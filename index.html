@@ -623,6 +623,29 @@
             <div style="background:var(--bg-primary);border-radius:6px;padding:8px 12px;text-align:center;"><div style="font-size:0.75rem;color:var(--text-muted)">Mar/26</div><div style="font-size:0.95rem;font-weight:700;color:var(--accent-green)">+14.0%</div><div style="font-size:0.72rem;color:var(--text-muted)">649K</div></div>
             <div style="background:var(--bg-primary);border-radius:6px;padding:8px 12px;text-align:center;"><div style="font-size:0.75rem;color:var(--text-muted)">Abr/26*</div><div style="font-size:0.95rem;font-weight:700;color:var(--text-muted)">em andamento</div><div style="font-size:0.72rem;color:var(--text-muted)">82K (7 dias)</div></div>
           </div>
+          <!-- Origem dos usuários -->
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-color);display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;">Origem m&eacute;dia<br><span style="font-weight:400;text-transform:none;letter-spacing:0;">(Jul/25–Abr/26)</span></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:8px;background:var(--bg-primary);border-radius:8px;padding:8px 14px;">
+                <div style="font-size:1.1rem;">&#128241;</div>
+                <div>
+                  <div style="font-size:0.65rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;">1&ordm; lugar</div>
+                  <div style="font-size:0.88rem;font-weight:700;color:var(--text-primary);">&gt;98.5%</div>
+                  <div style="font-size:0.7rem;color:var(--text-secondary);">App mobile</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:var(--bg-primary);border-radius:8px;padding:8px 14px;">
+                <div style="font-size:1.1rem;">&#128279;</div>
+                <div>
+                  <div style="font-size:0.65rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;">2&ordm; lugar</div>
+                  <div style="font-size:0.88rem;font-weight:700;color:var(--text-primary);">~0.4%</div>
+                  <div style="font-size:0.7rem;color:var(--text-secondary);">Perfil (pampa)</div>
+                </div>
+              </div>
+            </div>
+            <div style="font-size:0.68rem;color:var(--text-muted);font-style:italic;line-height:1.4;">App mobile = sem HTTP referer<br>(navega&ccedil;&atilde;o nativa do app)</div>
+          </div>
         </div>
         <div style="margin-top:14px;">
           <button class="query-toggle" id="qbtn-aud-site" onclick="toggleQuery('aud-site')">
@@ -1641,65 +1664,6 @@ ORDER BY 1, 3, 4</pre>
     ]
   };
 
-  // ---- Origem dos usuários: labels com fundo sólido dentro das barras Hub ----
-  var _originPlugin = {
-    id: 'originLabels',
-    afterDraw: function(chart) {
-      var site = chart._currentSite || 'all';
-      if (site !== 'all') return;
-      var ctx2 = chart.ctx;
-      var xScale = chart.scales.x;
-      var yScale = chart.scales.y;
-      if (!xScale || !yScale) return;
-      // [barIndex, linha1, linha2]
-      var origins = [
-        [6, 'App 99.5%', null],
-        [7, 'App 98.7%', 'MP/ML 0.7%'],
-        [8, 'App 98.8%', 'Perfil 0.4%'],
-        [9, 'App 99.0%', 'Perfil 0.3%']
-      ];
-      origins.forEach(function(o) {
-        var i = o[0], line1 = o[1], line2 = o[2];
-        var hubVal = (chart.data.datasets[1] && chart.data.datasets[1].data[i]) || 0;
-        var legVal = (chart.data.datasets[0] && chart.data.datasets[0].data[i]) || 0;
-        if (!hubVal) return;
-        var topY  = yScale.getPixelForValue(legVal + hubVal);
-        var botY  = yScale.getPixelForValue(legVal);
-        var barH  = botY - topY;
-        if (barH < 18) return;
-        var cx    = xScale.getPixelForValue(i);
-        var twoLines = (line2 !== null) && barH >= 42;
-        var boxW  = 58, lineH = 11;
-        var boxH  = twoLines ? (lineH * 2 + 8) : (lineH + 6);
-        // Centro vertical da caixa = centro da barra
-        var cy    = topY + barH / 2;
-        var bx    = cx - boxW / 2;
-        var by    = cy - boxH / 2;
-        // Garante que a caixa fica dentro da barra
-        if (by < topY + 2) by = topY + 2;
-        if (by + boxH > botY - 2) by = botY - boxH - 2;
-        if (by < topY) return;
-        ctx2.save();
-        // Fundo sólido
-        ctx2.fillStyle = 'rgba(0,0,0,0.52)';
-        ctx2.fillRect(bx, by, boxW, boxH);
-        // Linha 1
-        ctx2.textAlign = 'center';
-        ctx2.textBaseline = 'top';
-        ctx2.font = 'bold 9px "Inter",sans-serif';
-        ctx2.fillStyle = '#ffffff';
-        ctx2.fillText(line1, cx, by + 3);
-        // Linha 2
-        if (twoLines) {
-          ctx2.font = '7.5px "Inter",sans-serif';
-          ctx2.fillStyle = 'rgba(255,255,255,0.72)';
-          ctx2.fillText(line2, cx, by + 3 + lineH);
-        }
-        ctx2.restore();
-      });
-    }
-  };
-
   var _rolloutPlugin = {
     id: 'rolloutMarkers',
     afterDraw: function(chart) {
@@ -1755,7 +1719,7 @@ ORDER BY 1, 3, 4</pre>
     el.parentElement.style.height = height + 'px';
     return new Chart(el.getContext('2d'), {
       type: 'bar',
-      plugins: [ChartDataLabels, _rolloutPlugin, _originPlugin],
+      plugins: [ChartDataLabels, _rolloutPlugin],
       data: {
         labels: monthLabels,
         datasets: [
@@ -1799,11 +1763,7 @@ ORDER BY 1, 3, 4</pre>
                   }
                 },
                 pct: {
-                  display: (ctx) => {
-                    const i = ctx.dataIndex;
-                    if (i === 7 || i === 8 || i === 9) return false;
-                    return (ctx.chart.data.datasets[1].data[i] || 0) > 0 && (ctx.chart.data.datasets[0].data[i] || 0) > 0;
-                  },
+                  display: (ctx) => (ctx.chart.data.datasets[1].data[ctx.dataIndex] || 0) > 0 && (ctx.chart.data.datasets[0].data[ctx.dataIndex] || 0) > 0,
                   anchor: 'center', align: 'center',
                   color: 'rgba(255,255,255,0.9)',
                   font: { weight: '700', size: 10 },
