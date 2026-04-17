@@ -521,23 +521,37 @@
           <!-- Coluna 2: Com que frequência -->
           <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
             <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#128260; Com que frequ&ecirc;ncia</div>
-            <div style="display:flex;gap:10px;margin-bottom:16px;">
+            <!-- 1. Usuários + Visitas (destaque principal) -->
+            <div style="display:flex;gap:10px;margin-bottom:12px;">
               <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
                 <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Point Hub</div>
-                <div style="font-size:1.5rem;font-weight:800;color:var(--hub-color);">5,12</div>
-                <div style="font-size:0.68rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+                <div style="font-size:1.4rem;font-weight:800;color:var(--hub-color);">170,2K</div>
+                <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">871,3K visitas</div>
               </div>
               <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
                 <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Legacy</div>
-                <div style="font-size:1.5rem;font-weight:800;color:var(--legacy-color);">3,17</div>
-                <div style="font-size:0.68rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+                <div style="font-size:1.4rem;font-weight:800;color:var(--legacy-color);">157,7K</div>
+                <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">500,5K visitas</div>
               </div>
             </div>
-            <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:10px 14px;text-align:center;">
-              <span style="font-size:1.1rem;font-weight:800;color:var(--hub-color);">+61,5%</span>
-              <span style="font-size:0.72rem;color:var(--text-secondary);margin-left:6px;">freq. Hub vs Legacy</span>
+            <!-- 2. Frequência por usuário -->
+            <div style="display:flex;gap:10px;margin-bottom:12px;">
+              <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 12px;text-align:center;">
+                <div style="font-size:1rem;font-weight:700;color:var(--hub-color);">5,12</div>
+                <div style="font-size:0.65rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+              </div>
+              <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 12px;text-align:center;">
+                <div style="font-size:1rem;font-weight:700;color:var(--legacy-color);">3,17</div>
+                <div style="font-size:0.65rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+              </div>
             </div>
-            <div style="font-size:0.68rem;color:var(--text-muted);margin-top:10px;text-align:center;">28/02&ndash;14/03/26 &middot; 170,2K vs 157,7K usu&aacute;rios</div>
+            <!-- 3. Comparação -->
+            <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:8px 14px;text-align:center;">
+              <span style="font-size:0.95rem;font-weight:800;color:var(--hub-color);">+61,5%</span>
+              <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:6px;">freq. Hub vs Legacy</span>
+            </div>
           </div>
 
           <!-- Coluna 3: Por quanto tempo -->
