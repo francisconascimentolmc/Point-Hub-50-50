@@ -1503,74 +1503,52 @@ sameday AS (
                                       <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.68rem;outline:none;">
                                         <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128260; Devolu&ccedil;&atilde;o de Device
                                       </summary>
-                                      <pre style="margin:8px 0 0;font-size:0.56rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">WITH sessoes AS (
-  SELECT SAFE_CAST(usr.user_id AS INT64) AS user_id, site, ds,
-    CASE WHEN path LIKE '/point_devices/point_hub%' THEN 'Point Hub'
-         WHEN path LIKE '/point_devices/kinds%'     THEN 'Legacy'
-    END AS ambiente
-  FROM `meli-bi-data.MELIDATA.TRACKS`
-  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
-    AND site IN ('MLA','MLB') AND bu = 'mercadopago'
-    AND (path LIKE '/point_devices/point_hub%'
-      OR path LIKE '/point_devices/kinds%')
-    AND usr.user_id IS NOT NULL
-    AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
-),
-sessoes_dedup AS (
-  SELECT user_id, site, ds, MAX(ambiente) AS ambiente
-  FROM sessoes GROUP BY 1,2,3
-),
-devolucoes_device AS (
+                                      <pre style="margin:8px 0 0;font-size:0.56rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- Devolu&ccedil;&atilde;o presencial REPAIR (POST_BY_USER)
+-- Sucesso: RSO_TRACKING_STATUS IN ('ENTREGUE','COLETADO')
+WITH sessoes AS ( ... ),
+repairs AS (
   SELECT CAST(SO_CUS_CUST_ID AS INT64) AS user_id,
-         SO_SITE_ID AS site, DATE(SO_REQUEST_DATE) AS data_dev
+         SO_SITE_ID AS site, DATE(SO_REQUEST_DATE) AS data_req,
+         RSO_TRACKING_STATUS
   FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
   WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
-    AND SO_FLOW_TYPE = 'REPAIR'
-    AND SO_SERVICE_TYPE = 'IN_PERSON'
-    AND RSO_TRACKING_STATUS IN ('ENTREGUE','COLETADO')
+    AND SO_FLOW_TYPE     = 'REPAIR'
+    AND RSO_COLLECT_TYPE = 'POST_BY_USER'
     AND SO_SITE_ID IN ('MLA','MLB')
 )
-SELECT ambiente,
-  COUNT(DISTINCT s.user_id)                                   AS usuarios_secao,
-  COUNT(DISTINCT CASE WHEN d.user_id IS NOT NULL
-    THEN s.user_id END)                                       AS com_devolucao_device,
-  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN d.user_id IS NOT NULL
-    THEN s.user_id END),COUNT(DISTINCT s.user_id))*100,3)     AS efetividade_pct
-FROM sessoes_dedup s
-LEFT JOIN devolucoes_device d
-  ON s.user_id=d.user_id AND s.ds=d.data_dev AND s.site=d.site
-GROUP BY 1 ORDER BY 1</pre>
+-- Efetividade: sessão + alerta no mesmo dia
+-- Funil: base=repairs, sucesso=RSO_TRACKING_STATUS IN ('ENTREGUE','COLETADO')</pre>
                                     </details>
                                   </td>
-                                  <td style="text-align:center;padding:6px 8px;color:#14b8a6;font-weight:700;vertical-align:top;">0,08%</td>
-                                  <td style="text-align:center;padding:6px 8px;color:#a855f7;font-weight:700;vertical-align:top;">0,06%</td>
+                                  <td style="text-align:center;padding:6px 8px;color:#14b8a6;font-weight:700;vertical-align:top;">1,30%</td>
+                                  <td style="text-align:center;padding:6px 8px;color:#a855f7;font-weight:700;vertical-align:top;">1,11%</td>
                                   <td style="text-align:center;padding:6px 8px;vertical-align:top;"><span style="font-size:0.58rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:1px 5px;">&#10003; Medido</span></td>
                                 </tr>
-                                <!-- Funil Device - exposição por ambiente -->
+                                <!-- Funil Device - conclusão ENTREGUE/COLETADO -->
                                 <tr style="background:rgba(34,197,94,0.01);">
                                   <td colspan="4" style="padding:6px 8px 10px;">
-                                    <div style="font-size:0.58rem;color:var(--text-muted);margin-bottom:5px;font-weight:600;letter-spacing:0.3px;">&#8627; Distribui&ccedil;&atilde;o de exposi&ccedil;&atilde;o &nbsp;&mdash;&nbsp; 2.466 usu&aacute;rios com device em reparo (todos SHIPPING_DELIVERED)</div>
+                                    <div style="font-size:0.58rem;color:var(--text-muted);margin-bottom:5px;font-weight:600;letter-spacing:0.3px;">&#8627; Funil de conclus&atilde;o (ENTREGUE/COLETADO) &nbsp;&mdash;&nbsp; 8.981 usu&aacute;rios com REPAIR POST_BY_USER no per&iacute;odo</div>
                                     <div style="display:flex;flex-direction:column;gap:4px;">
                                       <div style="display:flex;align-items:center;gap:6px;">
                                         <span style="font-size:0.58rem;color:#14b8a6;font-weight:600;flex:0 0 70px;">Point Hub</span>
-                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:5.4%;height:100%;background:#14b8a6;border-radius:3px;"></div></div>
-                                        <span style="font-size:0.58rem;color:#14b8a6;font-weight:700;flex:0 0 32px;text-align:right;">5,4%</span>
-                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">133 / 2.466</span>
+                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:62.6%;height:100%;background:#14b8a6;border-radius:3px;"></div></div>
+                                        <span style="font-size:0.58rem;color:#14b8a6;font-weight:700;flex:0 0 32px;text-align:right;">62,6%</span>
+                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">1.382 / 2.207</span>
                                       </div>
                                       <div style="display:flex;align-items:center;gap:6px;">
                                         <span style="font-size:0.58rem;color:#a855f7;font-weight:600;flex:0 0 70px;">Legacy</span>
-                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:3.9%;height:100%;background:#a855f7;border-radius:3px;"></div></div>
-                                        <span style="font-size:0.58rem;color:#a855f7;font-weight:700;flex:0 0 32px;text-align:right;">3,9%</span>
-                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">97 / 2.466</span>
+                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:65.7%;height:100%;background:#a855f7;border-radius:3px;"></div></div>
+                                        <span style="font-size:0.58rem;color:#a855f7;font-weight:700;flex:0 0 32px;text-align:right;">65,7%</span>
+                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">1.147 / 1.746</span>
                                       </div>
                                       <div style="display:flex;align-items:center;gap:6px;">
                                         <span style="font-size:0.58rem;color:#f59e0b;font-weight:600;flex:0 0 70px;">Sem acesso</span>
-                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:90.7%;height:100%;background:#f59e0b;border-radius:3px;"></div></div>
-                                        <span style="font-size:0.58rem;color:#f59e0b;font-weight:700;flex:0 0 32px;text-align:right;">90,7%</span>
-                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">2.236 / 2.466</span>
+                                        <div style="flex:1;background:rgba(0,0,0,0.2);border-radius:3px;height:5px;overflow:hidden;"><div style="width:64%;height:100%;background:#f59e0b;border-radius:3px;"></div></div>
+                                        <span style="font-size:0.58rem;color:#f59e0b;font-weight:700;flex:0 0 32px;text-align:right;">64,0%</span>
+                                        <span style="font-size:0.55rem;color:var(--text-muted);flex:0 0 62px;text-align:right;">3.220 / 5.028</span>
                                       </div>
                                     </div>
-                                    <div style="margin-top:5px;font-size:0.55rem;color:var(--text-muted);">90,7% nunca acessou a se&ccedil;&atilde;o &mdash; o alerta n&atilde;o chegou a eles</div>
+                                    <div style="margin-top:5px;font-size:0.55rem;color:var(--text-muted);">56% nunca acessou a se&ccedil;&atilde;o &nbsp;&bull;&nbsp; Legacy +3,1 p.p. vs Hub &nbsp;&bull;&nbsp; Hub +1,4 p.p. acima do grupo sem exposi&ccedil;&atilde;o</div>
                                   </td>
                                 </tr>
                               </tbody>
