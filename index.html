@@ -1729,18 +1729,18 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
                                   <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
                                     <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128230; Solicitar Bobinas
                                   </summary>
-                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- user_id via event_data.$.customer (não usr.user_id)
--- ⚠️ validação de timezone ds vs SO_REQUEST_DATE pendente
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- user_id via usr.user_id (padrão shortcuts)
 WITH clicks AS (
-  SELECT CAST(JSON_VALUE(event_data,'$.customer') AS STRING) AS user_id,
+  SELECT CAST(usr.user_id AS STRING) AS user_id,
          site, ds AS data
   FROM `meli-bi-data.MELIDATA.TRACKS`
   WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
     AND bu = 'mercadopago'
-    AND path = '/point_cx_paper_roll/flow'
+    AND path = '/point_devices/point_hub/shortcuts'
+    AND JSON_VALUE(event_data, '$.action') = 'manage_paper_rolls'
     AND site IN ('MLA','MLB')
-    AND JSON_VALUE(event_data,'$.customer') IS NOT NULL
-    AND CAST(JSON_VALUE(event_data,'$.customer') AS INT64)
+    AND usr.user_id IS NOT NULL
+    AND SAFE_CAST(usr.user_id AS INT64)
         NOT IN (3087698992,3222801111)
 ),
 pedidos AS (
@@ -1766,7 +1766,7 @@ SELECT site, data,
 FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
                                 </details>
                               </td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;vertical-align:top;">39%</td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;vertical-align:top;">29%</td>
                               <td style="text-align:center;padding:9px 10px;color:var(--text-muted);vertical-align:top;">&mdash;</td>
                               <td style="text-align:center;padding:9px 10px;vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
