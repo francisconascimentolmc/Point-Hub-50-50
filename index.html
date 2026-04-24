@@ -1845,8 +1845,9 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
                                     <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#127981; Vouchers
                                   </summary>
                                   <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- Apenas MLB (MLA sem tráfego em Vouchers)
--- Entrada: /point_vouchers/main
--- Conversão: /authenticators/face_validation (trocar para conta empresa)
+-- Entrada: /point_vouchers/main (acesso à seção de vouchers)
+-- Conversão: /point_vouchers/detail (intenção de uso — acessou detalhe do voucher)
+-- NOTA: mede engajamento dentro da seção, não conversão transacional
 WITH clicks AS (
   SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
   FROM `meli-bi-data.MELIDATA.TRACKS`
@@ -1862,7 +1863,7 @@ conversoes AS (
   FROM `meli-bi-data.MELIDATA.TRACKS`
   WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
     AND bu = 'mercadopago'
-    AND path = '/authenticators/face_validation'
+    AND path = '/point_vouchers/detail'
     AND site IN ('MLA','MLB')
     AND usr.user_id IS NOT NULL
     AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
@@ -1876,13 +1877,16 @@ funil AS (
 )
 SELECT site, data,
   COUNT(DISTINCT user_id)                                    AS clicaram,
-  COUNT(DISTINCT CASE WHEN converteu=1 THEN user_id END)     AS converteram,
+  COUNT(DISTINCT CASE WHEN converteu=1 THEN user_id END)     AS acessaram_detalhe,
   ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN converteu=1
     THEN user_id END),COUNT(DISTINCT user_id))*100,2)        AS taxa_pct
 FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
                                 </details>
                               </td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">17,8% <span style="font-size:0.6rem;font-weight:400;color:var(--text-muted);">MLB</span></td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                                49,1% <span style="font-size:0.6rem;font-weight:400;color:var(--text-muted);">MLB</span>
+                                <div style="font-size:0.55rem;color:var(--accent-yellow);font-weight:400;margin-top:3px;line-height:1.3;">&#128161; inten&ccedil;&atilde;o p&oacute;s-entrada na se&ccedil;&atilde;o</div>
+                              </td>
                               <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">&mdash;</td>
                               <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
@@ -1938,8 +1942,9 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
                         </table>
                       </div>
                       <div style="margin-top:8px;font-size:0.65rem;color:var(--text-muted);line-height:1.5;">
-                        &#128161; M&eacute;todo: usu&aacute;rios &uacute;nicos que clicaram no shortcut <strong>e</strong> completaram a a&ccedil;&atilde;o no mesmo dia &divide; total de usu&aacute;rios que clicaram. Taxa ponderada 28/02&ndash;13/03 (14/03 exclu&iacute;do por ingest&atilde;o incompleta).<br>
-                        <span style="color:#f59e0b;">&#9888;</span> Legacy com metodologia diferente do Hub &mdash; paths de entrada distintos. Compara&ccedil;&atilde;o ser&aacute; revisada para alinhar a mesma etapa do funil.
+                        &#128161; M&eacute;todo geral: usu&aacute;rios &uacute;nicos que clicaram no shortcut <strong>e</strong> completaram a a&ccedil;&atilde;o no mesmo dia &divide; total de usu&aacute;rios que clicaram. Taxa ponderada 28/02&ndash;13/03 (14/03 exclu&iacute;do por ingest&atilde;o incompleta).<br>
+                        <span style="color:#f59e0b;">&#9888;</span> <strong>Vouchers</strong>: taxa mede a <em>inten&ccedil;&atilde;o ap&oacute;s entrar na se&ccedil;&atilde;o</em> &mdash; usu&aacute;rios que acessaram <code style="font-size:0.58rem;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px;">/point_vouchers/main</code> e navegaram para o detalhe de um voucher (<code style="font-size:0.58rem;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px;">/point_vouchers/detail</code>) no mesmo dia. N&atilde;o representa uma convers&atilde;o transacional (ex: compra ou ativa&ccedil;&atilde;o), mas sim o engajamento ativo dentro da se&ccedil;&atilde;o. MLB only.<br>
+                        <span style="color:#f59e0b;">&#9888;</span> <strong>Legacy (Comprar Point, Solicitar Bobinas)</strong>: paths de entrada distintos do Hub &mdash; compara&ccedil;&atilde;o ser&aacute; revisada para alinhar a mesma etapa do funil.
                       </div>
                     </div><!-- /conv-shortcuts -->
 
