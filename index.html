@@ -1758,14 +1758,25 @@ ORDER BY CASE COALESCE(s.ambiente,'X') WHEN 'Point Hub' THEN 1
                                   <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
                                     <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128722; Comprar Point
                                   </summary>
-                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">WITH clicks AS (
-  SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
-  FROM `meli-bi-data.MELIDATA.TRACKS`
-  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
-    AND bu = 'mercadopago'
-    AND path = '/point_devices/point_hub/shortcuts'
-    AND JSON_VALUE(event_data, '$.action') = 'buy_point'
-    AND site IN ('MLA','MLB')
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- Interseção: visitou /calm/landing/point E clicou no shortcut buy_point no mesmo dia
+WITH clicks AS (
+  SELECT DISTINCT
+    CAST(t1.usr.user_id AS STRING) AS user_id,
+    t1.site, t1.ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS` t1
+  INNER JOIN `meli-bi-data.MELIDATA.TRACKS` t2
+    ON  CAST(t1.usr.user_id AS STRING) = CAST(t2.usr.user_id AS STRING)
+    AND t1.ds = t2.ds AND t1.site = t2.site
+  WHERE t1.ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND t1.bu = 'mercadopago'
+    AND t1.path = '/point_devices/point_hub/shortcuts'
+    AND JSON_VALUE(t1.event_data, '$.action') = 'buy_point'
+    AND t1.site IN ('MLA','MLB')
+    AND t1.usr.user_id IS NOT NULL
+    AND SAFE_CAST(t1.usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+    AND t2.path = '/calm/landing/point'
+    AND t2.bu   = 'mercadopago'
+    AND t2.usr.user_id IS NOT NULL
 ),
 purchases AS (
   SELECT CAST(CUS_CUST_ID_BUY AS STRING) AS user_id,
@@ -1787,7 +1798,7 @@ LEFT JOIN purchases p
 GROUP BY 1,2 ORDER BY 2,1</pre>
                                 </details>
                               </td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">11,6%</td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">12,1%</td>
                               <td style="text-align:center;padding:9px 10px;color:#a855f7;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">13,5% <span style="font-size:0.58rem;font-weight:400;color:var(--text-muted);">&#9888;</span></td>
                               <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Medido</span></td>
                             </tr>
