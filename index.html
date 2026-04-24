@@ -1503,6 +1503,140 @@ GROUP BY 1 ORDER BY 1</pre>
                 </div>
               </div><!-- /efetividade-alertas -->
 
+              <!-- Funil Devolução Pendente -->
+              <div style="background:var(--bg-primary);border-radius:10px;border:1px solid rgba(34,197,94,0.25);overflow:hidden;">
+                <div style="display:grid;grid-template-columns:auto 1fr;gap:0;">
+                  <div style="width:4px;background:rgba(34,197,94,0.5);"></div>
+                  <div style="padding:14px 16px;">
+                    <div style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;">&#128228; Funil de Conclus&atilde;o &mdash; Devolu&ccedil;&atilde;o Pendente de Compra</div>
+                    <div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:14px;">28/02 &ndash; 14/03/2026 &nbsp;|&nbsp; Conclu&iacute;do = <code style="font-size:0.68rem;background:rgba(255,255,255,0.06);padding:1px 5px;border-radius:3px;">SO_ORDER_STATUS = REFUND_PROCESSED</code></div>
+
+                    <!-- Funil visual -->
+                    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+
+                      <!-- Point Hub -->
+                      <div style="background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:10px 14px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                          <div style="display:flex;align-items:center;gap:8px;">
+                            <span style="font-size:0.72rem;font-weight:700;color:#14b8a6;">&#9654; Point Hub</span>
+                            <span style="font-size:0.68rem;color:var(--text-muted);">61 com devolu&ccedil;&atilde;o</span>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:12px;">
+                            <span style="font-size:0.68rem;color:var(--text-secondary);">Conclu&iacute;ram: <strong style="color:#14b8a6;">49</strong></span>
+                            <span style="font-size:0.9rem;font-weight:700;color:#14b8a6;">80,3%</span>
+                          </div>
+                        </div>
+                        <div style="margin-top:6px;background:rgba(0,0,0,0.2);border-radius:4px;height:6px;overflow:hidden;">
+                          <div style="width:80.3%;height:100%;background:#14b8a6;border-radius:4px;"></div>
+                        </div>
+                      </div>
+
+                      <!-- Legacy -->
+                      <div style="background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:8px;padding:10px 14px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                          <div style="display:flex;align-items:center;gap:8px;">
+                            <span style="font-size:0.72rem;font-weight:700;color:#a855f7;">&#9654; Legacy</span>
+                            <span style="font-size:0.68rem;color:var(--text-muted);">45 com devolu&ccedil;&atilde;o</span>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:12px;">
+                            <span style="font-size:0.68rem;color:var(--text-secondary);">Conclu&iacute;ram: <strong style="color:#a855f7;">34</strong></span>
+                            <span style="font-size:0.9rem;font-weight:700;color:#a855f7;">75,6%</span>
+                          </div>
+                        </div>
+                        <div style="margin-top:6px;background:rgba(0,0,0,0.2);border-radius:4px;height:6px;overflow:hidden;">
+                          <div style="width:75.6%;height:100%;background:#a855f7;border-radius:4px;"></div>
+                        </div>
+                      </div>
+
+                      <!-- Não acessou -->
+                      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                          <div style="display:flex;align-items:center;gap:8px;">
+                            <span style="font-size:0.72rem;font-weight:700;color:var(--text-muted);">&#9651; N&atilde;o acessou a se&ccedil;&atilde;o</span>
+                            <span style="font-size:0.68rem;color:var(--text-muted);">237 com devolu&ccedil;&atilde;o</span>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:12px;">
+                            <span style="font-size:0.68rem;color:var(--text-secondary);">Conclu&iacute;ram: <strong style="color:var(--text-secondary);">178</strong></span>
+                            <span style="font-size:0.9rem;font-weight:700;color:var(--text-muted);">75,1%</span>
+                          </div>
+                        </div>
+                        <div style="margin-top:6px;background:rgba(0,0,0,0.2);border-radius:4px;height:6px;overflow:hidden;">
+                          <div style="width:75.1%;height:100%;background:rgba(255,255,255,0.2);border-radius:4px;"></div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Totais + Insights -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+                      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:8px 10px;">
+                        <div style="font-size:0.62rem;color:var(--text-muted);margin-bottom:3px;">Total com devolu&ccedil;&atilde;o</div>
+                        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);">343</div>
+                        <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">69% nunca acessou a se&ccedil;&atilde;o</div>
+                      </div>
+                      <div style="background:rgba(20,184,166,0.06);border:1px solid rgba(20,184,166,0.2);border-radius:6px;padding:8px 10px;">
+                        <div style="font-size:0.62rem;color:var(--text-muted);margin-bottom:3px;">Hub vs N&atilde;o acessou</div>
+                        <div style="font-size:1rem;font-weight:700;color:#14b8a6;">+5,2 p.p.</div>
+                        <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Legacy &asymp; N&atilde;o acessou (+0,5 p.p.)</div>
+                      </div>
+                    </div>
+
+                    <!-- Query dropdown -->
+                    <details style="margin-top:4px;">
+                      <summary style="cursor:pointer;font-size:0.65rem;color:var(--text-muted);list-style:none;display:flex;align-items:center;gap:4px;outline:none;">
+                        <span style="color:#14b8a6;font-size:0.55rem;">&#9654;</span> ver query
+                      </summary>
+                      <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- Base: devoluções → cruzamento com sessão (3 camadas)
+WITH sessoes AS (
+  SELECT SAFE_CAST(usr.user_id AS INT64) AS user_id, site, ds,
+    CASE WHEN path LIKE '/point_devices/point_hub%' THEN 'Point Hub'
+         WHEN path LIKE '/point_devices/kinds%'     THEN 'Legacy'
+    END AS ambiente
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND site IN ('MLA','MLB') AND bu = 'mercadopago'
+    AND (path LIKE '/point_devices/point_hub%'
+      OR path LIKE '/point_devices/kinds%')
+    AND usr.user_id IS NOT NULL
+    AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+),
+sessoes_dedup AS (
+  SELECT user_id, site, ds, MAX(ambiente) AS ambiente
+  FROM sessoes GROUP BY 1,2,3
+),
+devolucoes AS (
+  SELECT CAST(SO_CUS_CUST_ID AS INT64) AS user_id,
+         SO_SITE_ID AS site, DATE(SO_REQUEST_DATE) AS data_dev,
+         SO_ORDER_STATUS
+  FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
+  WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SO_FLOW_TYPE = 'DEVOLUTION'
+    AND SO_CALL_CENTER &lt;&gt; 'MARKETPLACE'
+    AND SO_SITE_ID IN ('MLA','MLB')
+),
+funil AS (
+  SELECT d.user_id, d.SO_ORDER_STATUS,
+    COALESCE(s.ambiente,'Não acessou a seção') AS ambiente
+  FROM devolucoes d
+  LEFT JOIN sessoes_dedup s
+    ON d.user_id=s.user_id AND d.data_dev=s.ds AND d.site=s.site
+)
+SELECT ambiente,
+  COUNT(DISTINCT user_id)                                        AS com_devolucao,
+  COUNT(DISTINCT CASE WHEN SO_ORDER_STATUS='REFUND_PROCESSED'
+    THEN user_id END)                                            AS concluiram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN SO_ORDER_STATUS=
+    'REFUND_PROCESSED' THEN user_id END),
+    COUNT(DISTINCT user_id))*100,1)                             AS taxa_pct
+FROM funil GROUP BY 1
+ORDER BY CASE ambiente WHEN 'Point Hub' THEN 1
+  WHEN 'Legacy' THEN 2 ELSE 3 END</pre>
+                    </details>
+
+                  </div>
+                </div>
+              </div><!-- /funil-devolucao -->
+
               <!-- Shortcuts -->
               <div style="background:var(--bg-primary);border-radius:10px;border:1px solid rgba(59,130,246,0.3);overflow:hidden;">
                 <div style="display:grid;grid-template-columns:auto 1fr;gap:0;">
