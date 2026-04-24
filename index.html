@@ -1443,6 +1443,45 @@ ORDER BY 1, 3, 4</pre>
                                       </div>
                                     </div>
                                     <div style="margin-top:5px;font-size:0.55rem;color:var(--text-muted);">69% dos usu&aacute;rios com devolu&ccedil;&atilde;o nunca acessou a se&ccedil;&atilde;o &nbsp;&bull;&nbsp; Hub +5,2 p.p. vs sem exposi&ccedil;&atilde;o</div>
+                                    <details style="margin-top:5px;"><summary style="cursor:pointer;font-size:0.55rem;color:var(--text-muted);list-style:none;outline:none;display:inline-flex;align-items:center;gap:3px;"><span style="color:#14b8a6;font-size:0.5rem;">&#9654;</span> ver query</summary><pre style="margin:5px 0 0;font-size:0.56rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.15);border-radius:4px;padding:7px 9px;overflow-x:auto;color:#a3e6d0;line-height:1.5;white-space:pre;font-family:monospace;">-- Funil: base=devoluções → cruzamento com sessão
+WITH sessoes AS (
+  SELECT SAFE_CAST(usr.user_id AS INT64) AS user_id, site, ds,
+    CASE WHEN path LIKE '/point_devices/point_hub%' THEN 'Point Hub'
+         WHEN path LIKE '/point_devices/kinds%'     THEN 'Legacy'
+    END AS ambiente
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND site IN ('MLA','MLB') AND bu = 'mercadopago'
+    AND (path LIKE '/point_devices/point_hub%'
+      OR path LIKE '/point_devices/kinds%')
+    AND usr.user_id IS NOT NULL
+    AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+),
+sessoes_dedup AS (
+  SELECT user_id, site, ds, MAX(ambiente) AS ambiente FROM sessoes GROUP BY 1,2,3
+),
+devolucoes AS (
+  SELECT CAST(SO_CUS_CUST_ID AS INT64) AS user_id, SO_SITE_ID AS site,
+         DATE(SO_REQUEST_DATE) AS data_dev, SO_ORDER_STATUS
+  FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
+  WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SO_FLOW_TYPE = 'DEVOLUTION' AND SO_CALL_CENTER &lt;&gt; 'MARKETPLACE'
+    AND SO_SITE_ID IN ('MLA','MLB')
+),
+funil AS (
+  SELECT d.user_id, d.SO_ORDER_STATUS,
+    COALESCE(s.ambiente,'Não acessou a seção') AS ambiente
+  FROM devolucoes d
+  LEFT JOIN sessoes_dedup s ON d.user_id=s.user_id AND d.data_dev=s.ds AND d.site=s.site
+)
+SELECT ambiente,
+  COUNT(DISTINCT user_id)                                             AS com_devolucao,
+  COUNT(DISTINCT CASE WHEN SO_ORDER_STATUS='REFUND_PROCESSED'
+        THEN user_id END)                                            AS concluiram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN SO_ORDER_STATUS='REFUND_PROCESSED'
+        THEN user_id END),COUNT(DISTINCT user_id))*100,1)           AS taxa_pct
+FROM funil GROUP BY 1
+ORDER BY CASE ambiente WHEN 'Point Hub' THEN 1 WHEN 'Legacy' THEN 2 ELSE 3 END</pre></details>
                                   </td>
                                 </tr>
                                 <tr>
@@ -1495,6 +1534,29 @@ sameday AS (
                                       </div>
                                     </div>
                                     <div style="margin-top:5px;font-size:0.55rem;color:var(--text-muted);">56% nunca acessou a se&ccedil;&atilde;o &nbsp;&bull;&nbsp; Hub +1,9 p.p. vs Legacy &nbsp;&bull;&nbsp; Hub +1,1 p.p. vs sem exposi&ccedil;&atilde;o</div>
+                                    <details style="margin-top:5px;"><summary style="cursor:pointer;font-size:0.55rem;color:var(--text-muted);list-style:none;outline:none;display:inline-flex;align-items:center;gap:3px;"><span style="color:#14b8a6;font-size:0.5rem;">&#9654;</span> ver query</summary><pre style="margin:5px 0 0;font-size:0.56rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.15);border-radius:4px;padding:7px 9px;overflow-x:auto;color:#a3e6d0;line-height:1.5;white-space:pre;font-family:monospace;">-- Funil: base=sameday → cruzamento com sessão
+WITH sessoes AS ( ... sessoes_dedup ... ),
+sameday AS (
+  SELECT CAST(SO_CUS_CUST_ID AS INT64) AS user_id, SO_SITE_ID AS site,
+         DATE(SO_REQUEST_DATE) AS data_req, RSO_TRACKING_STATUS
+  FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
+  WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SO_FLOW_TYPE    = 'REPAIR'
+    AND SO_SERVICE_TYPE = 'INTELLIGENT_SAMEDAY'
+    AND SO_SITE_ID IN ('MLA','MLB')
+)
+SELECT COALESCE(s.ambiente,'Não acessou a seção') AS ambiente,
+  COUNT(DISTINCT r.user_id)                                          AS com_alerta,
+  COUNT(DISTINCT CASE WHEN r.RSO_TRACKING_STATUS IN ('ENTREGUE','COLETADO')
+        THEN r.user_id END)                                          AS concluiram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN r.RSO_TRACKING_STATUS
+        IN ('ENTREGUE','COLETADO') THEN r.user_id END),
+    COUNT(DISTINCT r.user_id))*100,1)                               AS taxa_pct
+FROM sameday r
+LEFT JOIN sessoes_dedup s ON r.user_id=s.user_id AND r.data_req=s.ds AND r.site=s.site
+GROUP BY 1
+ORDER BY CASE COALESCE(s.ambiente,'X') WHEN 'Point Hub' THEN 1
+  WHEN 'Legacy' THEN 2 ELSE 3 END</pre></details>
                                   </td>
                                 </tr>
                                 <tr style="background:rgba(34,197,94,0.03);">
@@ -1549,6 +1611,29 @@ repairs AS (
                                       </div>
                                     </div>
                                     <div style="margin-top:5px;font-size:0.55rem;color:var(--text-muted);">56% nunca acessou a se&ccedil;&atilde;o &nbsp;&bull;&nbsp; Legacy +3,1 p.p. vs Hub &nbsp;&bull;&nbsp; Hub +1,4 p.p. acima do grupo sem exposi&ccedil;&atilde;o</div>
+                                    <details style="margin-top:5px;"><summary style="cursor:pointer;font-size:0.55rem;color:var(--text-muted);list-style:none;outline:none;display:inline-flex;align-items:center;gap:3px;"><span style="color:#14b8a6;font-size:0.5rem;">&#9654;</span> ver query</summary><pre style="margin:5px 0 0;font-size:0.56rem;background:rgba(0,0,0,0.3);border:1px solid rgba(34,197,94,0.15);border-radius:4px;padding:7px 9px;overflow-x:auto;color:#a3e6d0;line-height:1.5;white-space:pre;font-family:monospace;">-- Funil: base=repairs POST_BY_USER → cruzamento com sessão
+WITH sessoes AS ( ... sessoes_dedup ... ),
+repairs AS (
+  SELECT CAST(SO_CUS_CUST_ID AS INT64) AS user_id, SO_SITE_ID AS site,
+         DATE(SO_REQUEST_DATE) AS data_req, RSO_TRACKING_STATUS
+  FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
+  WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SO_FLOW_TYPE     = 'REPAIR'
+    AND RSO_COLLECT_TYPE = 'POST_BY_USER'
+    AND SO_SITE_ID IN ('MLA','MLB')
+)
+SELECT COALESCE(s.ambiente,'Não acessou a seção') AS ambiente,
+  COUNT(DISTINCT r.user_id)                                          AS com_alerta,
+  COUNT(DISTINCT CASE WHEN r.RSO_TRACKING_STATUS IN ('ENTREGUE','COLETADO')
+        THEN r.user_id END)                                          AS concluiram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN r.RSO_TRACKING_STATUS
+        IN ('ENTREGUE','COLETADO') THEN r.user_id END),
+    COUNT(DISTINCT r.user_id))*100,1)                               AS taxa_pct
+FROM repairs r
+LEFT JOIN sessoes_dedup s ON r.user_id=s.user_id AND r.data_req=s.ds AND r.site=s.site
+GROUP BY 1
+ORDER BY CASE COALESCE(s.ambiente,'X') WHEN 'Point Hub' THEN 1
+  WHEN 'Legacy' THEN 2 ELSE 3 END</pre></details>
                                   </td>
                                 </tr>
                               </tbody>
