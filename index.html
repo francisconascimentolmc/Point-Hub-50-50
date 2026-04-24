@@ -1595,6 +1595,7 @@ purchases AS (
   WHERE OPERATION_TYPE_DESC = 'PURCHASE'
     AND SIT_SITE_ID IN ('MLA','MLB')
     AND PO_CREATED_AT BETWEEN '2026-02-28' AND '2026-03-14'
+    AND LOWER(ORDER_DESCRIPTION) LIKE '%point%'
 )
 SELECT c.site, c.data,
   COUNT(DISTINCT c.user_id)                              AS clicaram,
@@ -1607,7 +1608,7 @@ LEFT JOIN purchases p
 GROUP BY 1,2 ORDER BY 2,1</pre>
                                 </details>
                               </td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">12,1%</td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">11,6%</td>
                               <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">&mdash;</td>
                               <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
