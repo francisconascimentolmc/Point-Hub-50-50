@@ -1496,31 +1496,185 @@ ORDER BY 1, 3, 4</pre>
                           <tbody>
                             <!-- Comprar Point -->
                             <tr style="background:rgba(20,184,166,0.04);">
-                              <td style="padding:9px 10px;color:var(--text-primary);font-weight:600;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,0.04);">&#128722; Comprar Point</td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);">12,1%</td>
-                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">&mdash;</td>
-                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
+                              <td style="padding:9px 10px;color:var(--text-primary);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                                <details>
+                                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
+                                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128722; Comprar Point
+                                  </summary>
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">WITH clicks AS (
+  SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/point_devices/point_hub/shortcuts'
+    AND JSON_VALUE(event_data, '$.action') = 'buy_point'
+    AND site IN ('MLA','MLB')
+),
+purchases AS (
+  SELECT CAST(CUS_CUST_ID_BUY AS STRING) AS user_id,
+         SIT_SITE_ID, DATE(PO_CREATED_AT) AS data
+  FROM `meli-bi-data.WHOWNER.BT_PRODUCT_ORDERS`
+  WHERE OPERATION_TYPE_DESC = 'PURCHASE'
+    AND SIT_SITE_ID IN ('MLA','MLB')
+    AND PO_CREATED_AT BETWEEN '2026-02-28' AND '2026-03-14'
+)
+SELECT c.site, c.data,
+  COUNT(DISTINCT c.user_id)                              AS clicaram,
+  COUNT(DISTINCT p.user_id)                              AS compraram,
+  ROUND(COUNT(DISTINCT p.user_id)*100.0
+    /NULLIF(COUNT(DISTINCT c.user_id),0),2)              AS taxa_pct
+FROM clicks c
+LEFT JOIN purchases p
+  ON c.user_id=p.user_id AND c.data=p.data AND c.site=p.SIT_SITE_ID
+GROUP BY 1,2 ORDER BY 2,1</pre>
+                                </details>
+                              </td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">12,1%</td>
+                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">&mdash;</td>
+                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
                             <!-- Ativar Point -->
                             <tr>
-                              <td style="padding:9px 10px;color:var(--text-primary);font-weight:600;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,0.04);">&#9889; Ativar Point</td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);">2,7%</td>
-                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">&mdash;</td>
-                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
+                              <td style="padding:9px 10px;color:var(--text-primary);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                                <details>
+                                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
+                                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#9889; Ativar Point
+                                  </summary>
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">WITH clicks AS (
+  SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/point_devices/point_hub/shortcuts'
+    AND JSON_VALUE(event_data, '$.action') = 'vinculate_point'
+    AND site IN ('MLA','MLB')
+    AND usr.user_id IS NOT NULL
+    AND CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+),
+ativacoes AS (
+  SELECT LAST_USER_ID AS user_id,
+         DATE(CREATED_AT) AS data_ativacao, SIT_SITE_ID AS site
+  FROM `meli-bi-data.WHOWNER.LK_PTM_POINT_DEVICE`
+  WHERE DATE(CREATED_AT) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SIT_SITE_ID IN ('MLA','MLB')
+    AND LAST_USER_ID IS NOT NULL
+  GROUP BY 1,2,3
+),
+funil AS (
+  SELECT c.site, c.data, c.user_id,
+    CASE WHEN a.user_id IS NOT NULL THEN 1 ELSE 0 END AS ativou
+  FROM clicks c
+  LEFT JOIN ativacoes a
+    ON c.user_id=a.user_id AND c.data=a.data_ativacao AND c.site=a.site
+)
+SELECT site, data,
+  COUNT(DISTINCT user_id)                                    AS clicaram,
+  COUNT(DISTINCT CASE WHEN ativou=1 THEN user_id END)        AS ativaram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN ativou=1
+    THEN user_id END),COUNT(DISTINCT user_id))*100,2)        AS taxa_pct
+FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
+                                </details>
+                              </td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">2,7%</td>
+                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">&mdash;</td>
+                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
                             <!-- Vouchers -->
                             <tr style="background:rgba(20,184,166,0.04);">
-                              <td style="padding:9px 10px;color:var(--text-primary);font-weight:600;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,0.04);">&#127981; Vouchers</td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);">17,8% <span style="font-size:0.6rem;font-weight:400;color:var(--text-muted);">MLB</span></td>
-                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);">&mdash;</td>
-                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
+                              <td style="padding:9px 10px;color:var(--text-primary);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                                <details>
+                                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
+                                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#127981; Vouchers
+                                  </summary>
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- Apenas MLB (MLA sem tráfego em Vouchers)
+-- Entrada: /point_vouchers/main
+-- Conversão: /authenticators/face_validation (trocar para conta empresa)
+WITH clicks AS (
+  SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/point_vouchers/main'
+    AND site IN ('MLA','MLB')
+    AND usr.user_id IS NOT NULL
+    AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+),
+conversoes AS (
+  SELECT CAST(usr.user_id AS STRING) AS user_id, site, ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/authenticators/face_validation'
+    AND site IN ('MLA','MLB')
+    AND usr.user_id IS NOT NULL
+    AND SAFE_CAST(usr.user_id AS INT64) NOT IN (3087698992,3222801111)
+),
+funil AS (
+  SELECT c.site, c.data, c.user_id,
+    CASE WHEN cv.user_id IS NOT NULL THEN 1 ELSE 0 END AS converteu
+  FROM clicks c
+  LEFT JOIN conversoes cv
+    ON c.user_id=cv.user_id AND c.data=cv.data AND c.site=cv.site
+)
+SELECT site, data,
+  COUNT(DISTINCT user_id)                                    AS clicaram,
+  COUNT(DISTINCT CASE WHEN converteu=1 THEN user_id END)     AS converteram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN converteu=1
+    THEN user_id END),COUNT(DISTINCT user_id))*100,2)        AS taxa_pct
+FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
+                                </details>
+                              </td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">17,8% <span style="font-size:0.6rem;font-weight:400;color:var(--text-muted);">MLB</span></td>
+                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">&mdash;</td>
+                              <td style="text-align:center;padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
                             <!-- Solicitar Bobinas -->
                             <tr>
-                              <td style="padding:9px 10px;color:var(--text-primary);font-weight:600;white-space:nowrap;">&#128230; Solicitar Bobinas</td>
-                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;">39%</td>
-                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);">&mdash;</td>
-                              <td style="text-align:center;padding:9px 10px;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
+                              <td style="padding:9px 10px;color:var(--text-primary);vertical-align:top;">
+                                <details>
+                                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.72rem;outline:none;">
+                                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128230; Solicitar Bobinas
+                                  </summary>
+                                  <pre style="margin:8px 0 0;font-size:0.58rem;background:rgba(0,0,0,0.3);border:1px solid rgba(20,184,166,0.2);border-radius:5px;padding:8px 10px;overflow-x:auto;color:#a3e6d0;line-height:1.6;white-space:pre;font-family:monospace;">-- user_id via event_data.$.customer (não usr.user_id)
+-- ⚠️ validação de timezone ds vs SO_REQUEST_DATE pendente
+WITH clicks AS (
+  SELECT CAST(JSON_VALUE(event_data,'$.customer') AS STRING) AS user_id,
+         site, ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/point_cx_paper_roll/flow'
+    AND site IN ('MLA','MLB')
+    AND JSON_VALUE(event_data,'$.customer') IS NOT NULL
+    AND CAST(JSON_VALUE(event_data,'$.customer') AS INT64)
+        NOT IN (3087698992,3222801111)
+),
+pedidos AS (
+  SELECT CAST(SO_CUS_CUST_ID AS STRING) AS user_id,
+         SO_SITE_ID AS site, DATE(SO_REQUEST_DATE) AS data_pedido
+  FROM `meli-bi-data.WHOWNER.BT_MP_POINT_SERVICE_ORDER`
+  WHERE DATE(SO_REQUEST_DATE) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SO_FLOW_TYPE = 'PAPER_ROLL'
+    AND SO_SITE_ID IN ('MLA','MLB')
+),
+funil AS (
+  SELECT c.site, c.data, c.user_id,
+    CASE WHEN p.user_id IS NOT NULL THEN 1 ELSE 0 END AS pediu
+  FROM clicks c
+  LEFT JOIN pedidos p
+    ON c.user_id=p.user_id AND c.data=p.data_pedido AND c.site=p.site
+)
+SELECT site, data,
+  COUNT(DISTINCT user_id)                                    AS clicaram,
+  COUNT(DISTINCT CASE WHEN pediu=1 THEN user_id END)         AS pediram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN pediu=1
+    THEN user_id END),COUNT(DISTINCT user_id))*100,2)        AS taxa_pct
+FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
+                                </details>
+                              </td>
+                              <td style="text-align:center;padding:9px 10px;color:#14b8a6;font-weight:700;vertical-align:top;">39%</td>
+                              <td style="text-align:center;padding:9px 10px;color:var(--text-muted);vertical-align:top;">&mdash;</td>
+                              <td style="text-align:center;padding:9px 10px;vertical-align:top;"><span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#10003; Hub medido</span></td>
                             </tr>
                           </tbody>
                         </table>
