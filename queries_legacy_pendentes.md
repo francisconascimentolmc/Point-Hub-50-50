@@ -125,3 +125,52 @@ ORDER BY 2, 1
 - `purchases` = `BT_PRODUCT_ORDERS` com `LOWER(ORDER_DESCRIPTION) LIKE '%point%'`
 - JOIN: mesmo dia + mesmo site
 - 14/03 excluído da média (lag de ingestão = 0 compras)
+
+---
+
+## Ativar Point — Legacy
+> **Status:** Calculado, NÃO publicado — problema metodológico identificado
+> **Resultado:** ~3,4% (MLA: ~0,9% com muitos zeros | MLB: ~3,4%)
+> **Motivo não publicar:** Mesmo desalinhamento de funil que Comprar Point e Solicitar Bobinas.
+> - **Hub** mede a partir do clique no shortcut `vinculate_point` (`/point_devices/point_hub/shortcuts`) — entrada no funil, usuário pode ser apenas curioso
+> - **Legacy** mede a partir do acesso à página `/point_devices/activate_point` — usuário já navegou ativamente até a tela de ativação, mais engajado/qualificado
+> - Comparação direta infla o Legacy artificialmente (começa mais tarde no funil)
+
+```sql
+WITH
+clicks AS (
+  SELECT
+    CAST(usr.user_id AS STRING) AS user_id,
+    site,
+    ds AS data
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds BETWEEN '2026-02-28' AND '2026-03-14'
+    AND bu = 'mercadopago'
+    AND path = '/point_devices/activate_point'
+    AND site IN ('MLA', 'MLB')
+    AND usr.user_id IS NOT NULL
+    AND CAST(usr.user_id AS INT64) NOT IN (3087698992, 3222801111)
+),
+ativacoes AS (
+  SELECT LAST_USER_ID AS user_id, DATE(CREATED_AT) AS data_ativacao, SIT_SITE_ID AS site
+  FROM `meli-bi-data.WHOWNER.LK_PTM_POINT_DEVICE`
+  WHERE DATE(CREATED_AT) BETWEEN '2026-02-28' AND '2026-03-14'
+    AND SIT_SITE_ID IN ('MLA', 'MLB')
+    AND LAST_USER_ID IS NOT NULL
+  GROUP BY 1, 2, 3
+),
+funil AS (
+  SELECT c.site, c.data, c.user_id,
+    CASE WHEN a.user_id IS NOT NULL THEN 1 ELSE 0 END AS ativou
+  FROM clicks c
+  LEFT JOIN ativacoes a ON c.user_id=a.user_id AND c.data=a.data_ativacao AND c.site=a.site
+)
+SELECT site, data,
+  COUNT(DISTINCT user_id)                                        AS usuarios_clicaram,
+  COUNT(DISTINCT CASE WHEN ativou=1 THEN user_id END)            AS usuarios_ativaram,
+  ROUND(SAFE_DIVIDE(COUNT(DISTINCT CASE WHEN ativou=1 THEN user_id END),
+    COUNT(DISTINCT user_id))*100,2)                             AS taxa_conversao_pct
+FROM funil GROUP BY 1,2 ORDER BY 2,1
+```
+
+**Próximo passo:** encontrar o equivalente do shortcut de ativação no Legacy — um evento que capture o mesmo ponto da jornada que `vinculate_point` captura no Hub.
