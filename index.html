@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -459,7 +459,15 @@
     .aud-site-btn{background:var(--bg-primary);border:1px solid var(--border-color);border-radius:20px;padding:5px 18px;font-size:0.78rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.15s;outline:none;}
     .aud-site-btn.active{background:rgba(20,184,166,0.15);border-color:var(--hub-color);color:var(--hub-color);}
     .aud-site-btn:hover:not(.active){border-color:var(--text-secondary);color:var(--text-primary);}
-    .aud-pending{display:none;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#ca8a04;margin-bottom:12px;}  </style>
+    .aud-pending{display:none;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#ca8a04;margin-bottom:12px;}
+
+    /* TAB NAVIGATION */
+    .tab-nav{display:flex;gap:0;margin-bottom:32px;border-bottom:2px solid var(--border-color);}
+    .tab-btn{background:none;border:none;color:var(--text-muted);font-size:0.88rem;font-weight:600;padding:10px 26px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.18s;letter-spacing:0.3px;outline:none;}
+    .tab-btn.active{color:var(--hub-color);border-bottom-color:var(--hub-color);}
+    .tab-btn:hover:not(.active){color:var(--text-primary);}
+    .desk-warn{background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:6px;padding:5px 10px;font-size:0.65rem;color:var(--accent-yellow);margin-bottom:6px;}
+  </style>
 </head>
 <body>
 <div class="container">
@@ -477,6 +485,10 @@
       <div class="meta-item"><span>&#128202;</span><span>MELIDATA.TRACKS</span></div>
     </div>
   </header>
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="5050"    onclick="switchTab('5050')">&#9889;&#65039; Aba 50/50</button>
+  <button class="tab-btn"        data-tab="desktop" onclick="switchTab('desktop')">&#128421;&#65039; Desktop</button>
+</nav>
 <div id="page-5050">
 
     <!-- DADOS DE NAVEGAÇÃO -->
@@ -2063,6 +2075,266 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
     </div><!-- /mq-block Pilar03 -->
 
   </div><!-- /page-5050 -->
+
+<!-- ============================================================ -->
+<!--  PAGE DESKTOP                                                 -->
+<!-- ============================================================ -->
+<div id="page-desktop" style="display:none;">
+
+  <!-- Context banner -->
+  <div style="background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(245,158,11,0.06));border:1px solid var(--border-color);border-radius:12px;padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:700;font-size:0.95rem;">&#128421;&#65039; Lan&ccedil;amento Desktop &mdash; Point Hub</div>
+      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">MLA + MLB &middot; 01 Jun 2026 &rarr; hoje &middot; Split: <strong style="color:var(--hub-color);">25% Hub Desktop</strong> / <strong style="color:var(--legacy-color);">75% Legacy Desktop</strong></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;">
+      <span class="env-badge hub" style="font-size:0.75rem;">Point Hub &mdash; 25%</span>
+      <span class="env-badge legacy" style="font-size:0.75rem;">Legacy &mdash; 75%</span>
+    </div>
+  </div>
+
+  <!-- ── DADOS DE NAVEGAÇÃO DESKTOP ────────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-blue);padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);">Nav</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Dados de Navega&ccedil;&atilde;o &mdash; Desktop</div>
+        <div class="mq-subtitle">Como os sellers chegam e se comportam na se&ccedil;&atilde;o Maquininhas Point via web desktop</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">Jun/2026 &rarr; hoje</span>
+        <span class="ps-tag neutral">device.platform = /web/desktop</span>
+      </div>
+    </div>
+
+    <div style="padding:20px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+
+        <!-- ── Col 1: Origem ── -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#127760; De onde v&ecirc;m</div>
+
+          <!-- Hub Desktop -->
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border-color);">
+            <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Point Hub</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Acesso Direto</span><span style="font-weight:700;color:var(--hub-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Navega&ccedil;&atilde;o Interna</span><span style="font-weight:700;color:var(--hub-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Email</span><span style="font-weight:700;color:var(--hub-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Outros</span><span style="font-weight:700;color:var(--hub-color);">&mdash;</span></div>
+          </div>
+
+          <!-- Legacy Desktop -->
+          <div>
+            <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Legacy</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Acesso Direto</span><span style="font-weight:700;color:var(--legacy-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Navega&ccedil;&atilde;o Interna</span><span style="font-weight:700;color:var(--legacy-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Email</span><span style="font-weight:700;color:var(--legacy-color);">&mdash;</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">Outros</span><span style="font-weight:700;color:var(--legacy-color);">&mdash;</span></div>
+          </div>
+          <div style="margin-top:10px;font-size:0.67rem;color:var(--accent-yellow);font-style:italic;">&#9888;&#65039; Preencher ap&oacute;s rodar Q1 &mdash; validar campo referer</div>
+        </div>
+
+        <!-- ── Col 2: Visitas ── -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#128260; Com que frequ&ecirc;ncia</div>
+
+          <div style="display:flex;gap:10px;margin-bottom:12px;">
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Point Hub</div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--hub-color);">&mdash;</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">&mdash; visitas</div>
+            </div>
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px;">Legacy</div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--legacy-color);">&mdash;</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">&mdash; visitas</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-bottom:12px;">
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 12px;text-align:center;">
+              <div style="font-size:1rem;font-weight:700;color:var(--hub-color);">&mdash;</div>
+              <div style="font-size:0.65rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+            </div>
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 12px;text-align:center;">
+              <div style="font-size:1rem;font-weight:700;color:var(--legacy-color);">&mdash;</div>
+              <div style="font-size:0.65rem;color:var(--text-secondary);">vis/usu&aacute;rio</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:8px 14px;text-align:center;">
+            <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);">&mdash;</span>
+            <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:6px;">freq. Hub vs Legacy</span>
+          </div>
+        </div>
+
+        <!-- ── Col 3: Tempo ── -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#9201;&#65039; Por quanto tempo</div>
+
+          <div style="display:flex;gap:10px;margin-bottom:12px;">
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Point Hub</div>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--hub-color);">&mdash;s</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">tempo m&eacute;dio</div>
+            </div>
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Legacy</div>
+              <div style="font-size:1.5rem;font-weight:800;color:var(--legacy-color);">&mdash;s</div>
+              <div style="font-size:0.68rem;color:var(--text-secondary);">tempo m&eacute;dio</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:8px 14px;text-align:center;margin-bottom:8px;">
+            <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);">&mdash;</span>
+            <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:6px;">tempo Hub vs Legacy</span>
+          </div>
+          <div style="font-size:0.67rem;color:var(--text-muted);font-style:italic;">Jun/2026 &rarr; hoje &middot; m&eacute;dia por sess&atilde;o/dia/usu&aacute;rio</div>
+        </div>
+
+      </div><!-- /3-col grid -->
+    </div><!-- /padding -->
+
+    <!-- ── Queries ── -->
+    <div style="border-top:1px solid var(--border-color);padding:16px 24px;">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:16px;">Queries BigQuery &mdash; Navega&ccedil;&atilde;o Desktop</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start;">
+
+        <!-- Q1 Origem -->
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Q1 &middot; Origem (De onde v&ecirc;m)</div>
+          <div class="desk-warn">&#9888;&#65039; Validar campo referer: tentar <code>http_referer</code> ou <code>device.referer</code></div>
+          <pre>-- Q1 · Origem Desktop — Hub vs Legacy
+-- ⚠️ ajustar campo referer conforme schema
+SELECT
+  CASE
+    WHEN path LIKE '/point_devices/point_hub%'
+    THEN 'Point Hub' ELSE 'Legacy'
+  END AS ambiente,
+  CASE
+    WHEN LOWER(COALESCE(http_referer,'')) LIKE '%mercadolivre%'
+      OR LOWER(COALESCE(http_referer,'')) LIKE '%mercadopago%'
+      THEN 'Navegação Interna'
+    WHEN LOWER(COALESCE(http_referer,'')) LIKE '%mail%'
+      OR LOWER(COALESCE(http_referer,'')) LIKE '%email%'
+      THEN 'Email'
+    WHEN LOWER(COALESCE(http_referer,'')) LIKE '%google%'
+      OR LOWER(COALESCE(http_referer,'')) LIKE '%bing%'
+      THEN 'Busca Orgânica'
+    WHEN http_referer IS NULL OR http_referer = ''
+      THEN 'Acesso Direto'
+    ELSE 'Outros'
+  END AS origem,
+  COUNT(DISTINCT
+    CAST(usr.user_id AS INT64))  AS usuarios,
+  COUNT(*)                        AS visitas,
+  ROUND(SAFE_DIVIDE(
+    COUNT(DISTINCT CAST(usr.user_id AS INT64)),
+    SUM(COUNT(DISTINCT CAST(usr.user_id AS INT64)))
+      OVER (PARTITION BY CASE
+        WHEN path LIKE '/point_devices/point_hub%'
+        THEN 'Point Hub' ELSE 'Legacy' END)
+  ) * 100, 1)                     AS pct
+FROM `meli-bi-data.MELIDATA.TRACKS`
+WHERE ds >= '2026-06-01'
+  AND site IN ('MLA','MLB')
+  AND bu = 'mercadopago'
+  AND (  path LIKE '/point_devices/point_hub%'
+      OR path LIKE '/point_devices/kinds%')
+  AND device.platform = '/web/desktop'
+  AND usr.user_id IS NOT NULL
+  AND CAST(usr.user_id AS INT64)
+      NOT IN (3087698992,3222801111)
+GROUP BY 1,2
+ORDER BY 1, visitas DESC</pre>
+        </div>
+
+        <!-- Q2 Visitas -->
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Q2 &middot; Visitas (Usu&aacute;rios &amp; Frequ&ecirc;ncia)</div>
+          <pre>-- Q2 · Visitas Desktop — Hub vs Legacy
+SELECT
+  site,
+  CASE
+    WHEN path LIKE '/point_devices/point_hub%'
+    THEN 'Point Hub' ELSE 'Legacy'
+  END                                AS ambiente,
+  COUNT(DISTINCT
+    CAST(usr.user_id AS INT64))      AS usuarios_unicos,
+  COUNT(*)                           AS visitas_totais,
+  ROUND(SAFE_DIVIDE(
+    COUNT(*),
+    COUNT(DISTINCT CAST(usr.user_id AS INT64))
+  ), 2)                              AS vis_por_usuario
+FROM `meli-bi-data.MELIDATA.TRACKS`
+WHERE ds >= '2026-06-01'
+  AND site IN ('MLA','MLB')
+  AND bu = 'mercadopago'
+  AND (  path LIKE '/point_devices/point_hub%'
+      OR path LIKE '/point_devices/kinds%')
+  AND device.platform = '/web/desktop'
+  AND usr.user_id IS NOT NULL
+  AND CAST(usr.user_id AS INT64)
+      NOT IN (3087698992,3222801111)
+GROUP BY 1,2
+ORDER BY 1,2</pre>
+        </div>
+
+        <!-- Q3 Tempo -->
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Q3 &middot; Tempo de Navega&ccedil;&atilde;o</div>
+          <div class="desk-warn">&#9888;&#65039; Validar campo timestamp: <code>ts</code> (ms) ou <code>event_timestamp</code></div>
+          <pre>-- Q3 · Tempo médio por sessão — Desktop
+-- ts = Unix ms; ajustar se necessário
+WITH sessoes AS (
+  SELECT
+    CAST(usr.user_id AS INT64)   AS user_id,
+    site, ds,
+    CASE
+      WHEN path LIKE '/point_devices/point_hub%'
+      THEN 'Point Hub' ELSE 'Legacy'
+    END AS ambiente,
+    TIMESTAMP_DIFF(
+      MAX(TIMESTAMP_MILLIS(ts)),
+      MIN(TIMESTAMP_MILLIS(ts)),
+      SECOND
+    ) AS duracao_seg
+  FROM `meli-bi-data.MELIDATA.TRACKS`
+  WHERE ds >= '2026-06-01'
+    AND site IN ('MLA','MLB')
+    AND bu = 'mercadopago'
+    AND (  path LIKE '/point_devices/point_hub%'
+        OR path LIKE '/point_devices/kinds%')
+    AND device.platform = '/web/desktop'
+    AND usr.user_id IS NOT NULL
+    AND CAST(usr.user_id AS INT64)
+        NOT IN (3087698992,3222801111)
+  GROUP BY 1,2,3,4
+)
+SELECT
+  ambiente, site,
+  COUNT(*)                             AS sessoes,
+  ROUND(AVG(duracao_seg),0)            AS tempo_medio_seg,
+  FORMAT('%dm %ds',
+    CAST(AVG(duracao_seg)/60 AS INT64),
+    MOD(CAST(AVG(duracao_seg) AS INT64),60)
+  )                                    AS tempo_medio_fmt,
+  ROUND(APPROX_QUANTILES(
+    duracao_seg,100)[OFFSET(50)],0)    AS mediana_seg
+FROM sessoes
+WHERE duracao_seg >= 0
+GROUP BY 1,2
+ORDER BY 1,2</pre>
+        </div>
+
+      </div><!-- /queries grid -->
+    </div><!-- /queries section -->
+
+  </div><!-- /mq-block nav desktop -->
+
+</div><!-- /page-desktop -->
 </div>
 <script>
   const scLabels = ["Ativar Point", "Comprar Point", "Vouchers", "Solicitar Bobinas", "Pedidos"];
@@ -2660,6 +2932,17 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
     });
   })();
 
+
+  // ── TAB NAVIGATION ──────────────────────────────────────────
+  function switchTab(tab) {
+    document.getElementById('page-5050').style.display    = tab === '5050'    ? '' : 'none';
+    document.getElementById('page-desktop').style.display = tab === 'desktop' ? '' : 'none';
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.tab === tab);
+    });
+  }
+
 </script>
 </body>
 </html>
+
