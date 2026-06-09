@@ -2197,9 +2197,10 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
           <div style="font-size:0.85rem;font-weight:700;color:var(--text-primary);">Visitas Di&aacute;rias &mdash; Hub Desktop</div>
           <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px;">01 Jun &rarr; 08 Jun 2026 &middot; device.platform = /web/desktop</div>
         </div>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:3px;background:var(--hub-color);display:inline-block;border-radius:2px;"></span>MLA</span>
-          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:3px;background:var(--legacy-color);display:inline-block;border-radius:2px;"></span>MLB</span>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:10px;background:rgba(245,158,11,0.9);display:inline-block;border-radius:2px;"></span>MLA</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:10px;background:rgba(96,165,250,0.9);display:inline-block;border-radius:2px;"></span>MLB</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:10px;background:rgba(167,139,250,0.35);border:1.5px solid rgba(167,139,250,0.65);display:inline-block;border-radius:2px;"></span>Legacy Desktop</span>
         </div>
       </div>
       <div style="position:relative;height:240px;">
@@ -2988,6 +2989,8 @@ ORDER BY 1</pre>
       }
     };
 
+    var legacyVis = [3646, 2733, 2937, 1500, 1839, 1012, 711, 625];
+
     new Chart(el.getContext('2d'), {
       type: 'bar',
       plugins: [ChartDataLabels, rolloutPlugin],
@@ -2995,11 +2998,32 @@ ORDER BY 1</pre>
         labels: labels,
         datasets: [
           {
+            // Legacy Desktop — barra de fundo, sobreposta
+            label: 'Legacy Desktop',
+            data: legacyVis,
+            backgroundColor: 'rgba(167,139,250,0.28)',
+            borderColor: 'rgba(167,139,250,0.65)',
+            borderWidth: 1.5,
+            borderRadius: 4,
+            barPercentage: 0.92,
+            categoryPercentage: 0.85,
+            order: 3,
+            datalabels: {
+              anchor: 'end', align: 'top', offset: 2,
+              color: '#c4b5fd',
+              font: { size: 9, weight: '700' },
+              formatter: function(v) { return v >= 1000 ? (v/1000).toFixed(1)+'K' : v; }
+            }
+          },
+          {
             label: 'MLA',
             data: mlaVis,
-            backgroundColor: 'rgba(245,158,11,0.85)',
+            backgroundColor: 'rgba(245,158,11,0.9)',
             borderRadius: 0,
+            barPercentage: 0.6,
+            categoryPercentage: 0.85,
             stack: 'visitas',
+            order: 1,
             datalabels: {
               anchor: 'center', align: 'center',
               color: '#111',
@@ -3010,26 +3034,27 @@ ORDER BY 1</pre>
           {
             label: 'MLB',
             data: mlbVis,
-            backgroundColor: 'rgba(96,165,250,0.85)',
+            backgroundColor: 'rgba(96,165,250,0.9)',
             borderRadius: 4,
+            barPercentage: 0.6,
+            categoryPercentage: 0.85,
             stack: 'visitas',
+            order: 1,
             datalabels: {
               anchor: 'center', align: 'center',
               color: '#fff',
               font: { size: 9, weight: '700' },
-              formatter: function(v, ctx) {
-                var total = totais[ctx.dataIndex];
-                var pct   = Math.round(v / total * 100);
-                return v >= 400 ? (v >= 1000 ? (v/1000).toFixed(1)+'K' : v) : '';
-              }
+              formatter: function(v) { return v >= 400 ? (v >= 1000 ? (v/1000).toFixed(1)+'K' : v) : ''; }
             }
           },
           {
-            // dataset invisível só para o label total no topo
-            label: 'Total',
+            label: 'Hub Total',
             data: totais,
             backgroundColor: 'rgba(0,0,0,0)',
-            stack: 'total-label',
+            barPercentage: 0.6,
+            categoryPercentage: 0.85,
+            stack: 'visitas',
+            order: 1,
             datalabels: {
               anchor: 'end', align: 'top', offset: 4,
               color: '#e2e8f0',
@@ -3050,16 +3075,27 @@ ORDER BY 1</pre>
           tooltip: {
             backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
             titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
-            filter: function(item) { return item.dataset.label !== 'Total'; },
+            filter: function(item) { return item.dataset.label !== 'Hub Total'; },
             callbacks: {
               label: function(ctx) {
+                if (ctx.dataset.label === 'Legacy Desktop') {
+                  return ' Legacy Desktop: ' + ctx.raw.toLocaleString('pt-BR') + ' visitas';
+                }
                 var total = totais[ctx.dataIndex];
                 var pct   = (ctx.raw / total * 100).toFixed(0);
                 return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' (' + pct + '%)';
               },
               afterBody: function(items) {
                 var idx = items[0].dataIndex;
-                return ['Total: ' + totais[idx].toLocaleString('pt-BR') + ' visitas'];
+                var hubTotal   = totais[idx];
+                var legTotal   = legacyVis[idx];
+                var grandTotal = hubTotal + legTotal;
+                return [
+                  'Hub Total: ' + hubTotal.toLocaleString('pt-BR'),
+                  'Legacy Total: ' + legTotal.toLocaleString('pt-BR'),
+                  '─────────────────',
+                  'Grand Total: ' + grandTotal.toLocaleString('pt-BR')
+                ];
               }
             }
           }
