@@ -2945,34 +2945,44 @@ ORDER BY 1</pre>
 
     var rolloutPlugin = {
       id: 'deskRollout',
-      afterDraw: function(chart) {
+      afterDatasetsDraw: function(chart) {
         var ctx  = chart.ctx;
-        var xAx  = chart.scales.x;
         var yAx  = chart.scales.y;
+        var meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data) return;
         var markers = [
           { index: 0, pct: '25%',  color: '#4ade80' },
           { index: 2, pct: '50%',  color: '#fb923c' },
           { index: 7, pct: '100%', color: '#f87171' }
         ];
         markers.forEach(function(m) {
-          var x = xAx.getPixelForValue(m.index);
+          var bar = meta.data[m.index];
+          if (!bar) return;
+          var x = bar.x;
+          var labelW = m.pct === '100%' ? 34 : 26;
           ctx.save();
-          ctx.setLineDash([4, 3]);
+          /* linha pontilhada */
+          ctx.setLineDash([5, 4]);
           ctx.strokeStyle = m.color;
           ctx.lineWidth = 1.5;
-          ctx.globalAlpha = 0.8;
+          ctx.globalAlpha = 0.75;
           ctx.beginPath();
-          ctx.moveTo(x, yAx.top);
+          ctx.moveTo(x, yAx.top + 2);
           ctx.lineTo(x, yAx.bottom);
           ctx.stroke();
+          /* badge no topo */
           ctx.setLineDash([]);
           ctx.globalAlpha = 1;
           ctx.fillStyle = m.color;
-          ctx.font = 'bold 9px -apple-system,sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillRect(x - 14, yAx.top - 22, 28, 16);
+          var bx = x - labelW / 2, by = yAx.top - 20;
+          ctx.beginPath();
+          ctx.roundRect(bx, by, labelW, 16, 3);
+          ctx.fill();
           ctx.fillStyle = '#111';
-          ctx.fillText(m.pct, x, yAx.top - 10);
+          ctx.font = 'bold 9px -apple-system,BlinkMacSystemFont,sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(m.pct, x, by + 8);
           ctx.restore();
         });
       }
