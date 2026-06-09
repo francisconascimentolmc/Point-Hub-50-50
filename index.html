@@ -2656,6 +2656,65 @@ ORDER BY 1</pre>
     </div><!-- /padding -->
   </div><!-- /mq-block maxwell desktop -->
 
+  <!-- ── CONTACT RATE DESKTOP ──────────────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-red);padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(248,113,113,0.12);color:var(--accent-red);">CR</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Contact Rate Di&aacute;rio &mdash; Desktop</div>
+        <div class="mq-subtitle">Sellers que acessaram a se&ccedil;&atilde;o Desktop e contataram o CX no mesmo dia &divide; total visitantes &middot; CDU: Point no funciona</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">01&ndash;08/Jun/2026</span>
+        <span class="ps-tag warn">&#9888; volume baixo</span>
+      </div>
+    </div>
+    <div style="padding:20px 24px;">
+
+      <!-- legend -->
+      <div style="display:flex;gap:20px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-secondary);">
+          <div style="width:20px;height:2px;background:var(--legacy-color);border-radius:1px;"></div>Legacy Desktop
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-secondary);">
+          <div style="width:20px;height:2px;background:var(--hub-color);border-radius:1px;"></div>Point Hub Desktop
+        </div>
+      </div>
+
+      <!-- chart -->
+      <div style="position:relative;height:240px;"><canvas id="deskCRChart"></canvas></div>
+
+      <!-- stats bar -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;">
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">M&eacute;dia Legacy</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--legacy-color);">0,265%</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">M&eacute;dia Hub</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--hub-color);">0,138%</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">Diferen&ccedil;a</div>
+          <div style="font-size:1rem;font-weight:700;color:#4ade80;">Hub &lt; Legacy</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">Dias c/ dado</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--text-primary);">Hub 4/8 &nbsp;|&nbsp; Leg 6/8</div>
+        </div>
+      </div>
+
+      <!-- caveats -->
+      <div style="margin-top:14px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:12px 14px;font-size:0.67rem;color:var(--text-muted);line-height:1.75;">
+        <div style="font-weight:700;color:var(--accent-yellow);margin-bottom:4px;">&#9888;&#65039; Leitura com cautela &mdash; volume insuficiente para CR confi&aacute;vel</div>
+        <strong>M&eacute;todo:</strong> sellers que acessaram a se&ccedil;&atilde;o Desktop + tiveram contato CX com CDU <code>Point no funciona</code> no mesmo dia &divide; visitantes do dia.<br>
+        <strong>Limitadores:</strong> 0&ndash;7 contatos CX/dia por ambiente (10&times; menos que o experimento 50/50 mobile) &middot; dias zerados no Hub refletem volume pequeno, n&atilde;o aus&ecirc;ncia de CX &middot; 09/Jun exclu&iacute;do (ingest&atilde;o incompleta) &middot; apenas 1 CDU &mdash; ampliar para cobrir mais CDUs de Point pode aumentar a precis&atilde;o.<br>
+        <strong>Tend&ecirc;ncia:</strong> Hub Desktop aparenta CR menor que Legacy, mas diferen&ccedil;a n&atilde;o &eacute; estat&iacute;sticamente robusta com esse volume.
+      </div>
+
+    </div><!-- /padding -->
+  </div><!-- /mq-block cr desktop -->
+
 </div><!-- /page-desktop -->
 </div>
 <script>
@@ -3437,6 +3496,96 @@ ORDER BY 1</pre>
             grid:   { color: 'rgba(71,85,105,0.2)' },
             border: { display: false },
             title:  { display: true, text: 'Visitas', color: '#64748b', font: { size: 9 } }
+          }
+        }
+      }
+    });
+  })();
+
+  // ── DESKTOP: CR DIÁRIO ──────────────────────────────────────
+  (function() {
+    var el = document.getElementById('deskCRChart');
+    if (!el) return;
+    var labels    = ['01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun'];
+    var crLegacy  = [0.437, 0.290, 0.487, 0.149, 0.249, 0.210, null, 0.301];
+    var crHub     = [null, null, 0.166, 0.434, 0.120, null, null, 0.382];
+    new Chart(el.getContext('2d'), {
+      type: 'line',
+      plugins: [ChartDataLabels],
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Legacy Desktop',
+            data: crLegacy,
+            borderColor: '#60a5fa',
+            backgroundColor: 'rgba(96,165,250,0.08)',
+            pointBackgroundColor: '#60a5fa',
+            pointBorderColor: '#111',
+            pointBorderWidth: 1.5,
+            pointRadius: 5, pointHoverRadius: 7,
+            borderWidth: 2, tension: 0.25, fill: false,
+            spanGaps: false,
+            datalabels: {
+              display: function(ctx) { return ctx.raw != null; },
+              anchor: 'top', align: 'top', offset: 4,
+              color: '#93c5fd', font: { size: 9, weight: '700' },
+              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : ''; }
+            }
+          },
+          {
+            label: 'Hub Desktop',
+            data: crHub,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245,158,11,0.08)',
+            pointBackgroundColor: '#f59e0b',
+            pointBorderColor: '#111',
+            pointBorderWidth: 1.5,
+            pointRadius: 5, pointHoverRadius: 7,
+            borderWidth: 2, tension: 0.25, fill: false,
+            spanGaps: false,
+            datalabels: {
+              display: function(ctx) { return ctx.raw != null; },
+              anchor: 'bottom', align: 'bottom', offset: 4,
+              color: '#fbbf24', font: { size: 9, weight: '700' },
+              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : ''; }
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 28, bottom: 24, left: 4, right: 4 } },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          datalabels: { display: true },
+          tooltip: {
+            backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
+            titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
+            callbacks: {
+              label: function(ctx) {
+                return ctx.raw != null
+                  ? ' ' + ctx.dataset.label + ': ' + ctx.raw.toFixed(3) + '%'
+                  : ' ' + ctx.dataset.label + ': sem dado';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#64748b', font: { size: 9 } },
+            grid:  { color: 'rgba(71,85,105,0.25)' },
+            border: { display: false }
+          },
+          y: {
+            ticks: {
+              color: '#64748b', font: { size: 9 },
+              callback: function(v) { return v.toFixed(2) + '%'; }
+            },
+            grid:   { color: 'rgba(71,85,105,0.25)' },
+            border: { display: false },
+            title:  { display: true, text: 'Contact Rate (%)', color: '#64748b', font: { size: 9 } }
           }
         }
       }
