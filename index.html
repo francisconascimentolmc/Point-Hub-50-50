@@ -2335,6 +2335,179 @@ ORDER BY 1</pre>
 
   </div><!-- /mq-block nav desktop -->
 
+  <!-- ── TAXA DE EFETIVIDADE DESKTOP ───────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid #14b8a6;padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(20,184,166,0.12);color:#14b8a6;">Conv</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Taxa de Efetividade por A&ccedil;&atilde;o &mdash; Desktop</div>
+        <div class="mq-subtitle">Sellers que clicaram na a&ccedil;&atilde;o e completaram no mesmo dia &divide; total que clicaram</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">01&ndash;09/Jun/2026</span>
+        <span class="ps-tag neutral">mesmo dia: clique + a&ccedil;&atilde;o</span>
+      </div>
+    </div>
+    <div style="padding:16px 24px;">
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:8px 12px;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border-color);white-space:nowrap;width:30%;">A&ccedil;&atilde;o</th>
+              <th style="text-align:center;padding:8px 12px;color:var(--hub-color);font-weight:700;border-bottom:1px solid var(--border-color);">&#9654; Hub Desktop</th>
+              <th style="text-align:center;padding:8px 12px;color:var(--legacy-color);font-weight:700;border-bottom:1px solid var(--border-color);">&#9654; Legacy Desktop</th>
+              <th style="text-align:center;padding:8px 12px;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border-color);">&Delta;</th>
+              <th style="text-align:center;padding:8px 12px;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border-color);">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Comprar Point -->
+            <tr style="background:rgba(20,184,166,0.03);">
+              <td style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                <details>
+                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.73rem;outline:none;">
+                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128722; Comprar Point
+                  </summary>
+                  <div style="margin-top:8px;font-size:0.65rem;color:var(--text-muted);line-height:1.6;padding:6px 0;">
+                    Hub: shortcut <code>buy_point</code> &rarr; compra em <code>BT_PRODUCT_ORDERS</code> mesmo dia<br>
+                    Legacy: acesso a <code>/point_devices/buy_new_point</code> &rarr; mesma condi&ccedil;&atilde;o<br>
+                    311 vs 421 clicaram &middot; 79 vs 95 compraram
+                  </div>
+                </details>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--hub-color);">25,4%</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--legacy-color);">22,6%</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.8rem;font-weight:700;color:#4ade80;">+2,8 p.p.</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;">&#10003; Hub vence</span>
+              </td>
+            </tr>
+
+            <!-- Pedir Bobinas -->
+            <tr>
+              <td style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                <details>
+                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.73rem;outline:none;">
+                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#128230; Pedir Bobinas
+                  </summary>
+                  <div style="margin-top:8px;font-size:0.65rem;color:var(--text-muted);line-height:1.6;padding:6px 0;">
+                    Hub: shortcut <code>manage_paper_rolls</code> &rarr; pedido em <code>BT_MP_POINT_SERVICE_ORDER</code> (PAPER_ROLL)<br>
+                    Legacy: <code>/point_cx_paper_roll/flow</code> via <code>event_data.$.customer</code> &rarr; mesma condi&ccedil;&atilde;o<br>
+                    364 vs 996 clicaram &middot; 134 vs 517 pediram<br>
+                    <span style="color:var(--accent-yellow);">&#9888; Legacy conta eventos multi-step do flow (~3,7 eventos/user vs 1,2 no Hub) &mdash; denominadores diferentes</span>
+                  </div>
+                </details>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--hub-color);">36,8%</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--legacy-color);">51,9%</span>
+                <span style="font-size:0.58rem;color:var(--text-muted);">&#9888;</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.8rem;font-weight:700;color:var(--legacy-color);">-15,1 p.p.</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.6rem;background:rgba(234,179,8,0.12);color:var(--accent-yellow);border:1px solid rgba(234,179,8,0.3);border-radius:3px;padding:2px 6px;white-space:nowrap;">&#9888; Revisar funil</span>
+              </td>
+            </tr>
+
+            <!-- Vouchers -->
+            <tr style="background:rgba(20,184,166,0.03);">
+              <td style="padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;">
+                <details>
+                  <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;font-weight:600;font-size:0.73rem;outline:none;">
+                    <span style="font-size:0.55rem;color:#14b8a6;">&#9654;</span> &#127966; Vouchers
+                  </summary>
+                  <div style="margin-top:8px;font-size:0.65rem;color:var(--text-muted);line-height:1.6;padding:6px 0;">
+                    Hub: shortcut <code>accept_vouchers</code> &rarr; acesso a <code>/point_vouchers/detail</code> mesmo dia<br>
+                    Legacy: <code>/point_devices/vouchers</code> &rarr; mesma condi&ccedil;&atilde;o<br>
+                    164 vs 286 clicaram &middot; 104 vs 133 viram detalhe<br>
+                    <span style="color:var(--text-muted);">M&eacute;trica de inten&ccedil;&atilde;o &mdash; n&atilde;o representa ativa&ccedil;&atilde;o transacional</span>
+                  </div>
+                </details>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--hub-color);">63,4%</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:1.2rem;font-weight:800;color:var(--legacy-color);">46,5%</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.8rem;font-weight:700;color:#4ade80;">+16,9 p.p.</span>
+              </td>
+              <td style="text-align:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;">
+                <span style="font-size:0.6rem;background:rgba(20,184,166,0.15);color:#14b8a6;border:1px solid rgba(20,184,166,0.3);border-radius:3px;padding:2px 6px;">&#10003; Hub vence</span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:0.65rem;color:var(--text-muted);line-height:1.7;border-top:1px solid var(--border-color);padding-top:10px;">
+        &#128161; <strong>M&eacute;todo:</strong> usu&aacute;rios &uacute;nicos que clicaram na a&ccedil;&atilde;o <strong>e</strong> completaram no mesmo dia &divide; total que clicaram &middot; 01&ndash;09/Jun/2026 &middot; MLA+MLB &middot; <code>device.platform = /web/desktop</code><br>
+        &#9888; <strong>Pedir Bobinas (Legacy):</strong> path <code>/point_cx_paper_roll/flow</code> &eacute; multi-step &mdash; denominador inclui eventos intermedi&aacute;rios, n&atilde;o apenas a entrada inicial. Comparar com cautela.
+      </div>
+    </div>
+  </div><!-- /mq-block conv desktop -->
+
+  <!-- ── MAXWELL DESKTOP ────────────────────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid #a855f7;padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(168,85,247,0.12);color:#a855f7;">Max</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Acionamento Maxwell &mdash; Desktop</div>
+        <div class="mq-subtitle">Sellers que acessaram a se&ccedil;&atilde;o e abriram o Maxwell no mesmo dia</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">01&ndash;09/Jun/2026</span>
+      </div>
+    </div>
+    <div style="padding:20px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
+
+        <!-- Hub Desktop -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;border-left:3px solid var(--hub-color);">
+          <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Point Hub Desktop</div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:8px;">
+            <div style="font-size:2rem;font-weight:800;color:var(--hub-color);">21,74%</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);padding-bottom:4px;">taxa Maxwell</div>
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-secondary);">6.223 usu&aacute;rios &middot; 1.353 abriram Maxwell</div>
+        </div>
+
+        <!-- Legacy Desktop -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;border-left:3px solid var(--legacy-color);">
+          <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Legacy Desktop</div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-bottom:8px;">
+            <div style="font-size:2rem;font-weight:800;color:var(--legacy-color);">20,06%</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);padding-bottom:4px;">taxa Maxwell</div>
+          </div>
+          <div style="font-size:0.72rem;color:var(--text-secondary);">6.181 usu&aacute;rios &middot; 1.240 abriram Maxwell</div>
+        </div>
+
+      </div>
+
+      <!-- Delta callout -->
+      <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:12px 16px;">
+        <span style="font-size:0.95rem;font-weight:800;color:#c084fc;">+1,68 p.p.</span>
+        <span style="font-size:0.75rem;color:var(--text-secondary);margin-left:8px;">Hub Desktop abre mais Maxwell que Legacy Desktop</span>
+        <div style="font-size:0.65rem;color:var(--text-muted);margin-top:6px;line-height:1.6;">
+          &#9888; Maxwell n&atilde;o filtrado por t&oacute;pico &mdash; inclui qualquer conversa aberta no mesmo dia da visita &middot;
+          Legacy Desktop = sellers que acessaram paths <code>/point_devices/*</code> (excl. point_hub) via <code>/web/desktop</code>
+        </div>
+      </div>
+    </div>
+  </div><!-- /mq-block maxwell desktop -->
+
 </div><!-- /page-desktop -->
 </div>
 <script>
