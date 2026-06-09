@@ -2190,6 +2190,27 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
       </div><!-- /3-col grid -->
     </div><!-- /padding -->
 
+    <!-- ── Gráfico Visitas Diárias ── -->
+    <div style="border-top:1px solid var(--border-color);padding:20px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--text-primary);">Visitas Di&aacute;rias &mdash; Hub Desktop</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);margin-top:2px;">01 Jun &rarr; 08 Jun 2026 &middot; device.platform = /web/desktop</div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;">
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:3px;background:var(--hub-color);display:inline-block;border-radius:2px;"></span>MLA</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--text-secondary);"><span style="width:12px;height:3px;background:var(--legacy-color);display:inline-block;border-radius:2px;"></span>MLB</span>
+        </div>
+      </div>
+      <div style="position:relative;height:240px;">
+        <canvas id="deskVisitasChart"></canvas>
+      </div>
+      <div style="display:flex;gap:24px;margin-top:14px;flex-wrap:wrap;">
+        <div style="font-size:0.72rem;color:var(--text-muted);">&#128197; 06&ndash;07/Jun = fim de semana &mdash; queda esperada</div>
+        <div style="font-size:0.72rem;color:var(--text-muted);">&#128200; 08/Jun (seg) = pico de retomada</div>
+      </div>
+    </div><!-- /chart visitas -->
+
     <!-- Queries (colapsaveis) -->
     <div style="border-top:1px solid var(--border-color);padding:12px 24px;">
 
@@ -2898,6 +2919,108 @@ ORDER BY 1</pre>
     });
   })();
 
+
+  // ── DESKTOP: VISITAS DIÁRIAS ────────────────────────────────
+  (function() {
+    var el = document.getElementById('deskVisitasChart');
+    if (!el) return;
+
+    var labels  = ['01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun'];
+    var mlaVis  = [700, 948, 1283, 2124, 1893, 645, 493, 3039];
+    var mlbVis  = [549, 659, 1044,  571, 1557, 646, 454, 2160];
+
+    new Chart(el.getContext('2d'), {
+      type: 'line',
+      plugins: [ChartDataLabels],
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'MLA',
+            data: mlaVis,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245,158,11,0.08)',
+            pointBackgroundColor: '#f59e0b',
+            pointBorderColor: '#111',
+            pointBorderWidth: 1.5,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 2,
+            tension: 0.25,
+            fill: false,
+            datalabels: {
+              display: true,
+              anchor: 'top', align: 'top', offset: 4,
+              color: '#fbbf24',
+              font: { size: 9, weight: '700' },
+              formatter: function(v) { return v >= 1000 ? (v/1000).toFixed(1)+'K' : v; }
+            }
+          },
+          {
+            label: 'MLB',
+            data: mlbVis,
+            borderColor: '#60a5fa',
+            backgroundColor: 'rgba(96,165,250,0.08)',
+            pointBackgroundColor: '#60a5fa',
+            pointBorderColor: '#111',
+            pointBorderWidth: 1.5,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 2,
+            tension: 0.25,
+            fill: false,
+            datalabels: {
+              display: true,
+              anchor: 'bottom', align: 'bottom', offset: 4,
+              color: '#93c5fd',
+              font: { size: 9, weight: '700' },
+              formatter: function(v) { return v >= 1000 ? (v/1000).toFixed(1)+'K' : v; }
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { top: 28, bottom: 24, left: 4, right: 4 } },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          datalabels: { display: true },
+          tooltip: {
+            backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
+            titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
+            callbacks: {
+              label: function(ctx) {
+                return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' visitas';
+              },
+              afterBody: function(items) {
+                var total = items.reduce(function(s, i) { return s + i.raw; }, 0);
+                return ['Total: ' + total.toLocaleString('pt-BR')];
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#64748b', font: { size: 9 } },
+            grid:  { color: 'rgba(71,85,105,0.25)' },
+            border: { display: false }
+          },
+          y: {
+            ticks: {
+              color: '#64748b',
+              font: { size: 9 },
+              callback: function(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+            },
+            grid:  { color: 'rgba(71,85,105,0.25)' },
+            border: { display: false },
+            title: { display: true, text: 'Visitas', color: '#64748b', font: { size: 9 } }
+          }
+        }
+      }
+    });
+  })();
 
   // ── TAB NAVIGATION ──────────────────────────────────────────
   function switchTab(tab) {
