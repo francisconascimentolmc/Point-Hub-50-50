@@ -2920,17 +2920,18 @@ ORDER BY 1</pre>
   })();
 
 
-  // ── DESKTOP: VISITAS DIÁRIAS ────────────────────────────────
+  // ── DESKTOP: VISITAS DIÁRIAS (barras empilhadas) ────────────
   (function() {
     var el = document.getElementById('deskVisitasChart');
     if (!el) return;
 
-    var labels  = ['01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun'];
-    var mlaVis  = [700, 948, 1283, 2124, 1893, 645, 493, 3039];
-    var mlbVis  = [549, 659, 1044,  571, 1557, 646, 454, 2160];
+    var labels = ['01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun'];
+    var mlaVis = [700, 948, 1283, 2124, 1893, 645, 493, 3039];
+    var mlbVis = [549, 659, 1044,  571, 1557, 646, 454, 2160];
+    var totais = labels.map(function(_, i) { return mlaVis[i] + mlbVis[i]; });
 
     new Chart(el.getContext('2d'), {
-      type: 'line',
+      type: 'bar',
       plugins: [ChartDataLabels],
       data: {
         labels: labels,
@@ -2938,42 +2939,43 @@ ORDER BY 1</pre>
           {
             label: 'MLA',
             data: mlaVis,
-            borderColor: '#f59e0b',
-            backgroundColor: 'rgba(245,158,11,0.08)',
-            pointBackgroundColor: '#f59e0b',
-            pointBorderColor: '#111',
-            pointBorderWidth: 1.5,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            borderWidth: 2,
-            tension: 0.25,
-            fill: false,
+            backgroundColor: 'rgba(245,158,11,0.85)',
+            borderRadius: 0,
+            stack: 'visitas',
             datalabels: {
-              display: true,
-              anchor: 'top', align: 'top', offset: 4,
-              color: '#fbbf24',
+              anchor: 'center', align: 'center',
+              color: '#111',
               font: { size: 9, weight: '700' },
-              formatter: function(v) { return v >= 1000 ? (v/1000).toFixed(1)+'K' : v; }
+              formatter: function(v) { return v >= 500 ? (v >= 1000 ? (v/1000).toFixed(1)+'K' : v) : ''; }
             }
           },
           {
             label: 'MLB',
             data: mlbVis,
-            borderColor: '#60a5fa',
-            backgroundColor: 'rgba(96,165,250,0.08)',
-            pointBackgroundColor: '#60a5fa',
-            pointBorderColor: '#111',
-            pointBorderWidth: 1.5,
-            pointRadius: 5,
-            pointHoverRadius: 7,
-            borderWidth: 2,
-            tension: 0.25,
-            fill: false,
+            backgroundColor: 'rgba(96,165,250,0.85)',
+            borderRadius: 4,
+            stack: 'visitas',
             datalabels: {
-              display: true,
-              anchor: 'bottom', align: 'bottom', offset: 4,
-              color: '#93c5fd',
+              anchor: 'center', align: 'center',
+              color: '#fff',
               font: { size: 9, weight: '700' },
+              formatter: function(v, ctx) {
+                var total = totais[ctx.dataIndex];
+                var pct   = Math.round(v / total * 100);
+                return v >= 400 ? (v >= 1000 ? (v/1000).toFixed(1)+'K' : v) : '';
+              }
+            }
+          },
+          {
+            // dataset invisível só para o label total no topo
+            label: 'Total',
+            data: totais,
+            backgroundColor: 'rgba(0,0,0,0)',
+            stack: 'total-label',
+            datalabels: {
+              anchor: 'end', align: 'top', offset: 4,
+              color: '#e2e8f0',
+              font: { size: 9, weight: '800' },
               formatter: function(v) { return v >= 1000 ? (v/1000).toFixed(1)+'K' : v; }
             }
           }
@@ -2982,7 +2984,7 @@ ORDER BY 1</pre>
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { top: 28, bottom: 24, left: 4, right: 4 } },
+        layout: { padding: { top: 28, bottom: 4, left: 4, right: 4 } },
         interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: { display: false },
@@ -2990,32 +2992,36 @@ ORDER BY 1</pre>
           tooltip: {
             backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
             titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
+            filter: function(item) { return item.dataset.label !== 'Total'; },
             callbacks: {
               label: function(ctx) {
-                return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' visitas';
+                var total = totais[ctx.dataIndex];
+                var pct   = (ctx.raw / total * 100).toFixed(0);
+                return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' (' + pct + '%)';
               },
               afterBody: function(items) {
-                var total = items.reduce(function(s, i) { return s + i.raw; }, 0);
-                return ['Total: ' + total.toLocaleString('pt-BR')];
+                var idx = items[0].dataIndex;
+                return ['Total: ' + totais[idx].toLocaleString('pt-BR') + ' visitas'];
               }
             }
           }
         },
         scales: {
           x: {
-            ticks: { color: '#64748b', font: { size: 9 } },
-            grid:  { color: 'rgba(71,85,105,0.25)' },
+            stacked: true,
+            ticks:  { color: '#64748b', font: { size: 9 } },
+            grid:   { display: false },
             border: { display: false }
           },
           y: {
+            stacked: true,
             ticks: {
-              color: '#64748b',
-              font: { size: 9 },
+              color: '#64748b', font: { size: 9 },
               callback: function(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
             },
-            grid:  { color: 'rgba(71,85,105,0.25)' },
+            grid:   { color: 'rgba(71,85,105,0.2)' },
             border: { display: false },
-            title: { display: true, text: 'Visitas', color: '#64748b', font: { size: 9 } }
+            title:  { display: true, text: 'Visitas', color: '#64748b', font: { size: 9 } }
           }
         }
       }
