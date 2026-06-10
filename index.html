@@ -488,17 +488,35 @@
 <body>
 <div class="container">
   <header class="header">
-    <div class="env-badges">
-      <span class="env-badge legacy">&#9632; Legacy &mdash; /point_devices/kinds</span>
-      <span class="env-badge hub">&#9632; Point Hub &mdash; /point_devices/point_hub</span>
+    <!-- header 50/50 -->
+    <div id="hdr-5050">
+      <div class="env-badges">
+        <span class="env-badge legacy">&#9632; Legacy &mdash; /point_devices/kinds</span>
+        <span class="env-badge hub">&#9632; Point Hub &mdash; /point_devices/point_hub</span>
+      </div>
+      <h1>&#9878;&#65039; Aba 50/50 &mdash; Per&iacute;odo 28/02 &ndash; 14/03/2026</h1>
+      <p class="subtitle">An&aacute;lise do per&iacute;odo de experimento 50/50 | MLA + MLB | Mercado Pago</p>
+      <div class="meta">
+        <div class="meta-item"><span>&#128197;</span><span>28 Fev &ndash; 14 Mar 2026 (15 dias)</span></div>
+        <div class="meta-item"><span>&#127468;&#127479; &#127462;&#127479;</span><span>Brasil + Argentina (MLB + MLA)</span></div>
+        <div class="meta-item"><span>&#128274;</span><span>mercadopago BU</span></div>
+        <div class="meta-item"><span>&#128202;</span><span>MELIDATA.TRACKS</span></div>
+      </div>
     </div>
-    <h1>&#9878;&#65039; Aba 50/50 &mdash; Per&iacute;odo 28/02 &ndash; 14/03/2026</h1>
-    <p class="subtitle">An&aacute;lise do per&iacute;odo de experimento 50/50 | MLA + MLB | Mercado Pago</p>
-    <div class="meta">
-      <div class="meta-item"><span>&#128197;</span><span>28 Fev &ndash; 14 Mar 2026 (15 dias)</span></div>
-      <div class="meta-item"><span>&#127468;&#127479; &#127462;&#127479;</span><span>Brasil + Argentina (MLB + MLA)</span></div>
-      <div class="meta-item"><span>&#128274;</span><span>mercadopago BU</span></div>
-      <div class="meta-item"><span>&#128202;</span><span>MELIDATA.TRACKS</span></div>
+    <!-- header Desktop -->
+    <div id="hdr-desktop" style="display:none;">
+      <div class="env-badges">
+        <span class="env-badge hub">&#9632; Point Hub Desktop &mdash; /web/desktop</span>
+        <span class="env-badge legacy">&#9632; Legacy Desktop &mdash; /web/desktop</span>
+      </div>
+      <h1>&#128421;&#65039; Roll Out Desktop &mdash; MLA e MLB</h1>
+      <p class="subtitle">01/06 &ndash; 09/06/2026 | MLA + MLB | Mercado Pago</p>
+      <div class="meta">
+        <div class="meta-item"><span>&#128197;</span><span>01 &ndash; 09 Jun 2026</span></div>
+        <div class="meta-item"><span>&#127468;&#127479; &#127462;&#127479;</span><span>Brasil + Argentina (MLB + MLA)</span></div>
+        <div class="meta-item"><span>&#128421;&#65039;</span><span>device.platform = /web/desktop</span></div>
+        <div class="meta-item"><span>&#128200;</span><span>25% &rarr; 50% &rarr; 100% (08/Jun)</span></div>
+      </div>
     </div>
   </header>
 <nav class="tab-nav">
@@ -3689,6 +3707,8 @@ ORDER BY 1</pre>
   function switchTab(tab) {
     document.getElementById('page-5050').style.display    = tab === '5050'    ? '' : 'none';
     document.getElementById('page-desktop').style.display = tab === 'desktop' ? '' : 'none';
+    document.getElementById('hdr-5050').style.display     = tab === '5050'    ? '' : 'none';
+    document.getElementById('hdr-desktop').style.display  = tab === 'desktop' ? '' : 'none';
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.tab === tab);
     });
