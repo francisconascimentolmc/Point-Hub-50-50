@@ -3749,6 +3749,10 @@ ORDER BY 1</pre>
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.tab === tab);
     });
+    // force Chart.js to recalculate widths after display change
+    if (tab === 'desktop') {
+      setTimeout(function() { window.dispatchEvent(new Event('resize')); }, 50);
+    }
   }
 
 </script>
