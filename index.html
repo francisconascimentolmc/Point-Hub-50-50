@@ -3830,12 +3830,12 @@ ORDER BY 1</pre>
 
   // ── TAB NAVIGATION ──────────────────────────────────────────
   function switchTab(tab) {
-    document.getElementById('page-5050').style.display    = tab === '5050'    ? '' : 'none';
-    document.getElementById('page-desktop').style.display = tab === 'desktop' ? '' : 'none';
-    document.getElementById('page-mlu').style.display     = tab === 'mlu'     ? '' : 'none';
-    document.getElementById('hdr-5050').style.display     = tab === '5050'    ? '' : 'none';
-    document.getElementById('hdr-desktop').style.display  = tab === 'desktop' ? '' : 'none';
-    document.getElementById('hdr-mlu').style.display      = tab === 'mlu'     ? '' : 'none';
+    document.getElementById('page-5050').style.display    = tab === '5050'    ? 'block' : 'none';
+    document.getElementById('page-desktop').style.display = tab === 'desktop' ? 'block' : 'none';
+    document.getElementById('page-mlu').style.display     = tab === 'mlu'     ? 'block' : 'none';
+    document.getElementById('hdr-5050').style.display     = tab === '5050'    ? 'block' : 'none';
+    document.getElementById('hdr-desktop').style.display  = tab === 'desktop' ? 'block' : 'none';
+    document.getElementById('hdr-mlu').style.display      = tab === 'mlu'     ? 'block' : 'none';
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.tab === tab);
     });
