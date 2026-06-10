@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point Hub MLU — Roll Out Mobile</title>
+  <style>
+    :root {
+      --bg-primary:#111111; --bg-secondary:#1c1c1c; --bg-card:#272727; --bg-surface:#333333;
+      --text-primary:#f0ede6; --text-secondary:#a09a90; --text-muted:#6b6560;
+      --accent-blue:#60a5fa; --accent-green:#4ade80; --accent-yellow:#f59e0b;
+      --accent-orange:#fb923c; --accent-red:#f87171; --accent-purple:#c084fc;
+      --accent-teal:#2dd4bf; --border-color:#3c3a35;
+      --legacy-color:#60a5fa; --hub-color:#f59e0b;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;}
+    .container{max-width:1400px;margin:0 auto;padding:40px 20px;}
+    .header{text-align:center;margin-bottom:40px;padding-bottom:28px;border-bottom:1px solid var(--border-color);}
+    .env-badges{display:flex;justify-content:center;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+    .env-badge{padding:6px 18px;border-radius:20px;font-weight:700;font-size:0.85rem;}
+    .env-badge.hub{background:rgba(245,158,11,0.15);color:var(--hub-color);border:1px solid rgba(245,158,11,0.4);}
+    .env-badge.legacy{background:rgba(96,165,250,0.15);color:var(--legacy-color);border:1px solid rgba(96,165,250,0.4);}
+    .header h1{font-size:2.2rem;font-weight:700;margin-bottom:6px;background:linear-gradient(135deg,var(--legacy-color),var(--hub-color));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .header .subtitle{font-size:1rem;color:var(--text-secondary);margin-bottom:14px;}
+    .header .meta{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;}
+    .meta-item{display:flex;align-items:center;gap:7px;font-size:0.85rem;color:var(--text-muted);}
+    .mq-block{background:var(--bg-secondary);border-radius:16px;border:1px solid var(--border-color);margin-bottom:24px;overflow:hidden;}
+    .mq-hdr{display:flex;align-items:center;gap:14px;padding:16px 24px;border-bottom:1px solid var(--border-color);}
+    .mq-num{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:4px 12px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+    .mq-title{font-size:1.05rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;}
+    .mq-subtitle{font-size:0.78rem;color:var(--text-muted);}
+    .ps-tag{font-size:0.7rem;font-weight:700;padding:2px 9px;border-radius:8px;}
+    .ps-tag.neutral{background:rgba(148,163,184,0.12);color:var(--text-secondary);}
+    pre{background:rgba(0,0,0,0.35);border:1px solid var(--border-color);border-radius:8px;padding:12px 16px;font-size:0.72rem;color:#a3e6d0;line-height:1.7;white-space:pre;overflow-x:auto;font-family:monospace;}
+    details summary{cursor:pointer;list-style:none;user-select:none;outline:none;}
+    details summary::-webkit-details-marker{display:none;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="env-badges">
+      <span class="env-badge hub">&#9632; Point Hub Mobile &mdash; MLU</span>
+      <span class="env-badge legacy">&#9632; Legacy Mobile &mdash; MLU</span>
+    </div>
+    <h1>&#128241; Roll Out Mobile &mdash; MLU (Uruguai)</h1>
+    <p class="subtitle">An&aacute;lise do per&iacute;odo de rollout | MLU | Mercado Pago</p>
+    <div class="meta">
+      <div class="meta-item"><span>&#128197;</span><span>26 Mai &ndash; hoje</span></div>
+      <div class="meta-item"><span>&#127482;&#127486;</span><span>Uruguai (MLU)</span></div>
+      <div class="meta-item"><span>&#128241;</span><span>Mobile only &mdash; Android + iOS</span></div>
+      <div class="meta-item"><span>&#128274;</span><span>mercadopago BU</span></div>
+      <div class="meta-item"><span>&#128202;</span><span>MELIDATA.TRACKS</span></div>
+    </div>
+  </header>
+
+  <!-- CONTEXTO DA ANÁLISE -->
+  <div class="mq-block">
+    <div class="mq-hdr" style="border-left:4px solid var(--hub-color);">
+      <div class="mq-num" style="background:rgba(245,158,11,0.12);color:var(--hub-color);">CTX</div>
+      <div>
+        <div class="mq-title">Contexto da An&aacute;lise</div>
+        <div class="mq-subtitle">Rollout progressivo do Point Hub para mobile no Uruguai</div>
+      </div>
+    </div>
+    <div style="padding:24px;">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;flex-wrap:wrap;">
+
+        <div>
+          <p style="font-size:0.88rem;color:var(--text-primary);line-height:1.8;margin-bottom:14px;">
+            Em <strong>26 de maio de 2026</strong>, iniciamos o rollout do <strong style="color:var(--hub-color);">Point Hub para mobile</strong> no site <strong>MLU (Uruguai)</strong>, com expans&atilde;o progressiva em dois est&aacute;gios:
+            <strong>50%</strong> dos sellers em 26/05 &rarr; <strong>100%</strong> em 08/06.
+            Durante esse per&iacute;odo, sellers atribu&iacute;dos ao Hub acessam a nova experi&ecirc;ncia via app Android ou iOS, enquanto os demais continuam na vers&atilde;o Legacy.
+          </p>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.8;margin-bottom:14px;">
+            Esta virada foi executada <strong>exclusivamente no canal mobile</strong>.
+            A vers&atilde;o <strong>desktop para MLU</strong> ainda n&atilde;o foi lan&ccedil;ada &mdash; seguir&aacute; o planejamento dos demais sites (MLM, MLC e outros).
+          </p>
+          <p style="font-size:0.82rem;color:var(--text-secondary);line-height:1.8;">
+            O objetivo desta an&aacute;lise &eacute; entender o <strong>comportamento do seller uruguaio na nova experi&ecirc;ncia mobile</strong> &mdash;
+            como navega, de onde chega, quais a&ccedil;&otilde;es realiza e em que medida recorre ao suporte &mdash;
+            comparando diretamente com o grupo Legacy para avaliar o impacto do redesign neste mercado.
+          </p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;min-width:240px;">
+          <div style="background:var(--bg-card);border-radius:10px;padding:12px 16px;border-left:3px solid var(--hub-color);">
+            <div style="color:var(--hub-color);font-weight:700;font-size:0.8rem;margin-bottom:4px;">&#128241; Point Hub Mobile &mdash; MLU</div>
+            <div style="color:var(--text-secondary);font-size:0.75rem;">26/Mai &rarr; <strong>50%</strong> &nbsp;&middot;&nbsp; 08/Jun &rarr; <strong>100%</strong></div>
+            <div style="color:var(--text-muted);font-size:0.65rem;margin-top:3px;">/point_devices/point_hub &middot; /mobile/android + /mobile/ios</div>
+          </div>
+          <div style="background:var(--bg-card);border-radius:10px;padding:12px 16px;border-left:3px solid var(--legacy-color);">
+            <div style="color:var(--legacy-color);font-weight:700;font-size:0.8rem;margin-bottom:4px;">&#128241; Legacy Mobile &mdash; MLU</div>
+            <div style="color:var(--text-secondary);font-size:0.75rem;">Grupo controle &middot; sellers n&atilde;o atribu&iacute;dos ao Hub</div>
+            <div style="color:var(--text-muted);font-size:0.65rem;margin-top:3px;">/point_devices/kinds &middot; /mobile/android + /mobile/ios</div>
+          </div>
+          <div style="background:var(--bg-card);border-radius:10px;padding:12px 16px;border-left:3px solid var(--border-color);">
+            <div style="color:var(--text-muted);font-weight:700;font-size:0.8rem;margin-bottom:4px;">&#128274; Desktop MLU</div>
+            <div style="color:var(--text-muted);font-size:0.75rem;">Ainda n&atilde;o lan&ccedil;ado &mdash; aguarda planejamento</div>
+            <div style="color:var(--text-muted);font-size:0.65rem;margin-top:3px;">Seguir&aacute; rollout de MLM, MLC e demais sites</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /contexto -->
+
+  <!-- DADOS DE NAVEGAÇÃO -->
+  <div class="mq-block">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-blue);">
+      <div class="mq-num" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);">Nav</div>
+      <div>
+        <div class="mq-title">Dados de Navega&ccedil;&atilde;o &mdash; MLU Mobile</div>
+        <div class="mq-subtitle">Como os sellers chegam e se comportam na se&ccedil;&atilde;o Maquininhas Point via app mobile no Uruguai</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">26/Mai/2026 &rarr; hoje</span>
+        <span class="ps-tag neutral">&#128241; Android + iOS</span>
+      </div>
+    </div>
+
+    <div style="padding:20px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+        <!-- Col 1: De onde vêm -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:16px;">&#128241; De onde v&ecirc;m</div>
+
+          <div style="margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border-color);">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Point Hub Mobile &middot; MLU</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">1&ordm; Navega&ccedil;&atilde;o Nativa App</span>
+              <span style="font-weight:700;color:var(--hub-color);">95,0%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">2&ordm; Display</span>
+              <span style="font-weight:700;color:var(--hub-color);">2,6%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">3&ordm; Busca Org&acirc;nica</span>
+              <span style="font-weight:700;color:var(--hub-color);">0,7%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">4&ordm; Outros</span>
+              <span style="font-weight:700;color:var(--hub-color);">1,7%</span>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:0.68rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Legacy Mobile &middot; MLU</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">1&ordm; Navega&ccedil;&atilde;o Nativa App</span>
+              <span style="font-weight:700;color:var(--legacy-color);">93,0%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">2&ordm; Display</span>
+              <span style="font-weight:700;color:var(--legacy-color);">2,6%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">3&ordm; Busca Org&acirc;nica</span>
+              <span style="font-weight:700;color:var(--legacy-color);">2,0%</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;padding:4px 0;">
+              <span style="color:var(--text-secondary);">4&ordm; Outros</span>
+              <span style="font-weight:700;color:var(--legacy-color);">2,4%</span>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;font-size:0.65rem;color:var(--text-muted);">
+            Fonte: <code>traffic.channel_group</code> &middot; &ldquo;Navega&ccedil;&atilde;o Nativa&rdquo; = Direct (sem HTTP referer, padr&atilde;o do app mobile)
+          </div>
+        </div>
+
+        <!-- Col 2: Com que frequência -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:16px;">&#128260; Com que frequ&ecirc;ncia</div>
+
+          <!-- Hub total -->
+          <div style="background:var(--bg-primary);border-radius:10px;padding:14px;margin-bottom:12px;">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Point Hub Mobile &middot; MLU</div>
+            <div style="font-size:1.6rem;font-weight:800;color:var(--hub-color);">846</div>
+            <div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:8px;">usu&aacute;rios &uacute;nicos &middot; 2.249 visitas</div>
+            <div style="font-size:0.9rem;font-weight:700;color:var(--hub-color);">2,66 <span style="font-size:0.68rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <div style="flex:1;background:var(--bg-secondary);border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Android</div>
+                <div style="font-size:0.9rem;font-weight:700;color:var(--hub-color);">531</div>
+                <div style="font-size:0.58rem;color:var(--text-muted);">62,8% &middot; 1.507 vis.</div>
+              </div>
+              <div style="flex:1;background:var(--bg-secondary);border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">iOS</div>
+                <div style="font-size:0.9rem;font-weight:700;color:var(--hub-color);">315</div>
+                <div style="font-size:0.58rem;color:var(--text-muted);">37,2% &middot; 742 vis.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legacy total -->
+          <div style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.2);border-radius:10px;padding:14px;margin-bottom:12px;">
+            <div style="font-size:0.68rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Legacy Mobile &middot; MLU</div>
+            <div style="font-size:1.6rem;font-weight:800;color:var(--legacy-color);">491</div>
+            <div style="font-size:0.72rem;color:var(--text-secondary);margin-bottom:8px;">usu&aacute;rios &uacute;nicos &middot; 733 visitas</div>
+            <div style="font-size:0.9rem;font-weight:700;color:var(--legacy-color);">1,49 <span style="font-size:0.68rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
+            <div style="display:flex;gap:8px;margin-top:10px;">
+              <div style="flex:1;background:var(--bg-secondary);border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Android</div>
+                <div style="font-size:0.9rem;font-weight:700;color:var(--legacy-color);">316</div>
+                <div style="font-size:0.58rem;color:var(--text-muted);">64,4% &middot; 486 vis.</div>
+              </div>
+              <div style="flex:1;background:var(--bg-secondary);border-radius:7px;padding:8px;text-align:center;">
+                <div style="font-size:0.6rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">iOS</div>
+                <div style="font-size:0.9rem;font-weight:700;color:var(--legacy-color);">175</div>
+                <div style="font-size:0.58rem;color:var(--text-muted);">35,6% &middot; 247 vis.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delta -->
+          <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:10px 14px;text-align:center;">
+            <span style="font-size:1.1rem;font-weight:800;color:#4ade80;">+78,5%</span>
+            <span style="font-size:0.75rem;color:var(--text-secondary);margin-left:8px;">freq. Hub vs Legacy</span>
+          </div>
+        </div>
+
+      </div><!-- /2-col grid -->
+    </div><!-- /padding -->
+  </div><!-- /nav -->
+
+</div><!-- /container -->
+</body>
+</html>
