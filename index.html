@@ -2833,6 +2833,95 @@ ORDER BY 1</pre>
     </div><!-- /padding -->
   </div><!-- /mq-block maxwell desktop -->
 
+  <!-- ── CONTACT RATE DIÁRIO — DESKTOP ─────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-red);padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(248,113,113,0.12);color:var(--accent-red);">CR</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Contact Rate Di&aacute;rio &mdash; Desktop</div>
+        <div class="mq-subtitle">Sellers que acessaram a se&ccedil;&atilde;o Desktop e contataram o CX (CDU: Point no funciona) no mesmo dia &divide; total visitantes</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">01&ndash;08/Jun/2026</span>
+        <span class="ps-tag warn">&#9888; volume baixo</span>
+      </div>
+    </div>
+    <div style="padding:20px 24px;">
+
+      <!-- legend -->
+      <div style="display:flex;gap:20px;margin-bottom:14px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-secondary);">
+          <div style="width:20px;height:2px;background:var(--legacy-color);border-radius:1px;"></div>Legacy Desktop
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--text-secondary);">
+          <div style="width:20px;height:2px;background:var(--hub-color);border-radius:1px;"></div>Point Hub Desktop
+        </div>
+      </div>
+
+      <!-- chart + tabela lado a lado -->
+      <div style="display:grid;grid-template-columns:3fr 1fr;gap:20px;align-items:start;">
+
+        <!-- gráfico -->
+        <div style="position:relative;height:220px;">
+          <canvas id="deskCRChart"></canvas>
+        </div>
+
+        <!-- tabela de contatos CX -->
+        <div>
+          <div style="font-size:0.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Contatos CX / dia</div>
+          <table style="width:100%;border-collapse:collapse;font-size:0.7rem;">
+            <thead>
+              <tr>
+                <th style="text-align:left;padding:4px 8px;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border-color);">Data</th>
+                <th style="text-align:center;padding:4px 8px;color:var(--legacy-color);font-weight:700;border-bottom:1px solid var(--border-color);">Leg</th>
+                <th style="text-align:center;padding:4px 8px;color:var(--hub-color);font-weight:700;border-bottom:1px solid var(--border-color);">Hub</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">01/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">7</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">02/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">4</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">03/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">6</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">1</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">04/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">3</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">05/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">2</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">1</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">06/Jun</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">07/Jun<br><span style="font-size:0.58rem;color:var(--text-muted);">dom</span></td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td><td style="text-align:center;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+              <tr><td style="padding:3px 8px;color:var(--text-secondary);">08/Jun</td><td style="text-align:center;padding:3px 8px;font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:3px 8px;font-weight:700;color:var(--hub-color);">6</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /grid -->
+
+      <!-- stats -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;">
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">M&eacute;dia Legacy</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--legacy-color);">0,265%</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">M&eacute;dia Hub</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--hub-color);">0,138%</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">Diferen&ccedil;a</div>
+          <div style="font-size:1rem;font-weight:700;color:#4ade80;">Hub &lt; Legacy</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:6px;padding:10px;text-align:center;">
+          <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:3px;">Dias c/ dado</div>
+          <div style="font-size:1rem;font-weight:700;color:var(--text-primary);">Hub 4/8 &nbsp;|&nbsp; Leg 6/8</div>
+        </div>
+      </div>
+
+      <!-- nota -->
+      <div style="margin-top:12px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:10px 14px;font-size:0.65rem;color:var(--text-muted);line-height:1.65;">
+        <strong style="color:var(--accent-yellow);">&#9888;&#65039; Leitura com cautela</strong> &mdash; volume insuficiente para CR confi&aacute;vel (0&ndash;7 contatos/dia por ambiente).
+        M&eacute;todo: sellers que acessaram a se&ccedil;&atilde;o Desktop + contato CX com CDU <code>Point no funciona</code> no mesmo dia &divide; visitantes.
+        Tend&ecirc;ncia: Hub Desktop aparenta CR menor que Legacy, mas diferen&ccedil;a n&atilde;o &eacute; estat&iacute;sticamente robusta.
+      </div>
+
+    </div><!-- /padding -->
+  </div><!-- /mq-block cr desktop -->
+
 </div><!-- /page-desktop -->
 
 <!-- ============================================================ -->
