@@ -518,10 +518,26 @@
         <div class="meta-item"><span>&#128200;</span><span>25% &rarr; 50% &rarr; 100% (08/Jun)</span></div>
       </div>
     </div>
+    <!-- header MLU -->
+    <div id="hdr-mlu" style="display:none;">
+      <div class="env-badges">
+        <span class="env-badge hub">&#9632; Point Hub Mobile &mdash; MLU</span>
+        <span class="env-badge legacy">&#9632; Legacy Mobile &mdash; MLU</span>
+      </div>
+      <h1>&#128241; Roll Out Mobile &mdash; MLU (Uruguai)</h1>
+      <p class="subtitle">26/05 &ndash; 10/06/2026 | MLU | Mercado Pago</p>
+      <div class="meta">
+        <div class="meta-item"><span>&#128197;</span><span>26 Mai &ndash; 10 Jun 2026</span></div>
+        <div class="meta-item"><span>&#127482;&#127486;</span><span>Uruguai (MLU)</span></div>
+        <div class="meta-item"><span>&#128241;</span><span>Mobile only &mdash; /mobile/android + /mobile/ios</span></div>
+        <div class="meta-item"><span>&#128200;</span><span>50% (26/Mai) &rarr; 100% (08/Jun)</span></div>
+      </div>
+    </div>
   </header>
 <nav class="tab-nav">
   <button class="tab-btn active" data-tab="5050"    onclick="switchTab('5050')">&#9889;&#65039; Aba 50/50</button>
   <button class="tab-btn"        data-tab="desktop" onclick="switchTab('desktop')">&#128421;&#65039; Desktop</button>
+  <button class="tab-btn"        data-tab="mlu"     onclick="switchTab('mlu')">&#128241; MLU Mobile</button>
 </nav>
 <div id="page-5050">
 
@@ -2897,6 +2913,56 @@ ORDER BY 1</pre>
   </div><!-- /mq-block cr desktop -->
 
 </div><!-- /page-desktop -->
+
+<!-- ============================================================ -->
+<!--  PAGE MLU                                                     -->
+<!-- ============================================================ -->
+<div id="page-mlu" style="display:none;">
+
+  <!-- Context banner -->
+  <div style="background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(245,158,11,0.06));border:1px solid var(--border-color);border-radius:12px;padding:20px 24px;margin-bottom:20px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+
+      <div style="flex:1;min-width:300px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">&#128241; Contexto da An&aacute;lise &mdash; MLU</div>
+        <p style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;margin:0;">
+          Em <strong>26 de maio de 2026</strong>, iniciamos o rollout do <strong style="color:var(--hub-color);">Point Hub para mobile</strong> no site <strong>MLU (Uruguai)</strong>, com expans&atilde;o em dois est&aacute;gios: <strong>50%</strong> em 26/05 &rarr; <strong>100%</strong> em 08/06.
+          Esta virada foi executada <strong>exclusivamente no canal mobile</strong> &mdash; os sellers do Uruguai que acessam via app Android ou iOS passaram a ver o novo Point Hub, enquanto os que ainda est&atilde;o no grupo de controle continuaram com a experi&ecirc;ncia Legacy.
+        </p>
+        <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.7;margin:8px 0 0;">
+          A vers&atilde;o <strong>desktop para MLU</strong> ainda n&atilde;o foi lan&ccedil;ada &mdash; seguir&aacute; o planejamento dos demais sites (MLM, MLC e outros). O objetivo desta an&aacute;lise &eacute; entender o <strong>comportamento do seller uruguaio na nova experi&ecirc;ncia mobile</strong>, comparando diretamente com o grupo Legacy para avaliar o impacto do redesign neste mercado.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+        <div style="background:var(--bg-card);border-radius:8px;padding:10px 16px;font-size:0.72rem;border-left:3px solid var(--hub-color);">
+          <div style="color:var(--hub-color);font-weight:700;margin-bottom:2px;">Point Hub Mobile &mdash; MLU</div>
+          <div style="color:var(--text-secondary);">26/Mai &rarr; 50% &nbsp;·&nbsp; 08/Jun &rarr; 100%</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;margin-top:2px;">MLU &nbsp;·&nbsp; /mobile/android + /mobile/ios</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:8px;padding:10px 16px;font-size:0.72rem;border-left:3px solid var(--legacy-color);">
+          <div style="color:var(--legacy-color);font-weight:700;margin-bottom:2px;">Legacy Mobile &mdash; MLU</div>
+          <div style="color:var(--text-secondary);">Grupo controle &nbsp;·&nbsp; sellers n&atilde;o atribu&iacute;dos ao Hub</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;margin-top:2px;">MLU &nbsp;·&nbsp; /point_devices/kinds + /mobile/*</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:8px;padding:10px 16px;font-size:0.72rem;border-left:3px solid var(--border-color);">
+          <div style="color:var(--text-muted);font-weight:700;margin-bottom:2px;">Desktop MLU</div>
+          <div style="color:var(--text-muted);">&#128274; Ainda n&atilde;o lan&ccedil;ado &mdash; aguarda planejamento</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;margin-top:2px;">Seguir&aacute; rollout de MLM, MLC e demais sites</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Análises a serem adicionadas -->
+  <div style="background:var(--bg-secondary);border-radius:12px;border:1px dashed var(--border-color);padding:32px;text-align:center;color:var(--text-muted);">
+    <div style="font-size:1.2rem;margin-bottom:8px;">&#128202;</div>
+    <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">An&aacute;lises em constru&ccedil;&atilde;o</div>
+    <div style="font-size:0.75rem;">Os dados de navega&ccedil;&atilde;o, convers&atilde;o e Maxwell para MLU ser&atilde;o adicionados aqui.</div>
+  </div>
+
+</div><!-- /page-mlu -->
 </div>
 <script>
   const scLabels = ["Ativar Point", "Comprar Point", "Vouchers", "Solicitar Bobinas", "Pedidos"];
@@ -3744,13 +3810,14 @@ ORDER BY 1</pre>
   function switchTab(tab) {
     document.getElementById('page-5050').style.display    = tab === '5050'    ? '' : 'none';
     document.getElementById('page-desktop').style.display = tab === 'desktop' ? '' : 'none';
+    document.getElementById('page-mlu').style.display     = tab === 'mlu'     ? '' : 'none';
     document.getElementById('hdr-5050').style.display     = tab === '5050'    ? '' : 'none';
     document.getElementById('hdr-desktop').style.display  = tab === 'desktop' ? '' : 'none';
+    document.getElementById('hdr-mlu').style.display      = tab === 'mlu'     ? '' : 'none';
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.tab === tab);
     });
-    // force Chart.js to recalculate widths after display change
-    if (tab === 'desktop') {
+    if (tab === 'desktop' || tab === 'mlu') {
       setTimeout(function() { window.dispatchEvent(new Event('resize')); }, 50);
     }
   }
