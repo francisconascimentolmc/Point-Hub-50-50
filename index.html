@@ -2955,12 +2955,113 @@ ORDER BY 1</pre>
     </div>
   </div>
 
-  <!-- Análises a serem adicionadas -->
-  <div style="background:var(--bg-secondary);border-radius:12px;border:1px dashed var(--border-color);padding:32px;text-align:center;color:var(--text-muted);">
-    <div style="font-size:1.2rem;margin-bottom:8px;">&#128202;</div>
-    <div style="font-size:0.85rem;font-weight:600;margin-bottom:6px;">An&aacute;lises em constru&ccedil;&atilde;o</div>
-    <div style="font-size:0.75rem;">Os dados de navega&ccedil;&atilde;o, convers&atilde;o e Maxwell para MLU ser&atilde;o adicionados aqui.</div>
-  </div>
+  <!-- ── DADOS DE NAVEGAÇÃO MLU ──────────────────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-blue);padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(59,130,246,0.12);color:var(--accent-blue);">Nav</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Dados de Navega&ccedil;&atilde;o &mdash; MLU Mobile</div>
+        <div class="mq-subtitle">Como os sellers chegam e se comportam na se&ccedil;&atilde;o Maquininhas Point via app mobile no Uruguai</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">26/Mai/2026 &rarr; hoje</span>
+        <span class="ps-tag neutral">&#128241; /mobile/android + /mobile/ios</span>
+      </div>
+    </div>
+
+    <div style="padding:20px 24px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+
+        <!-- Col 1: Origem -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#128241; De onde v&ecirc;m</div>
+
+          <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border-color);">
+            <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Point Hub Mobile &middot; MLU</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">1&ordm; Navega&ccedil;&atilde;o Nativa App</span><span style="font-weight:700;color:var(--hub-color);">95,0%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">2&ordm; Display</span><span style="font-weight:700;color:var(--hub-color);">2,6%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">3&ordm; Busca Org&acirc;nica</span><span style="font-weight:700;color:var(--hub-color);">0,7%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">4&ordm; Outros</span><span style="font-weight:700;color:var(--hub-color);">1,8%</span></div>
+          </div>
+
+          <div>
+            <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Legacy Mobile &middot; MLU</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">1&ordm; Navega&ccedil;&atilde;o Nativa App</span><span style="font-weight:700;color:var(--legacy-color);">93,0%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">2&ordm; Busca Org&acirc;nica</span><span style="font-weight:700;color:var(--legacy-color);">2,0%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">3&ordm; Display</span><span style="font-weight:700;color:var(--legacy-color);">2,6%</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;padding:3px 0;"><span style="color:var(--text-secondary);">4&ordm; Outros</span><span style="font-weight:700;color:var(--legacy-color);">2,4%</span></div>
+          </div>
+          <div style="margin-top:10px;font-size:0.65rem;color:var(--text-muted);">Fonte: <code>traffic.channel_group</code> &middot; &quot;Direct&quot; = navega&ccedil;&atilde;o nativa do app (sem HTTP referer)</div>
+        </div>
+
+        <!-- Col 2: Visitas -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#128260; Com que frequ&ecirc;ncia</div>
+
+          <div style="background:var(--bg-primary);border-radius:8px;padding:12px;margin-bottom:10px;">
+            <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Point Hub Mobile &middot; MLU</div>
+            <div style="font-size:1.4rem;font-weight:800;color:var(--hub-color);">839</div>
+            <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos &middot; 2.229 visitas</div>
+            <div style="font-size:0.82rem;font-weight:700;color:var(--hub-color);margin-top:6px;">2,66 <span style="font-size:0.65rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 10px;text-align:center;">
+              <div style="font-size:0.6rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">Android</div>
+              <div style="font-size:0.85rem;font-weight:700;color:var(--hub-color);">63,8%</div>
+              <div style="font-size:0.6rem;color:var(--text-secondary);">/mobile/android</div>
+            </div>
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 10px;text-align:center;">
+              <div style="font-size:0.6rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">iOS</div>
+              <div style="font-size:0.85rem;font-weight:700;color:var(--hub-color);">36,2%</div>
+              <div style="font-size:0.6rem;color:var(--text-secondary);">/mobile/ios</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.2);border-radius:8px;padding:12px;">
+            <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Legacy Mobile &middot; MLU</div>
+            <div style="font-size:1.2rem;font-weight:800;color:var(--legacy-color);">491</div>
+            <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos &middot; 733 visitas</div>
+            <div style="font-size:0.82rem;font-weight:700;color:var(--legacy-color);margin-top:6px;">1,49 <span style="font-size:0.65rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
+          </div>
+
+          <div style="background:rgba(20,184,166,0.07);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:8px 14px;text-align:center;margin-top:10px;">
+            <span style="font-size:0.95rem;font-weight:800;color:#4ade80;">+78,5%</span>
+            <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:6px;">freq. Hub vs Legacy</span>
+          </div>
+        </div>
+
+        <!-- Col 3: Tempo -->
+        <div style="background:var(--bg-card);border-radius:12px;padding:18px 20px;">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;">&#9201;&#65039; Por quanto tempo</div>
+
+          <div style="display:flex;gap:8px;margin-bottom:12px;">
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Point Hub</div>
+              <div style="font-size:1.3rem;font-weight:800;color:var(--hub-color);">10m 15s</div>
+              <div style="font-size:0.65rem;color:var(--text-secondary);">m&eacute;dia &middot; 615s</div>
+            </div>
+            <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Legacy</div>
+              <div style="font-size:1.3rem;font-weight:800;color:var(--legacy-color);">19m 19s</div>
+              <div style="font-size:0.65rem;color:var(--text-secondary);">m&eacute;dia &middot; 1.159s</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:8px 14px;text-align:center;margin-bottom:8px;">
+            <span style="font-size:0.85rem;font-weight:800;color:#f87171;">-47%</span>
+            <span style="font-size:0.7rem;color:var(--text-secondary);margin-left:6px;">tempo Hub vs Legacy</span>
+          </div>
+
+          <div style="background:rgba(234,179,8,0.07);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:8px 12px;font-size:0.65rem;color:var(--text-muted);line-height:1.5;">
+            &#9888;&#65039; Mediana &asymp; 0s em ambos &mdash; m&eacute;dia afetada por sess&otilde;es longas. Mesma limita&ccedil;&atilde;o metodol&oacute;gica do Desktop.<br>
+            26/Mai &rarr; hoje &middot; MLU &middot; /mobile/android + /mobile/ios
+          </div>
+        </div>
+
+      </div><!-- /3-col grid -->
+    </div><!-- /padding -->
+  </div><!-- /mq-block nav mlu -->
 
 </div><!-- /page-mlu -->
 </div>
