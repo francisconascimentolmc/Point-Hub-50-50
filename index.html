@@ -461,6 +461,9 @@
     .aud-site-btn:hover:not(.active){border-color:var(--text-secondary);color:var(--text-primary);}
     .aud-pending{display:none;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#ca8a04;margin-bottom:12px;}
 
+    /* PAGE ISOLATION — garante que apenas a aba ativa é visível */
+    #page-desktop, #page-mlu { display: none; }
+
     /* TAB NAVIGATION */
     .tab-nav{display:flex;gap:0;margin-bottom:32px;border-bottom:2px solid var(--border-color);}
     .tab-btn{background:none;border:none;color:var(--text-muted);font-size:0.88rem;font-weight:600;padding:10px 26px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.18s;letter-spacing:0.3px;outline:none;}
