@@ -3657,7 +3657,7 @@ ORDER BY 1</pre>
               color: '#93c5fd', font: { size: 9, weight: '700' },
               formatter: function(v, ctx) {
                 var casos = cxLegacy[ctx.dataIndex];
-                return v != null ? v.toFixed(3) + '%\n(' + casos + ' casos)' : '';
+                return v != null ? [v.toFixed(3) + '%', casos + ' caso' + (casos !== 1 ? 's' : '')] : null;
               }
             }
           },
@@ -3678,7 +3678,7 @@ ORDER BY 1</pre>
               color: '#fbbf24', font: { size: 9, weight: '700' },
               formatter: function(v, ctx) {
                 var casos = cxHub[ctx.dataIndex];
-                return v != null ? v.toFixed(3) + '%\n(' + casos + ' casos)' : '';
+                return v != null ? [v.toFixed(3) + '%', casos + ' caso' + (casos !== 1 ? 's' : '')] : null;
               }
             }
           }
