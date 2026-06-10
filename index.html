@@ -2116,14 +2116,33 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
 <div id="page-desktop" style="display:none;">
 
   <!-- Context banner -->
-  <div style="background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(245,158,11,0.06));border:1px solid var(--border-color);border-radius:12px;padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div>
-      <div style="font-weight:700;font-size:0.95rem;">&#128421;&#65039; Lan&ccedil;amento Desktop &mdash; Point Hub</div>
-      <div style="font-size:0.75rem;color:var(--text-muted);margin-top:2px;">MLA + MLB &middot; 01 Jun 2026 &rarr; hoje &middot; Split: <strong style="color:var(--hub-color);">25% Hub Desktop</strong> / <strong style="color:var(--legacy-color);">75% Legacy Desktop</strong></div>
-    </div>
-    <div style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap;">
-      <span class="env-badge hub" style="font-size:0.75rem;">Point Hub &mdash; 25%</span>
-      <span class="env-badge legacy" style="font-size:0.75rem;">Legacy &mdash; 75%</span>
+  <div style="background:linear-gradient(135deg,rgba(96,165,250,0.06),rgba(245,158,11,0.06));border:1px solid var(--border-color);border-radius:12px;padding:20px 24px;margin-bottom:20px;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+
+      <div style="flex:1;min-width:300px;">
+        <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">&#128421;&#65039; Contexto da An&aacute;lise</div>
+        <p style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;margin:0;">
+          Em <strong>01 de junho de 2026</strong>, iniciamos o rollout do <strong style="color:var(--hub-color);">Point Hub para web desktop</strong> em <strong>MLA e MLB</strong>, com expans&atilde;o progressiva: <strong>25%</strong> no dia 01/06 &rarr; <strong>50%</strong> em 03/06 &rarr; <strong>100%</strong> em 08/06.
+          Durante esse per&iacute;odo, sellers atribu&iacute;dos ao Hub Desktop acessam a nova experi&ecirc;ncia enquanto os demais seguem vendo a <strong style="color:var(--legacy-color);">vers&atilde;o Legacy</strong>.
+        </p>
+        <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.7;margin:8px 0 0;">
+          O objetivo desta an&aacute;lise &eacute; entender o <strong>comportamento do seller na nova experi&ecirc;ncia desktop</strong> &mdash; como navega, de onde chega, quais a&ccedil;&otilde;es realiza e em que medida recorre ao suporte &mdash; comparando diretamente com quem ainda utiliza o Legacy, para avaliar o impacto do redesign nesse canal.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+        <div style="background:var(--bg-card);border-radius:8px;padding:10px 16px;font-size:0.72rem;border-left:3px solid var(--hub-color);">
+          <div style="color:var(--hub-color);font-weight:700;margin-bottom:2px;">Point Hub Desktop</div>
+          <div style="color:var(--text-secondary);">01/06 &rarr; 25% &nbsp;·&nbsp; 03/06 &rarr; 50% &nbsp;·&nbsp; 08/06 &rarr; 100%</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;margin-top:2px;">MLA + MLB &nbsp;·&nbsp; /point_devices/point_hub + /web/desktop</div>
+        </div>
+        <div style="background:var(--bg-card);border-radius:8px;padding:10px 16px;font-size:0.72rem;border-left:3px solid var(--legacy-color);">
+          <div style="color:var(--legacy-color);font-weight:700;margin-bottom:2px;">Legacy Desktop</div>
+          <div style="color:var(--text-secondary);">Grupo controle &nbsp;·&nbsp; sellers n&atilde;o atribu&iacute;dos ao Hub</div>
+          <div style="color:var(--text-muted);font-size:0.65rem;margin-top:2px;">Acessa paths de a&ccedil;&atilde;o via /point_devices/* + /web/desktop</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
