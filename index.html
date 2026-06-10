@@ -467,6 +467,22 @@
     .tab-btn.active{color:var(--hub-color);border-bottom-color:var(--hub-color);}
     .tab-btn:hover:not(.active){color:var(--text-primary);}
     .desk-warn{background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:6px;padding:5px 10px;font-size:0.65rem;color:var(--accent-yellow);margin-bottom:6px;}
+
+    /* Maxwell drill-down */
+    .mx-tree details{margin:2px 0;}
+    .mx-tree summary{cursor:pointer;list-style:none;user-select:none;outline:none;display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:5px;transition:background 0.12s;}
+    .mx-tree summary::-webkit-details-marker{display:none;}
+    .mx-tree summary::before{content:'▶';font-size:0.55rem;margin-right:5px;display:inline-block;transition:transform 0.15s;flex-shrink:0;}
+    .mx-tree details[open]>summary::before{transform:rotate(90deg);}
+    .mx-tree .l1>summary{font-size:0.75rem;font-weight:700;background:var(--bg-card);}
+    .mx-tree .l1>summary:hover{background:var(--bg-surface);}
+    .mx-tree .l1>.l1-body{padding-left:14px;margin-top:3px;}
+    .mx-tree .l2>summary{font-size:0.7rem;font-weight:600;background:var(--bg-primary);margin-top:2px;}
+    .mx-tree .l2>summary:hover{background:var(--bg-surface);}
+    .mx-tree .l2>.l2-body{padding-left:14px;margin-top:2px;}
+    .mx-tree .l3-row{display:flex;justify-content:space-between;font-size:0.68rem;color:var(--text-secondary);padding:3px 8px;}
+    .mx-tree .mx-cnt{font-size:0.68rem;font-weight:700;white-space:nowrap;margin-left:8px;}
+    .mx-tree .mx-pct{font-size:0.62rem;color:var(--text-muted);margin-left:4px;}
   </style>
 </head>
 <body>
@@ -2139,23 +2155,23 @@ FROM funil GROUP BY 1,2 ORDER BY 2,1</pre>
 
           <div style="background:var(--bg-primary);border-radius:8px;padding:12px;margin-bottom:10px;">
             <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Point Hub Desktop &middot; Total</div>
-            <div style="font-size:1.4rem;font-weight:800;color:var(--hub-color);">884</div>
-            <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos &middot; 3.421 visitas</div>
-            <div style="font-size:0.82rem;font-weight:700;color:var(--hub-color);margin-top:6px;">3,87 <span style="font-size:0.65rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
+            <div style="font-size:1.4rem;font-weight:800;color:var(--hub-color);">6.481</div>
+            <div style="font-size:0.68rem;color:var(--text-secondary);">usu&aacute;rios &uacute;nicos &middot; 25.335 visitas</div>
+            <div style="font-size:0.82rem;font-weight:700;color:var(--hub-color);margin-top:6px;">3,91 <span style="font-size:0.65rem;font-weight:400;color:var(--text-muted);">vis/usu&aacute;rio</span></div>
           </div>
 
           <div style="display:flex;gap:8px;margin-bottom:12px;">
             <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 10px;text-align:center;">
               <div style="font-size:0.6rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">MLA</div>
-              <div style="font-size:0.95rem;font-weight:700;color:var(--hub-color);">520</div>
-              <div style="font-size:0.6rem;color:var(--text-secondary);">users &middot; 1.989 vis.</div>
-              <div style="font-size:0.72rem;font-weight:600;color:var(--hub-color);margin-top:2px;">3,83 vis/u</div>
+              <div style="font-size:0.95rem;font-weight:700;color:var(--hub-color);">3.857</div>
+              <div style="font-size:0.6rem;color:var(--text-secondary);">users &middot; 15.112 vis.</div>
+              <div style="font-size:0.72rem;font-weight:600;color:var(--hub-color);margin-top:2px;">3,92 vis/u</div>
             </div>
             <div style="flex:1;background:var(--bg-primary);border-radius:8px;padding:8px 10px;text-align:center;">
               <div style="font-size:0.6rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:3px;">MLB</div>
-              <div style="font-size:0.95rem;font-weight:700;color:var(--hub-color);">364</div>
-              <div style="font-size:0.6rem;color:var(--text-secondary);">users &middot; 1.432 vis.</div>
-              <div style="font-size:0.72rem;font-weight:600;color:var(--hub-color);margin-top:2px;">3,93 vis/u</div>
+              <div style="font-size:0.95rem;font-weight:700;color:var(--hub-color);">2.624</div>
+              <div style="font-size:0.6rem;color:var(--text-secondary);">users &middot; 10.223 vis.</div>
+              <div style="font-size:0.72rem;font-weight:600;color:var(--hub-color);margin-top:2px;">3,90 vis/u</div>
             </div>
           </div>
 
@@ -2607,63 +2623,148 @@ ORDER BY 1</pre>
       <!-- Top 5 topics -->
       <div style="margin-top:20px;border-top:1px solid var(--border-color);padding-top:16px;">
         <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);">&#128221; Top 5 Assuntos Maxwell &mdash; Desktop (01&ndash;09/Jun)</div>
-          <div style="font-size:0.63rem;color:var(--text-muted);">via <code>TYPIFICATION_L3</code> &middot; excluindo sem tipifica&ccedil;&atilde;o</div>
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-primary);">&#128221; Assuntos Maxwell &mdash; Desktop (01&ndash;09/Jun)</div>
+          <div style="font-size:0.63rem;color:var(--text-muted);">L1 &rarr; L2 &rarr; L3 &middot; clique para expandir &middot; excluindo sem tipifica&ccedil;&atilde;o</div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
 
-          <!-- Legacy topics L3 -->
-          <div>
+          <!-- Legacy drill-down -->
+          <div class="mx-tree">
             <div style="font-size:0.65rem;font-weight:700;color:var(--legacy-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Legacy Desktop <span style="font-weight:400;color:var(--text-muted);">(46,7% sem L3)</span></div>
-            <div style="display:flex;flex-direction:column;gap:5px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">1&ordm; Point won&apos;t power on</span>
-                <span><strong style="color:var(--legacy-color);">71</strong> <span style="color:var(--text-muted);font-size:0.65rem;">4,7%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">2&ordm; Device replacement</span>
-                <span><strong style="color:var(--legacy-color);">70</strong> <span style="color:var(--text-muted);font-size:0.65rem;">4,6%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">3&ordm; How to sell with QR codes</span>
-                <span><strong style="color:var(--legacy-color);">61</strong> <span style="color:var(--text-muted);font-size:0.65rem;">4,0%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">4&ordm; Others</span>
-                <span><strong style="color:var(--legacy-color);">53</strong> <span style="color:var(--text-muted);font-size:0.65rem;">3,5%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">5&ordm; API Functional Questions</span>
-                <span><strong style="color:var(--legacy-color);">38</strong> <span style="color:var(--text-muted);font-size:0.65rem;">2,5%</span></span>
-              </div>
-            </div>
+
+            <details class="l1"><summary style="color:var(--legacy-color);">Point <span class="mx-cnt" style="color:var(--legacy-color);">467 <span class="mx-pct">30,9%</span></span></summary><div class="l1-body">
+              <details class="l2"><summary>Hardware faults &amp; RMA <span class="mx-cnt">232</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Won&apos;t power on</span><span class="mx-cnt" style="color:var(--legacy-color);">71</span></div>
+                <div class="l3-row"><span>Device replacement</span><span class="mx-cnt" style="color:var(--legacy-color);">70</span></div>
+                <div class="l3-row"><span>Battery issues</span><span class="mx-cnt" style="color:var(--legacy-color);">35</span></div>
+                <div class="l3-row"><span>Out of warranty</span><span class="mx-cnt" style="color:var(--legacy-color);">21</span></div>
+                <div class="l3-row"><span>Thermal printing</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+                <div class="l3-row"><span>Card reading</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">15</span></div>
+              </div></details>
+              <details class="l2"><summary>Account management <span class="mx-cnt">115</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Change account/ownership</span><span class="mx-cnt" style="color:var(--legacy-color);">32</span></div>
+                <div class="l3-row"><span>New Users &amp; Activation</span><span class="mx-cnt" style="color:var(--legacy-color);">23</span></div>
+                <div class="l3-row"><span>Security passwords/codes</span><span class="mx-cnt" style="color:var(--legacy-color);">14</span></div>
+                <div class="l3-row"><span>Accepted cards &amp; vouchers</span><span class="mx-cnt" style="color:var(--legacy-color);">12</span></div>
+                <div class="l3-row"><span>Acquisition</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+              </div></details>
+              <details class="l2"><summary>Cellular/SIM connectivity <span class="mx-cnt">64</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Connectivity issues</span><span class="mx-cnt" style="color:var(--legacy-color);">19</span></div>
+                <div class="l3-row"><span>Chip suspended</span><span class="mx-cnt" style="color:var(--legacy-color);">14</span></div>
+                <div class="l3-row"><span>No signal</span><span class="mx-cnt" style="color:var(--legacy-color);">7</span></div>
+                <div class="l3-row"><span>Others / Logistics</span><span class="mx-cnt" style="color:var(--legacy-color);">24</span></div>
+              </div></details>
+              <details class="l2"><summary>Payment acceptance <span class="mx-cnt">56</span></summary><div class="l2-body">
+                <div class="l3-row"><span>General features &amp; inquiries</span><span class="mx-cnt" style="color:var(--legacy-color);">25</span></div>
+                <div class="l3-row"><span>Rejected charges</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">21</span></div>
+              </div></details>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--legacy-color);">Selling Capabilities <span class="mx-cnt" style="color:var(--legacy-color);">201 <span class="mx-pct">13,3%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>Cost experience &amp; fees</span><span class="mx-cnt" style="color:var(--legacy-color);">74</span></div>
+              <div class="l3-row"><span>Sales report</span><span class="mx-cnt" style="color:var(--legacy-color);">62</span></div>
+              <div class="l3-row"><span>Your business hub</span><span class="mx-cnt" style="color:var(--legacy-color);">41</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">24</span></div>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--legacy-color);">Online Payments <span class="mx-cnt" style="color:var(--legacy-color);">79 <span class="mx-pct">5,2%</span></span></summary><div class="l1-body">
+              <details class="l2"><summary>API <span class="mx-cnt">57</span></summary><div class="l2-body">
+                <div class="l3-row"><span>API Functional Questions</span><span class="mx-cnt" style="color:var(--legacy-color);">38</span></div>
+                <div class="l3-row"><span>Rejections</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">9</span></div>
+              </div></details>
+              <details class="l2"><summary>Link de pago <span class="mx-cnt">12</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Payment Link Functional Questions</span><span class="mx-cnt" style="color:var(--legacy-color);">10</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">2</span></div>
+              </div></details>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--legacy-color);">QR <span class="mx-cnt" style="color:var(--legacy-color);">100 <span class="mx-pct">6,6%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>How to sell with QR codes</span><span class="mx-cnt" style="color:var(--legacy-color);">61</span></div>
+              <div class="l3-row"><span>Usage / Payment issues</span><span class="mx-cnt" style="color:var(--legacy-color);">21</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">18</span></div>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--legacy-color);">Cuentas Digitales <span class="mx-cnt" style="color:var(--legacy-color);">123 <span class="mx-pct">8,1%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>Your Money</span><span class="mx-cnt" style="color:var(--legacy-color);">37</span></div>
+              <div class="l3-row"><span>Money Out</span><span class="mx-cnt" style="color:var(--legacy-color);">21</span></div>
+              <div class="l3-row"><span>Money In</span><span class="mx-cnt" style="color:var(--legacy-color);">19</span></div>
+              <div class="l3-row"><span>Interest-Bearing Account</span><span class="mx-cnt" style="color:var(--legacy-color);">15</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--legacy-color);">31</span></div>
+            </div></details>
           </div>
 
-          <!-- Hub topics L3 -->
-          <div>
+          <!-- Hub drill-down -->
+          <div class="mx-tree">
             <div style="font-size:0.65rem;font-weight:700;color:var(--hub-color);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Point Hub Desktop <span style="font-weight:400;color:var(--text-muted);">(50,2% sem L3)</span></div>
-            <div style="display:flex;flex-direction:column;gap:5px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">1&ordm; Device replacement</span>
-                <span><strong style="color:var(--hub-color);">73</strong> <span style="color:var(--text-muted);font-size:0.65rem;">4,3%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">2&ordm; Point won&apos;t power on</span>
-                <span><strong style="color:var(--hub-color);">65</strong> <span style="color:var(--text-muted);font-size:0.65rem;">3,8%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">3&ordm; API Functional Questions</span>
-                <span><strong style="color:var(--hub-color);">56</strong> <span style="color:var(--text-muted);font-size:0.65rem;">3,3%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">4&ordm; Others</span>
-                <span><strong style="color:var(--hub-color);">51</strong> <span style="color:var(--text-muted);font-size:0.65rem;">3,0%</span></span>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.72rem;padding:5px 8px;background:var(--bg-card);border-radius:5px;">
-                <span style="color:var(--text-secondary);">5&ordm; How to sell with QR codes</span>
-                <span><strong style="color:var(--hub-color);">51</strong> <span style="color:var(--text-muted);font-size:0.65rem;">3,0%</span></span>
-              </div>
-            </div>
+
+            <details class="l1"><summary style="color:var(--hub-color);">Point <span class="mx-cnt" style="color:var(--hub-color);">490 <span class="mx-pct">29,8%</span></span></summary><div class="l1-body">
+              <details class="l2"><summary>Hardware faults &amp; RMA <span class="mx-cnt">247</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Device replacement</span><span class="mx-cnt" style="color:var(--hub-color);">73</span></div>
+                <div class="l3-row"><span>Won&apos;t power on</span><span class="mx-cnt" style="color:var(--hub-color);">65</span></div>
+                <div class="l3-row"><span>Battery issues</span><span class="mx-cnt" style="color:var(--hub-color);">36</span></div>
+                <div class="l3-row"><span>Out of warranty</span><span class="mx-cnt" style="color:var(--hub-color);">27</span></div>
+                <div class="l3-row"><span>Thermal printing</span><span class="mx-cnt" style="color:var(--hub-color);">12</span></div>
+                <div class="l3-row"><span>Card reading</span><span class="mx-cnt" style="color:var(--hub-color);">11</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">23</span></div>
+              </div></details>
+              <details class="l2"><summary>Account management <span class="mx-cnt">134</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Acquisition</span><span class="mx-cnt" style="color:var(--hub-color);">31</span></div>
+                <div class="l3-row"><span>New Users &amp; Activation</span><span class="mx-cnt" style="color:var(--hub-color);">30</span></div>
+                <div class="l3-row"><span>Change account/ownership</span><span class="mx-cnt" style="color:var(--hub-color);">26</span></div>
+                <div class="l3-row"><span>Accepted cards &amp; vouchers</span><span class="mx-cnt" style="color:var(--hub-color);">15</span></div>
+                <div class="l3-row"><span>Security passwords/codes</span><span class="mx-cnt" style="color:var(--hub-color);">12</span></div>
+              </div></details>
+              <details class="l2"><summary>Cellular/SIM connectivity <span class="mx-cnt">49</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Connectivity issues</span><span class="mx-cnt" style="color:var(--hub-color);">17</span></div>
+                <div class="l3-row"><span>Chip suspended</span><span class="mx-cnt" style="color:var(--hub-color);">11</span></div>
+                <div class="l3-row"><span>No signal</span><span class="mx-cnt" style="color:var(--hub-color);">5</span></div>
+                <div class="l3-row"><span>Others / Logistics</span><span class="mx-cnt" style="color:var(--hub-color);">16</span></div>
+              </div></details>
+              <details class="l2"><summary>Shipments &amp; deliveries <span class="mx-cnt">41</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Coil shipping</span><span class="mx-cnt" style="color:var(--hub-color);">10</span></div>
+                <div class="l3-row"><span>Status within deadline</span><span class="mx-cnt" style="color:var(--hub-color);">10</span></div>
+                <div class="l3-row"><span>Return &amp; label</span><span class="mx-cnt" style="color:var(--hub-color);">9</span></div>
+                <div class="l3-row"><span>Status late</span><span class="mx-cnt" style="color:var(--hub-color);">8</span></div>
+                <div class="l3-row"><span>Purchase resistance</span><span class="mx-cnt" style="color:var(--hub-color);">4</span></div>
+              </div></details>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--hub-color);">Selling Capabilities <span class="mx-cnt" style="color:var(--hub-color);">181 <span class="mx-pct">11,0%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>Cost experience &amp; fees</span><span class="mx-cnt" style="color:var(--hub-color);">69</span></div>
+              <div class="l3-row"><span>Sales report</span><span class="mx-cnt" style="color:var(--hub-color);">57</span></div>
+              <div class="l3-row"><span>Your business hub</span><span class="mx-cnt" style="color:var(--hub-color);">38</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">17</span></div>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--hub-color);">Online Payments <span class="mx-cnt" style="color:var(--hub-color);">108 <span class="mx-pct">6,6%</span></span></summary><div class="l1-body">
+              <details class="l2"><summary>API <span class="mx-cnt">76</span></summary><div class="l2-body">
+                <div class="l3-row"><span>API Functional Questions</span><span class="mx-cnt" style="color:var(--hub-color);">56</span></div>
+                <div class="l3-row"><span>Rejections</span><span class="mx-cnt" style="color:var(--hub-color);">10</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">10</span></div>
+              </div></details>
+              <details class="l2"><summary>Link de pago <span class="mx-cnt">18</span></summary><div class="l2-body">
+                <div class="l3-row"><span>Payment Link Functional Questions</span><span class="mx-cnt" style="color:var(--hub-color);">17</span></div>
+                <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">1</span></div>
+              </div></details>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--hub-color);">QR <span class="mx-cnt" style="color:var(--hub-color);">75 <span class="mx-pct">4,6%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>How to sell with QR codes</span><span class="mx-cnt" style="color:var(--hub-color);">51</span></div>
+              <div class="l3-row"><span>Usage / Payment issues</span><span class="mx-cnt" style="color:var(--hub-color);">16</span></div>
+              <div class="l3-row"><span>How to pay with QR</span><span class="mx-cnt" style="color:var(--hub-color);">4</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">4</span></div>
+            </div></details>
+
+            <details class="l1"><summary style="color:var(--hub-color);">Cuentas Digitales <span class="mx-cnt" style="color:var(--hub-color);">135 <span class="mx-pct">8,2%</span></span></summary><div class="l1-body">
+              <div class="l3-row"><span>Your Money</span><span class="mx-cnt" style="color:var(--hub-color);">46</span></div>
+              <div class="l3-row"><span>Money In</span><span class="mx-cnt" style="color:var(--hub-color);">23</span></div>
+              <div class="l3-row"><span>Money Out</span><span class="mx-cnt" style="color:var(--hub-color);">20</span></div>
+              <div class="l3-row"><span>Interest-Bearing Account</span><span class="mx-cnt" style="color:var(--hub-color);">17</span></div>
+              <div class="l3-row"><span>Others</span><span class="mx-cnt" style="color:var(--hub-color);">29</span></div>
+            </div></details>
           </div>
 
         </div><!-- /topics grid -->
