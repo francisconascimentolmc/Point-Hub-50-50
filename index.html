@@ -2862,6 +2862,29 @@ ORDER BY 1</pre>
         </div>
       </div>
 
+      <!-- contatos por dia -->
+      <div style="margin-top:14px;overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.7rem;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:6px 10px;color:var(--text-muted);font-weight:600;border-bottom:1px solid var(--border-color);">Data</th>
+              <th style="text-align:center;padding:6px 10px;color:var(--legacy-color);font-weight:700;border-bottom:1px solid var(--border-color);">Legacy &mdash; casos CX</th>
+              <th style="text-align:center;padding:6px 10px;color:var(--hub-color);font-weight:700;border-bottom:1px solid var(--border-color);">Hub &mdash; casos CX</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">01/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">7</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">02/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">4</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">03/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">6</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">1</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">04/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">3</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">05/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">2</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--hub-color);">1</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">06/Jun</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.03);">07/Jun <span style="font-size:0.6rem;color:var(--text-muted);">(dom)</span></td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td><td style="text-align:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);color:var(--text-muted);">&mdash;</td></tr>
+            <tr><td style="padding:5px 10px;color:var(--text-secondary);">08/Jun</td><td style="text-align:center;padding:5px 10px;font-weight:700;color:var(--legacy-color);">1</td><td style="text-align:center;padding:5px 10px;font-weight:700;color:var(--hub-color);">6</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <!-- caveats -->
       <div style="margin-top:14px;background:rgba(234,179,8,0.06);border:1px solid rgba(234,179,8,0.2);border-radius:8px;padding:12px 14px;font-size:0.67rem;color:var(--text-muted);line-height:1.75;">
         <div style="font-weight:700;color:var(--accent-yellow);margin-bottom:4px;">&#9888;&#65039; Leitura com cautela &mdash; volume insuficiente para CR confi&aacute;vel</div>
@@ -3655,10 +3678,7 @@ ORDER BY 1</pre>
               display: function(ctx) { return ctx.raw != null; },
               anchor: 'top', align: 'top', offset: 4,
               color: '#93c5fd', font: { size: 9, weight: '700' },
-              formatter: function(v, ctx) {
-                var casos = cxLegacy[ctx.dataIndex];
-                return v != null ? [v.toFixed(3) + '%', casos + ' caso' + (casos !== 1 ? 's' : '')] : null;
-              }
+              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : null; }
             }
           },
           {
@@ -3676,10 +3696,7 @@ ORDER BY 1</pre>
               display: function(ctx) { return ctx.raw != null; },
               anchor: 'bottom', align: 'bottom', offset: 4,
               color: '#fbbf24', font: { size: 9, weight: '700' },
-              formatter: function(v, ctx) {
-                var casos = cxHub[ctx.dataIndex];
-                return v != null ? [v.toFixed(3) + '%', casos + ' caso' + (casos !== 1 ? 's' : '')] : null;
-              }
+              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : null; }
             }
           }
         ]
