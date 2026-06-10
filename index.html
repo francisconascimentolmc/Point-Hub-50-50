@@ -3509,6 +3509,8 @@ ORDER BY 1</pre>
     var labels    = ['01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun'];
     var crLegacy  = [0.437, 0.290, 0.487, 0.149, 0.249, 0.210, null, 0.301];
     var crHub     = [null, null, 0.166, 0.434, 0.120, null, null, 0.382];
+    var cxLegacy  = [7, 4, 6, 1, 2, 1, null, 1];
+    var cxHub     = [null, null, 1, 3, 1, null, null, 6];
     new Chart(el.getContext('2d'), {
       type: 'line',
       plugins: [ChartDataLabels],
@@ -3530,7 +3532,10 @@ ORDER BY 1</pre>
               display: function(ctx) { return ctx.raw != null; },
               anchor: 'top', align: 'top', offset: 4,
               color: '#93c5fd', font: { size: 9, weight: '700' },
-              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : ''; }
+              formatter: function(v, ctx) {
+                var casos = cxLegacy[ctx.dataIndex];
+                return v != null ? v.toFixed(3) + '%\n(' + casos + ' casos)' : '';
+              }
             }
           },
           {
@@ -3548,7 +3553,10 @@ ORDER BY 1</pre>
               display: function(ctx) { return ctx.raw != null; },
               anchor: 'bottom', align: 'bottom', offset: 4,
               color: '#fbbf24', font: { size: 9, weight: '700' },
-              formatter: function(v) { return v != null ? v.toFixed(3) + '%' : ''; }
+              formatter: function(v, ctx) {
+                var casos = cxHub[ctx.dataIndex];
+                return v != null ? v.toFixed(3) + '%\n(' + casos + ' casos)' : '';
+              }
             }
           }
         ]
