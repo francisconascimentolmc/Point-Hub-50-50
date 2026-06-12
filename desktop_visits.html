@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point Hub Desktop — Visitas por Site</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
+  <style>
+    :root {
+      --bg-primary:#111111; --bg-secondary:#1c1c1c; --bg-card:#272727;
+      --text-primary:#f0ede6; --text-secondary:#a09a90; --text-muted:#6b6560;
+      --border-color:#3c3a35;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;}
+    .container{max-width:1400px;margin:0 auto;padding:32px 20px;}
+    .header{margin-bottom:28px;}
+    .header h1{font-size:1.6rem;font-weight:700;margin-bottom:4px;}
+    .header p{font-size:0.85rem;color:var(--text-muted);}
+    .card{background:var(--bg-secondary);border-radius:16px;border:1px solid var(--border-color);padding:24px;}
+    /* Filter buttons */
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+    .filter-label{font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-right:4px;}
+    .site-btn{background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:5px 16px;font-size:0.78rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.15s;outline:none;}
+    .site-btn:hover:not(.active){border-color:var(--text-secondary);color:var(--text-primary);}
+    .site-btn.active{color:#111;}
+    .site-btn[data-site="all"].active{background:#e2e8f0;border-color:#e2e8f0;color:#111;}
+    .site-btn[data-site="MLA"].active{background:#f59e0b;border-color:#f59e0b;}
+    .site-btn[data-site="MLB"].active{background:#60a5fa;border-color:#60a5fa;}
+    .site-btn[data-site="MLM"].active{background:#4ade80;border-color:#4ade80;}
+    .site-btn[data-site="MLC"].active{background:#c084fc;border-color:#c084fc;}
+    .site-btn[data-site="MLU"].active{background:#fb923c;border-color:#fb923c;}
+    /* Legend */
+    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
+    .leg-item{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text-secondary);}
+    .leg-dot{width:12px;height:3px;border-radius:2px;display:inline-block;}
+    /* Rollout info */
+    .rollout-info{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+    .ri{display:flex;align-items:center;gap:5px;font-size:0.68rem;color:var(--text-muted);}
+    .ri-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>&#128421;&#65039; Visitas Diárias — Point Hub Desktop por Site</h1>
+    <p>Usuários únicos/dia &middot; device.platform = /web/desktop &middot; 11/Mai – 11/Jun 2026 &middot; MELIDATA.TRACKS</p>
+  </div>
+
+  <div class="card">
+
+    <!-- Filter buttons -->
+    <div class="filter-bar">
+      <span class="filter-label">Site:</span>
+      <button class="site-btn active" data-site="all" onclick="filterSite('all')">Todos</button>
+      <button class="site-btn" data-site="MLA" onclick="filterSite('MLA')">🇦🇷 MLA</button>
+      <button class="site-btn" data-site="MLB" onclick="filterSite('MLB')">🇧🇷 MLB</button>
+      <button class="site-btn" data-site="MLM" onclick="filterSite('MLM')">🇲🇽 MLM</button>
+      <button class="site-btn" data-site="MLC" onclick="filterSite('MLC')">🇨🇱 MLC</button>
+      <button class="site-btn" data-site="MLU" onclick="filterSite('MLU')">🇺🇾 MLU</button>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend" id="chartLegend">
+      <div class="leg-item"><span class="leg-dot" style="background:#f59e0b;"></span>MLA</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#60a5fa;"></span>MLB</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#4ade80;"></span>MLM</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#c084fc;"></span>MLC</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#fb923c;"></span>MLU</div>
+    </div>
+
+    <!-- Chart -->
+    <div style="position:relative;height:360px;">
+      <canvas id="visitsChart"></canvas>
+    </div>
+
+    <!-- Rollout annotations legend -->
+    <div class="rollout-info">
+      <div class="ri"><span class="ri-dot" style="background:#4ade80;"></span><strong style="color:#4ade80;">01/Jun</strong> — MLA+MLB 25%</div>
+      <div class="ri"><span class="ri-dot" style="background:#fb923c;"></span><strong style="color:#fb923c;">03/Jun</strong> — MLA+MLB 50%</div>
+      <div class="ri"><span class="ri-dot" style="background:#f87171;"></span><strong style="color:#f87171;">08/Jun</strong> — MLA+MLB 100%</div>
+      <div class="ri"><span class="ri-dot" style="background:#c084fc;"></span><strong style="color:#c084fc;">09/Jun</strong> — MLM 25% + MLC 25%</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+var labels = [
+  '11/Mai','12/Mai','13/Mai','14/Mai','15/Mai','16/Mai','17/Mai','18/Mai','19/Mai','20/Mai',
+  '21/Mai','22/Mai','23/Mai','24/Mai','25/Mai','26/Mai','27/Mai','28/Mai','29/Mai','30/Mai','31/Mai',
+  '01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun','09/Jun','10/Jun','11/Jun'
+];
+
+var dataMLA = [
+  0,0,0,0,0,0,0,0,1,0,
+  0,0,0,0,0,0,0,0,0,0,0,
+  212,253,367,518,505,265,184,891,1137,1080,1063
+];
+var dataMLB = [
+  2,1,2,2,1,1,0,2,5,2,
+  3,2,0,1,2,3,2,4,4,0,0,
+  151,180,234,173,327,182,139,681,866,923,845
+];
+var dataMLM = [
+  0,0,1,1,1,0,0,0,0,0,
+  1,1,0,0,1,1,0,0,0,0,0,
+  1,0,0,0,0,0,0,0,117,156,208
+];
+var dataMLC = [
+  0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,0,0,0,
+  0,0,0,0,0,0,0,0,60,54,137
+];
+var dataMLU = [
+  0,0,0,0,0,0,0,0,0,1,
+  0,0,0,0,0,1,0,1,0,0,0,
+  1,1,0,0,1,0,0,1,4,4,30
+];
+
+var allDatasets = [
+  { site:'MLA', label:'MLA (Argentina)',  data:dataMLA, color:'#f59e0b' },
+  { site:'MLB', label:'MLB (Brasil)',      data:dataMLB, color:'#60a5fa' },
+  { site:'MLM', label:'MLM (México)',      data:dataMLM, color:'#4ade80' },
+  { site:'MLC', label:'MLC (Chile)',       data:dataMLC, color:'#c084fc' },
+  { site:'MLU', label:'MLU (Uruguai)',     data:dataMLU, color:'#fb923c' }
+];
+
+// ── ROLLOUT PLUGIN ─────────────────────────────────────────────
+var rolloutPlugin = {
+  id: 'rollout',
+  afterDatasetsDraw: function(chart) {
+    var ctx = chart.ctx, yAx = chart.scales.y, xAx = chart.scales.x;
+    var markers = [
+      { label:'21', pct:'25%',  color:'#4ade80'  }, // index 21 = 01/Jun
+      { label:'23', pct:'50%',  color:'#fb923c'  }, // index 23 = 03/Jun
+      { label:'28', pct:'100%', color:'#f87171'  }, // index 28 = 08/Jun
+      { label:'29', pct:'MLM\nMLC',color:'#c084fc'} // index 29 = 09/Jun
+    ];
+    var idxMap = {21:21,23:23,28:28,29:29};
+    markers.forEach(function(m) {
+      var idx = parseInt(m.label);
+      var meta = chart.getDatasetMeta(0);
+      if (!meta || !meta.data || !meta.data[idx]) return;
+      var x = meta.data[idx].x;
+      var lw = m.pct.length > 3 ? 36 : 28;
+      ctx.save();
+      ctx.setLineDash([5,4]); ctx.strokeStyle=m.color; ctx.lineWidth=1.5; ctx.globalAlpha=0.7;
+      ctx.beginPath(); ctx.moveTo(x,yAx.top+2); ctx.lineTo(x,yAx.bottom); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha=1; ctx.fillStyle=m.color;
+      ctx.beginPath(); ctx.roundRect(x-lw/2,yAx.top-22,lw,16,3); ctx.fill();
+      ctx.fillStyle='#111'; ctx.font='bold 8px -apple-system,sans-serif';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(m.pct,x,yAx.top-14); ctx.restore();
+    });
+  }
+};
+
+// ── CHART ──────────────────────────────────────────────────────
+var ctx = document.getElementById('visitsChart').getContext('2d');
+var chart = new Chart(ctx, {
+  type: 'line',
+  plugins: [rolloutPlugin],
+  data: {
+    labels: labels,
+    datasets: allDatasets.map(function(d) {
+      return {
+        label: d.label,
+        data: d.data,
+        borderColor: d.color,
+        backgroundColor: 'transparent',
+        pointBackgroundColor: d.color,
+        pointBorderColor: '#111',
+        pointBorderWidth: 1,
+        pointRadius: function(ctx) { return ctx.raw > 0 ? 4 : 0; },
+        pointHoverRadius: 6,
+        borderWidth: 2,
+        tension: 0.3,
+        fill: false,
+        spanGaps: false,
+        _site: d.site
+      };
+    })
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 30, bottom: 4, left: 4, right: 10 } },
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      datalabels: { display: false },
+      tooltip: {
+        backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
+        titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
+        filter: function(item) { return item.raw > 0; },
+        callbacks: {
+          label: function(ctx) {
+            return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' users';
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#64748b', font: { size: 8 },
+          maxRotation: 45,
+          callback: function(val, idx) {
+            var l = labels[idx];
+            return l.endsWith('Mai') && idx % 3 === 0 ? l :
+                   l.startsWith('0') ? l : '';
+          }
+        },
+        grid: { color: 'rgba(71,85,105,0.15)' },
+        border: { display: false }
+      },
+      y: {
+        ticks: {
+          color: '#64748b', font: { size: 9 },
+          callback: function(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
+        },
+        grid: { color: 'rgba(71,85,105,0.2)' },
+        border: { display: false },
+        title: { display: true, text: 'Usuários únicos / dia', color: '#64748b', font: { size: 9 } }
+      }
+    }
+  }
+});
+
+// ── FILTER ─────────────────────────────────────────────────────
+function filterSite(site) {
+  document.querySelectorAll('.site-btn').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.site === site);
+  });
+  chart.data.datasets.forEach(function(ds, i) {
+    var show = site === 'all' || allDatasets[i].site === site;
+    ds.hidden = !show;
+  });
+  chart.update();
+}
+</script>
+</body>
+</html>
