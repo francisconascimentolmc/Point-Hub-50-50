@@ -2423,6 +2423,50 @@ ORDER BY 1</pre>
 
   </div><!-- /mq-block nav desktop -->
 
+  <!-- ── FUNIL COMPLETO HUB vs LEGACY DESKTOP ──────────────── -->
+  <div class="mq-block" style="margin-bottom:20px;">
+    <div class="mq-hdr" style="border-left:4px solid var(--accent-purple);padding:14px 22px;">
+      <div class="mq-num" style="background:rgba(192,132,252,0.12);color:var(--accent-purple);">Funil</div>
+      <div class="mq-hdr-text">
+        <div class="mq-title">Funil Completo Desktop &mdash; Hub vs Legacy</div>
+        <div class="mq-subtitle">Visitantes &rarr; Maxwell Web &rarr; Maxwell&rarr;CX &rarr; Direto CX &middot; MLA+MLB &middot; 11/Mai&ndash;11/Jun/2026</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:6px;flex-shrink:0;">
+        <span class="ps-tag neutral">11/Mai &rarr; 11/Jun</span>
+        <span class="ps-tag neutral">CDU: Point no funciona</span>
+      </div>
+    </div>
+    <div style="padding:16px 24px;overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.7rem;min-width:900px;">
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align:left;padding:6px 8px;color:var(--text-muted);font-weight:600;border-bottom:2px solid var(--border-color);vertical-align:bottom;">Data</th>
+            <th colspan="4" style="text-align:center;padding:6px 12px;color:var(--hub-color);font-weight:700;border-bottom:1px solid rgba(245,158,11,0.3);border-left:2px solid rgba(245,158,11,0.3);">&#128421; Point Hub Desktop</th>
+            <th colspan="4" style="text-align:center;padding:6px 12px;color:var(--legacy-color);font-weight:700;border-bottom:1px solid rgba(96,165,250,0.3);border-left:2px solid rgba(96,165,250,0.3);">&#128241; Legacy Desktop</th>
+          </tr>
+          <tr>
+            <th style="text-align:center;padding:5px 8px;color:var(--hub-color);font-weight:600;border-bottom:2px solid var(--border-color);border-left:2px solid rgba(245,158,11,0.3);">Vis.</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--hub-color);font-weight:600;border-bottom:2px solid var(--border-color);">Maxwell</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--hub-color);font-weight:600;border-bottom:2px solid var(--border-color);">CX</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--hub-color);font-weight:600;border-bottom:2px solid var(--border-color);">CR%</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--legacy-color);font-weight:600;border-bottom:2px solid var(--border-color);border-left:2px solid rgba(96,165,250,0.3);">Vis.</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--legacy-color);font-weight:600;border-bottom:2px solid var(--border-color);">Maxwell</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--legacy-color);font-weight:600;border-bottom:2px solid var(--border-color);">CX</th>
+            <th style="text-align:center;padding:5px 8px;color:var(--legacy-color);font-weight:600;border-bottom:2px solid var(--border-color);">CR%</th>
+          </tr>
+        </thead>
+        <tbody id="funilBody">
+        </tbody>
+      </table>
+      <div style="margin-top:10px;font-size:0.62rem;color:var(--text-muted);line-height:1.6;">
+        &#128161; <strong>Vis.</strong> = usu&aacute;rios &uacute;nicos que acessaram a se&ccedil;&atilde;o desktop &middot;
+        <strong>Maxwell</strong> = abriram Maxwell web (DEVICE=web) no mesmo dia &middot;
+        <strong>CX</strong> = contataram o suporte (CDU: Point no funciona) no mesmo dia &middot;
+        <strong>CR%</strong> = CX &divide; Visitantes &middot; Hub pr&eacute;-01/Jun = usu&aacute;rios de teste (&lt;10/dia)
+      </div>
+    </div>
+  </div><!-- /mq-block funil desktop -->
+
   <!-- ── TAXA DE EFETIVIDADE DESKTOP ───────────────────────── -->
   <div class="mq-block" style="margin-bottom:20px;">
     <div class="mq-hdr" style="border-left:4px solid #14b8a6;padding:14px 22px;">
@@ -3769,6 +3813,83 @@ ORDER BY 1</pre>
           }
         }
       }
+    });
+  })();
+
+  // ── FUNIL DESKTOP Hub vs Legacy ─────────────────────────────
+  (function() {
+    var rows = [
+      // [data, hub_vis, hub_mxw, hub_cx, hub_cr, leg_vis, leg_mxw, leg_cx, leg_cr]
+      ['11/Mai',  2,    0,   0, 0.000, 1843, 189,  6, 0.326],
+      ['12/Mai',  1,    0,   0, 0.000, 1807, 182,  2, 0.111],
+      ['13/Mai',  2,    0,   0, 0.000, 1812, 169,  4, 0.221],
+      ['14/Mai',  2,    0,   0, 0.000, 1777, 176,  4, 0.225],
+      ['15/Mai',  1,    0,   0, 0.000, 1655, 167,  7, 0.423],
+      ['16/Mai',  1,    0,   0, 0.000,  809,  84,  2, 0.247],
+      ['17/Mai',  0,    0,   0, 0.000,  543,  66,  1, 0.184],
+      ['18/Mai',  2,    1,   0, 0.000, 1672, 203,  3, 0.179],
+      ['19/Mai',  6,    1,   0, 0.000, 1719, 198, 12, 0.698],
+      ['20/Mai',  2,    0,   0, 0.000, 1763, 200,  4, 0.227],
+      ['21/Mai',  3,    0,   0, 0.000, 1723, 205,  5, 0.290],
+      ['22/Mai',  2,    0,   0, 0.000, 1936, 225,  7, 0.362],
+      ['23/Mai',  0,    0,   0, 0.000,  907,  96,  2, 0.221],
+      ['24/Mai',  1,    1,   0, 0.000,  568,  54,  2, 0.352],
+      ['25/Mai',  2,    0,   0, 0.000, 1163, 164,  5, 0.430],
+      ['26/Mai',  3,    0,   0, 0.000, 1963, 252,  4, 0.204],
+      ['27/Mai',  2,    0,   0, 0.000, 1959, 254,  8, 0.408],
+      ['28/Mai',  4,    0,   0, 0.000, 1768, 233,  9, 0.509],
+      ['29/Mai',  4,    0,   0, 0.000, 1590, 226,  2, 0.126],
+      ['30/Mai',  0,    0,   0, 0.000,  847, 118,  2, 0.236],
+      ['31/Mai',  0,    0,   0, 0.000,  638,  82,  1, 0.157],
+      ['01/Jun', 363,  47,   0, 0.000, 1602, 218,  7, 0.437],
+      ['02/Jun', 433,  66,   0, 0.000, 1378, 200,  4, 0.290],
+      ['03/Jun', 601,  92,   1, 0.166, 1232, 175,  6, 0.487],
+      ['04/Jun', 691, 106,   3, 0.434,  670, 123,  1, 0.149],
+      ['05/Jun', 832, 131,   1, 0.120,  802, 128,  2, 0.249],
+      ['06/Jun', 447,  67,   0, 0.000,  477,  69,  1, 0.210],
+      ['07/Jun', 323,  44,   0, 0.000,  322,  48,  0, 0.000],
+      ['08/Jun',1572, 274,   6, 0.382,  332,  51,  1, 0.301],
+      ['09/Jun',2003, 323,   8, 0.399,   39,  11,  0, 0.000],
+      ['10/Jun',2003, 295,   4, 0.200,   33,   8,  0, 0.000],
+      ['11/Jun',1908, 249,   3, 0.157,   40,  11,  0, 0.000]
+    ];
+
+    var rolloutDates = {'01/Jun':true,'03/Jun':true,'08/Jun':true,'09/Jun':true};
+    var weekends = {'16/Mai':true,'17/Mai':true,'23/Mai':true,'24/Mai':true,'30/Mai':true,'31/Mai':true,'06/Jun':true,'07/Jun':true};
+    var tbody = document.getElementById('funilBody');
+    if (!tbody) return;
+
+    rows.forEach(function(r) {
+      var d=r[0], hv=r[1], hm=r[2], hc=r[3], hcr=r[4];
+      var lv=r[5], lm=r[6], lc=r[7], lcr=r[8];
+      var isPreLaunch = (d.indexOf('Mai')>-1 || d==='01/Jun'||d==='02/Jun');
+      var isRollout = rolloutDates[d];
+      var isWknd = weekends[d];
+      var bg = isRollout ? 'background:rgba(192,132,252,0.05);' : (isWknd ? 'background:rgba(255,255,255,0.01);' : '');
+      var brd = isRollout ? 'border-top:1px solid rgba(192,132,252,0.3);' : 'border-top:1px solid rgba(255,255,255,0.03);';
+      var dateLbl = d + (isWknd ? '<br><span style="font-size:0.55rem;color:var(--text-muted);">fim sem.</span>' : '');
+      var rollTag = isRollout ? ' <span style="font-size:0.55rem;background:rgba(192,132,252,0.2);color:var(--accent-purple);border-radius:3px;padding:1px 4px;">rollout</span>' : '';
+      var hubPreTag = isPreLaunch && hv < 10 && hv > 0 ? '<span style="font-size:0.55rem;color:var(--text-muted);">(teste)</span>' : '';
+
+      var c = 'var(--text-secondary)';
+      var h = isPreLaunch && hv < 10 ? 'var(--text-muted)' : 'var(--hub-color)';
+      var l = 'var(--legacy-color)';
+
+      tbody.insertAdjacentHTML('beforeend',
+        '<tr style="'+bg+brd+'">'+
+        '<td style="padding:4px 8px;color:var(--text-secondary);white-space:nowrap;">'+dateLbl+rollTag+'</td>'+
+        // Hub cols
+        '<td style="text-align:center;padding:4px 8px;color:'+h+';font-weight:'+(hv>9?'700':'400')+'border-left:2px solid rgba(245,158,11,0.15);">'+(hv>0?hv.toLocaleString('pt-BR'):'<span style="color:var(--text-muted);">—</span>')+hubPreTag+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;color:'+h+';">'+(hm>0?hm:'<span style="color:var(--text-muted);">0</span>')+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;font-weight:700;color:'+(hc>0?'#4ade80':'var(--text-muted)')+';">'+(hc>0?hc:'—')+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;color:'+(hcr>0?h:'var(--text-muted)')+';">'+(hcr>0?hcr.toFixed(3)+'%':'—')+'</td>'+
+        // Legacy cols
+        '<td style="text-align:center;padding:4px 8px;color:'+l+';font-weight:700;border-left:2px solid rgba(96,165,250,0.15);">'+(lv>0?lv.toLocaleString('pt-BR'):'<span style="color:var(--text-muted);">—</span>')+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;color:'+l+';">'+(lm>0?lm:'<span style="color:var(--text-muted);">0</span>')+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;font-weight:700;color:'+(lc>0?'#4ade80':'var(--text-muted)')+';">'+(lc>0?lc:'—')+'</td>'+
+        '<td style="text-align:center;padding:4px 8px;color:'+(lcr>0?l:'var(--text-muted)')+';">'+(lcr>0?lcr.toFixed(3)+'%':'—')+'</td>'+
+        '</tr>'
+      );
     });
   })();
 
