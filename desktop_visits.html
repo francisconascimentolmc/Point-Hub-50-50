@@ -5,240 +5,191 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Point Hub Desktop — Visitas por Site</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
     :root {
-      --bg-primary:#111111; --bg-secondary:#1c1c1c; --bg-card:#272727;
-      --text-primary:#f0ede6; --text-secondary:#a09a90; --text-muted:#6b6560;
-      --border-color:#3c3a35;
+      --bg:#111; --bg2:#1c1c1c; --bg3:#272727;
+      --txt:#f0ede6; --txt2:#a09a90; --txt3:#6b6560;
+      --brd:#3c3a35;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;}
-    .container{max-width:1400px;margin:0 auto;padding:32px 20px;}
-    .header{margin-bottom:28px;}
-    .header h1{font-size:1.6rem;font-weight:700;margin-bottom:4px;}
-    .header p{font-size:0.85rem;color:var(--text-muted);}
-    .card{background:var(--bg-secondary);border-radius:16px;border:1px solid var(--border-color);padding:24px;}
-    /* Filter buttons */
-    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
-    .filter-label{font-size:0.72rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-right:4px;}
-    .site-btn{background:var(--bg-card);border:1px solid var(--border-color);border-radius:20px;padding:5px 16px;font-size:0.78rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all 0.15s;outline:none;}
-    .site-btn:hover:not(.active){border-color:var(--text-secondary);color:var(--text-primary);}
-    .site-btn.active{color:#111;}
-    .site-btn[data-site="all"].active{background:#e2e8f0;border-color:#e2e8f0;color:#111;}
-    .site-btn[data-site="MLA"].active{background:#f59e0b;border-color:#f59e0b;}
-    .site-btn[data-site="MLB"].active{background:#60a5fa;border-color:#60a5fa;}
-    .site-btn[data-site="MLM"].active{background:#4ade80;border-color:#4ade80;}
-    .site-btn[data-site="MLC"].active{background:#c084fc;border-color:#c084fc;}
-    .site-btn[data-site="MLU"].active{background:#fb923c;border-color:#fb923c;}
-    /* Legend */
-    .legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;}
-    .leg-item{display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--text-secondary);}
-    .leg-dot{width:12px;height:3px;border-radius:2px;display:inline-block;}
-    /* Rollout info */
-    .rollout-info{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
-    .ri{display:flex;align-items:center;gap:5px;font-size:0.68rem;color:var(--text-muted);}
-    .ri-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;}
+    .wrap{max-width:1400px;margin:0 auto;padding:32px 20px;}
+    h1{font-size:1.5rem;font-weight:700;margin-bottom:4px;}
+    .sub{font-size:0.82rem;color:var(--txt3);margin-bottom:24px;}
+    .card{background:var(--bg2);border-radius:16px;border:1px solid var(--brd);padding:24px;}
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+    .flbl{font-size:0.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;}
+    .sbtn{background:var(--bg3);border:1px solid var(--brd);border-radius:20px;padding:5px 16px;font-size:0.78rem;font-weight:600;color:var(--txt3);cursor:pointer;transition:all .15s;outline:none;}
+    .sbtn:hover:not(.active){border-color:var(--txt2);color:var(--txt);}
+    .sbtn.active{color:#111 !important;}
+    .sbtn[data-site="all"].active{background:#e2e8f0;border-color:#e2e8f0;}
+    .sbtn[data-site="MLA"].active{background:#f59e0b;border-color:#f59e0b;}
+    .sbtn[data-site="MLB"].active{background:#60a5fa;border-color:#60a5fa;}
+    .sbtn[data-site="MLM"].active{background:#4ade80;border-color:#4ade80;}
+    .sbtn[data-site="MLC"].active{background:#c084fc;border-color:#c084fc;}
+    .sbtn[data-site="MLU"].active{background:#fb923c;border-color:#fb923c;}
+    .legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+    .li{display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--txt2);}
+    .lseg{width:20px;height:2px;display:inline-block;}
+    .lseg.solid{border-radius:2px;}
+    .lseg.dashed{background:none;border-bottom:2px dashed;}
+    .ri-bar{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+    .ri{display:flex;align-items:center;gap:5px;font-size:0.67rem;color:var(--txt3);}
+    .rid{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
   </style>
 </head>
 <body>
-<div class="container">
-
-  <div class="header">
-    <h1>&#128421;&#65039; Visitas Diárias — Point Hub Desktop por Site</h1>
-    <p>Usuários únicos/dia &middot; device.platform = /web/desktop &middot; 11/Mai – 11/Jun 2026 &middot; MELIDATA.TRACKS</p>
-  </div>
+<div class="wrap">
+  <h1>&#128421;&#65039; Visitas Diárias Desktop — Point Hub vs Legacy</h1>
+  <p class="sub">Usuários únicos/dia &middot; /web/desktop &middot; 11/Mai – 11/Jun/2026 &middot; Linha sólida = Hub &middot; Linha pontilhada = Legacy</p>
 
   <div class="card">
-
-    <!-- Filter buttons -->
     <div class="filter-bar">
-      <span class="filter-label">Site:</span>
-      <button class="site-btn active" data-site="all" onclick="filterSite('all')">Todos</button>
-      <button class="site-btn" data-site="MLA" onclick="filterSite('MLA')">🇦🇷 MLA</button>
-      <button class="site-btn" data-site="MLB" onclick="filterSite('MLB')">🇧🇷 MLB</button>
-      <button class="site-btn" data-site="MLM" onclick="filterSite('MLM')">🇲🇽 MLM</button>
-      <button class="site-btn" data-site="MLC" onclick="filterSite('MLC')">🇨🇱 MLC</button>
-      <button class="site-btn" data-site="MLU" onclick="filterSite('MLU')">🇺🇾 MLU</button>
+      <span class="flbl">Site:</span>
+      <button class="sbtn active" data-site="all"  onclick="go('all')">Todos</button>
+      <button class="sbtn"        data-site="MLA"  onclick="go('MLA')">🇦🇷 MLA</button>
+      <button class="sbtn"        data-site="MLB"  onclick="go('MLB')">🇧🇷 MLB</button>
+      <button class="sbtn"        data-site="MLM"  onclick="go('MLM')">🇲🇽 MLM</button>
+      <button class="sbtn"        data-site="MLC"  onclick="go('MLC')">🇨🇱 MLC</button>
+      <button class="sbtn"        data-site="MLU"  onclick="go('MLU')">🇺🇾 MLU</button>
     </div>
 
-    <!-- Legend -->
-    <div class="legend" id="chartLegend">
-      <div class="leg-item"><span class="leg-dot" style="background:#f59e0b;"></span>MLA</div>
-      <div class="leg-item"><span class="leg-dot" style="background:#60a5fa;"></span>MLB</div>
-      <div class="leg-item"><span class="leg-dot" style="background:#4ade80;"></span>MLM</div>
-      <div class="leg-item"><span class="leg-dot" style="background:#c084fc;"></span>MLC</div>
-      <div class="leg-item"><span class="leg-dot" style="background:#fb923c;"></span>MLU</div>
+    <div class="legend">
+      <span style="font-size:.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px;margin-right:2px;">Tipo:</span>
+      <div class="li"><span class="lseg solid" style="background:var(--txt2);"></span>Point Hub Desktop</div>
+      <div class="li"><span class="lseg dashed" style="border-color:var(--txt2);"></span>Legacy Desktop</div>
+      <span style="margin-left:8px;font-size:.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.4px;margin-right:2px;">Sites:</span>
+      <div class="li"><span class="lseg solid" style="background:#f59e0b;"></span>MLA</div>
+      <div class="li"><span class="lseg solid" style="background:#60a5fa;"></span>MLB</div>
+      <div class="li"><span class="lseg solid" style="background:#4ade80;"></span>MLM</div>
+      <div class="li"><span class="lseg solid" style="background:#c084fc;"></span>MLC</div>
+      <div class="li"><span class="lseg solid" style="background:#fb923c;"></span>MLU</div>
     </div>
 
-    <!-- Chart -->
-    <div style="position:relative;height:360px;">
-      <canvas id="visitsChart"></canvas>
+    <div style="position:relative;height:400px;">
+      <canvas id="vc"></canvas>
     </div>
 
-    <!-- Rollout annotations legend -->
-    <div class="rollout-info">
-      <div class="ri"><span class="ri-dot" style="background:#4ade80;"></span><strong style="color:#4ade80;">01/Jun</strong> — MLA+MLB 25%</div>
-      <div class="ri"><span class="ri-dot" style="background:#fb923c;"></span><strong style="color:#fb923c;">03/Jun</strong> — MLA+MLB 50%</div>
-      <div class="ri"><span class="ri-dot" style="background:#f87171;"></span><strong style="color:#f87171;">08/Jun</strong> — MLA+MLB 100%</div>
-      <div class="ri"><span class="ri-dot" style="background:#c084fc;"></span><strong style="color:#c084fc;">09/Jun</strong> — MLM 25% + MLC 25%</div>
+    <div class="ri-bar">
+      <div class="ri"><span class="rid" style="background:#4ade80;"></span><b style="color:#4ade80;">01/Jun</b> — MLA+MLB 25%</div>
+      <div class="ri"><span class="rid" style="background:#fb923c;"></span><b style="color:#fb923c;">03/Jun</b> — MLA+MLB 50%</div>
+      <div class="ri"><span class="rid" style="background:#f87171;"></span><b style="color:#f87171;">08/Jun</b> — MLA+MLB 100%</div>
+      <div class="ri"><span class="rid" style="background:#c084fc;"></span><b style="color:#c084fc;">09/Jun</b> — MLM 25% + MLC 25%</div>
     </div>
-
   </div>
 </div>
 
 <script>
-// ── DATA ──────────────────────────────────────────────────────
-var labels = [
-  '11/Mai','12/Mai','13/Mai','14/Mai','15/Mai','16/Mai','17/Mai','18/Mai','19/Mai','20/Mai',
-  '21/Mai','22/Mai','23/Mai','24/Mai','25/Mai','26/Mai','27/Mai','28/Mai','29/Mai','30/Mai','31/Mai',
-  '01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun','09/Jun','10/Jun','11/Jun'
-];
+var L = ['11/Mai','12/Mai','13/Mai','14/Mai','15/Mai','16/Mai','17/Mai','18/Mai','19/Mai','20/Mai',
+         '21/Mai','22/Mai','23/Mai','24/Mai','25/Mai','26/Mai','27/Mai','28/Mai','29/Mai','30/Mai','31/Mai',
+         '01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun','08/Jun','09/Jun','10/Jun','11/Jun'];
 
-var dataMLA = [
-  0,0,0,0,0,0,0,0,1,0,
-  0,0,0,0,0,0,0,0,0,0,0,
-  212,253,367,518,505,265,184,891,1137,1080,1063
-];
-var dataMLB = [
-  2,1,2,2,1,1,0,2,5,2,
-  3,2,0,1,2,3,2,4,4,0,0,
-  151,180,234,173,327,182,139,681,866,923,845
-];
-var dataMLM = [
-  0,0,1,1,1,0,0,0,0,0,
-  1,1,0,0,1,1,0,0,0,0,0,
-  1,0,0,0,0,0,0,0,117,156,208
-];
-var dataMLC = [
-  0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,60,54,137
-];
-var dataMLU = [
-  0,0,0,0,0,0,0,0,0,1,
-  0,0,0,0,0,1,0,1,0,0,0,
-  1,1,0,0,1,0,0,1,4,4,30
-];
-
-var allDatasets = [
-  { site:'MLA', label:'MLA (Argentina)',  data:dataMLA, color:'#f59e0b' },
-  { site:'MLB', label:'MLB (Brasil)',      data:dataMLB, color:'#60a5fa' },
-  { site:'MLM', label:'MLM (México)',      data:dataMLM, color:'#4ade80' },
-  { site:'MLC', label:'MLC (Chile)',       data:dataMLC, color:'#c084fc' },
-  { site:'MLU', label:'MLU (Uruguai)',     data:dataMLU, color:'#fb923c' }
-];
-
-// ── ROLLOUT PLUGIN ─────────────────────────────────────────────
-var rolloutPlugin = {
-  id: 'rollout',
-  afterDatasetsDraw: function(chart) {
-    var ctx = chart.ctx, yAx = chart.scales.y, xAx = chart.scales.x;
-    var markers = [
-      { label:'21', pct:'25%',  color:'#4ade80'  }, // index 21 = 01/Jun
-      { label:'23', pct:'50%',  color:'#fb923c'  }, // index 23 = 03/Jun
-      { label:'28', pct:'100%', color:'#f87171'  }, // index 28 = 08/Jun
-      { label:'29', pct:'MLM\nMLC',color:'#c084fc'} // index 29 = 09/Jun
-    ];
-    var idxMap = {21:21,23:23,28:28,29:29};
-    markers.forEach(function(m) {
-      var idx = parseInt(m.label);
-      var meta = chart.getDatasetMeta(0);
-      if (!meta || !meta.data || !meta.data[idx]) return;
-      var x = meta.data[idx].x;
-      var lw = m.pct.length > 3 ? 36 : 28;
-      ctx.save();
-      ctx.setLineDash([5,4]); ctx.strokeStyle=m.color; ctx.lineWidth=1.5; ctx.globalAlpha=0.7;
-      ctx.beginPath(); ctx.moveTo(x,yAx.top+2); ctx.lineTo(x,yAx.bottom); ctx.stroke();
-      ctx.setLineDash([]); ctx.globalAlpha=1; ctx.fillStyle=m.color;
-      ctx.beginPath(); ctx.roundRect(x-lw/2,yAx.top-22,lw,16,3); ctx.fill();
-      ctx.fillStyle='#111'; ctx.font='bold 8px -apple-system,sans-serif';
-      ctx.textAlign='center'; ctx.textBaseline='middle';
-      ctx.fillText(m.pct,x,yAx.top-14); ctx.restore();
-    });
-  }
+// Hub data (null = no data, 0 = rollout not reached yet)
+var H={
+  MLA:[null,null,null,null,null,null,null,null,1,null,null,null,null,null,null,null,null,null,null,null,null,212,253,367,518,505,265,184,891,1137,1080,1063],
+  MLB:[2,1,2,2,1,1,null,2,5,2,3,2,null,1,2,3,2,4,4,null,null,151,180,234,173,327,182,139,681,866,923,845],
+  MLM:[null,null,1,1,1,null,null,null,null,null,1,1,null,null,1,1,null,null,null,null,null,1,null,null,null,null,null,null,null,117,156,208],
+  MLC:[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,60,54,137],
+  MLU:[null,null,null,null,null,null,null,null,null,1,null,null,null,null,null,1,null,1,null,null,null,1,1,null,null,1,null,null,1,4,4,30]
 };
 
-// ── CHART ──────────────────────────────────────────────────────
-var ctx = document.getElementById('visitsChart').getContext('2d');
-var chart = new Chart(ctx, {
-  type: 'line',
-  plugins: [rolloutPlugin],
-  data: {
-    labels: labels,
-    datasets: allDatasets.map(function(d) {
-      return {
-        label: d.label,
-        data: d.data,
-        borderColor: d.color,
-        backgroundColor: 'transparent',
-        pointBackgroundColor: d.color,
-        pointBorderColor: '#111',
-        pointBorderWidth: 1,
-        pointRadius: function(ctx) { return ctx.raw > 0 ? 4 : 0; },
-        pointHoverRadius: 6,
-        borderWidth: 2,
-        tension: 0.3,
-        fill: false,
-        spanGaps: false,
-        _site: d.site
-      };
-    })
+// Legacy data
+var LG={
+  MLA:[943,935,1004,953,886,452,238,897,905,974,952,1206,567,301,413,1131,1143,1034,944,482,334,928,865,700,482,483,285,173,190,2,1,5],
+  MLB:[900,872,808,824,769,357,305,775,814,789,771,730,340,267,750,832,816,734,646,365,304,674,513,532,188,319,192,149,142,37,32,35],
+  MLM:[464,482,467,468,429,222,142,420,484,426,420,429,236,194,472,492,472,472,446,266,223,516,535,525,483,475,266,177,423,441,417,229],
+  MLC:[241,247,241,231,205,90,94,285,265,207,102,166,79,85,241,230,236,206,195,120,85,292,275,290,228,212,128,118,262,198,162,163],
+  MLU:[8,2,9,1,5,1,2,5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+};
+
+var COLORS={MLA:'#f59e0b',MLB:'#60a5fa',MLM:'#4ade80',MLC:'#c084fc',MLU:'#fb923c'};
+var SITES=['MLA','MLB','MLM','MLC','MLU'];
+
+// Build datasets: Hub (solid) then Legacy (dashed) for each site
+var allDS=[];
+SITES.forEach(function(s){
+  allDS.push({site:s,type:'Hub',  label:s+' Hub',    data:H[s],  color:COLORS[s], dash:[]    });
+  allDS.push({site:s,type:'Legacy',label:s+' Legacy',data:LG[s], color:COLORS[s], dash:[5,4] });
+});
+
+// Rollout plugin
+var rp={id:'rp',afterDatasetsDraw:function(c){
+  var ctx=c.ctx,y=c.scales.y;
+  // find first visible dataset
+  var meta=null;
+  for(var i=0;i<c.data.datasets.length;i++){if(!c.data.datasets[i].hidden){meta=c.getDatasetMeta(i);break;}}
+  if(!meta||!meta.data)return;
+  [{i:21,t:'25%',col:'#4ade80'},{i:23,t:'50%',col:'#fb923c'},{i:28,t:'100%',col:'#f87171'},{i:29,t:'MLM\nMLC',col:'#c084fc'}].forEach(function(m){
+    var b=meta.data[m.i]; if(!b)return;
+    var x=b.x, lw=m.t.length>3?36:26;
+    ctx.save();
+    ctx.setLineDash([5,4]);ctx.strokeStyle=m.col;ctx.lineWidth=1.5;ctx.globalAlpha=.7;
+    ctx.beginPath();ctx.moveTo(x,y.top+2);ctx.lineTo(x,y.bottom);ctx.stroke();
+    ctx.setLineDash([]);ctx.globalAlpha=1;ctx.fillStyle=m.col;
+    ctx.beginPath();ctx.roundRect(x-lw/2,y.top-22,lw,16,3);ctx.fill();
+    ctx.fillStyle='#111';ctx.font='bold 8px -apple-system,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(m.t,x,y.top-14);ctx.restore();
+  });
+}};
+
+var chart=new Chart(document.getElementById('vc').getContext('2d'),{
+  type:'line',plugins:[rp],
+  data:{
+    labels:L,
+    datasets:allDS.map(function(d){return{
+      label:d.label,data:d.data,
+      borderColor:d.color,
+      backgroundColor:'transparent',
+      borderWidth:d.type==='Hub'?2:1.5,
+      borderDash:d.dash,
+      pointBackgroundColor:d.color,
+      pointBorderColor:'#111',
+      pointBorderWidth:1,
+      pointRadius:function(ctx){return(ctx.raw!=null&&ctx.raw>0)?3:0;},
+      pointHoverRadius:5,
+      tension:0.3,fill:false,spanGaps:false,
+      _site:d.site,_type:d.type
+    };})
   },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    layout: { padding: { top: 30, bottom: 4, left: 4, right: 10 } },
-    interaction: { mode: 'index', intersect: false },
-    plugins: {
-      legend: { display: false },
-      datalabels: { display: false },
-      tooltip: {
-        backgroundColor: '#1e293b', borderColor: '#475569', borderWidth: 1,
-        titleColor: '#f1f5f9', bodyColor: '#94a3b8', padding: 10,
-        filter: function(item) { return item.raw > 0; },
-        callbacks: {
-          label: function(ctx) {
-            return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('pt-BR') + ' users';
-          }
-        }
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:32,bottom:4,left:4,right:10}},
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      datalabels:{display:false},
+      tooltip:{
+        backgroundColor:'#1e293b',borderColor:'#475569',borderWidth:1,
+        titleColor:'#f1f5f9',bodyColor:'#94a3b8',padding:10,
+        filter:function(i){return i.raw!=null&&i.raw>0;},
+        callbacks:{label:function(c){return' '+c.dataset.label+': '+c.raw.toLocaleString('pt-BR')+' users';}}
       }
     },
-    scales: {
-      x: {
-        ticks: {
-          color: '#64748b', font: { size: 8 },
-          maxRotation: 45,
-          callback: function(val, idx) {
-            var l = labels[idx];
-            return l.endsWith('Mai') && idx % 3 === 0 ? l :
-                   l.startsWith('0') ? l : '';
+    scales:{
+      x:{
+        ticks:{color:'#64748b',font:{size:8},maxRotation:45,
+          callback:function(v,i){
+            var d=L[i];
+            if(d==='11/Mai'||d==='18/Mai'||d==='25/Mai'||d==='01/Jun'||d==='08/Jun')return d;
+            return'';
           }
         },
-        grid: { color: 'rgba(71,85,105,0.15)' },
-        border: { display: false }
+        grid:{color:'rgba(71,85,105,0.15)'},border:{display:false}
       },
-      y: {
-        ticks: {
-          color: '#64748b', font: { size: 9 },
-          callback: function(v) { return v >= 1000 ? (v/1000).toFixed(0)+'K' : v; }
-        },
-        grid: { color: 'rgba(71,85,105,0.2)' },
-        border: { display: false },
-        title: { display: true, text: 'Usuários únicos / dia', color: '#64748b', font: { size: 9 } }
+      y:{
+        ticks:{color:'#64748b',font:{size:9},callback:function(v){return v>=1000?(v/1000).toFixed(1)+'K':v;}},
+        grid:{color:'rgba(71,85,105,0.2)'},border:{display:false},
+        title:{display:true,text:'Usuários únicos / dia',color:'#64748b',font:{size:9}}
       }
     }
   }
 });
 
-// ── FILTER ─────────────────────────────────────────────────────
-function filterSite(site) {
-  document.querySelectorAll('.site-btn').forEach(function(b) {
-    b.classList.toggle('active', b.dataset.site === site);
-  });
-  chart.data.datasets.forEach(function(ds, i) {
-    var show = site === 'all' || allDatasets[i].site === site;
-    ds.hidden = !show;
+function go(site){
+  document.querySelectorAll('.sbtn').forEach(function(b){b.classList.toggle('active',b.dataset.site===site);});
+  chart.data.datasets.forEach(function(ds){
+    ds.hidden = site==='all' ? false : ds._site!==site;
   });
   chart.update();
 }
