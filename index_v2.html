@@ -1,4 +1,4 @@
-﻿﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -462,7 +462,7 @@
     .aud-pending{display:none;background:rgba(234,179,8,0.1);border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#ca8a04;margin-bottom:12px;}
 
     /* PAGE ISOLATION — garante que apenas a aba ativa é visível */
-    #page-desktop, #page-mlu, #page-cross { display: none; }
+    #page-5050, #page-desktop, #page-mlu, #page-cross { display: none; }
 
     /* TAB NAVIGATION */
     .tab-nav{display:flex;gap:0;margin-bottom:32px;border-bottom:2px solid var(--border-color);}
@@ -553,10 +553,10 @@
     </div>
   </header>
 <nav class="tab-nav">
-  <button class="tab-btn active" data-tab="5050"    onclick="switchTab('5050')">&#9889;&#65039; Aba 50/50</button>
-  <button class="tab-btn"        data-tab="desktop" onclick="switchTab('desktop')">&#128421;&#65039; Desktop</button>
-  <button class="tab-btn"        data-tab="cross"   onclick="switchTab('cross')">&#127760; Desktop Cross Site</button>
-  <button class="tab-btn" style="display:none;" data-tab="mlu" onclick="switchTab('mlu')">&#128241; MLU Mobile</button>
+  <button class="tab-btn" style="display:none;" data-tab="5050"    onclick="switchTab('5050')">&#9889;&#65039; Aba 50/50</button>
+  <button class="tab-btn" style="display:none;" data-tab="desktop" onclick="switchTab('desktop')">&#128421;&#65039; Desktop</button>
+  <button class="tab-btn active"                 data-tab="cross"  onclick="switchTab('cross')">&#127760; Desktop Cross Site</button>
+  <button class="tab-btn" style="display:none;" data-tab="mlu"    onclick="switchTab('mlu')">&#128241; MLU Mobile</button>
 </nav>
 <div id="page-5050">
 
@@ -3087,78 +3087,6 @@ ORDER BY 1</pre>
 <!-- ============================================================ -->
 <div id="page-cross" style="display:none;">
 
-  <!-- Context banner -->
-  <div style="background:linear-gradient(135deg,rgba(52,211,153,0.06),rgba(245,158,11,0.06));border:1px solid var(--border-color);border-radius:12px;padding:20px 24px;margin-bottom:20px;">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-
-      <div style="flex:1;min-width:300px;">
-        <div style="font-size:0.65rem;font-weight:700;color:#34d399;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;">&#127760; Contexto da An&aacute;lise &mdash; Desktop Cross Site</div>
-        <p style="font-size:0.82rem;color:var(--text-primary);line-height:1.7;margin:0;">
-          Ap&oacute;s o rollout completo de <strong>MLA e MLB Desktop</strong> (conclu&iacute;do em 08/Jun),
-          expandimos o <strong style="color:var(--hub-color);">Point Hub Desktop</strong> para os sites
-          <strong>MLM (M&eacute;xico)</strong>, <strong>MLC (Chile)</strong> e <strong>MLU (Uruguai)</strong>
-          com expans&atilde;o progressiva a partir de <strong>09 de junho de 2026</strong>.
-        </p>
-        <p style="font-size:0.78rem;color:var(--text-secondary);line-height:1.7;margin:8px 0 0;">
-          O objetivo &eacute; entender o <strong>comportamento do seller na experi&ecirc;ncia desktop nesses novos mercados</strong> &mdash;
-          como navega, de onde chega e em que medida recorre ao suporte &mdash;
-          comparando Hub Desktop vs Legacy Desktop por site.
-        </p>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0;min-width:260px;">
-
-        <!-- Rollout card -->
-        <div style="background:var(--bg-card);border-radius:10px;padding:12px 16px;border-left:3px solid #34d399;">
-          <div style="color:#34d399;font-weight:700;font-size:0.8rem;margin-bottom:8px;">&#128200; Rollout MLM · MLC · MLU Desktop</div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
-              <span style="color:var(--text-secondary);">09/Jun/2026</span>
-              <span style="font-weight:700;color:#4ade80;">25%</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
-              <span style="color:var(--text-secondary);">11/Jun/2026</span>
-              <span style="font-weight:700;color:#fb923c;">50%</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.75rem;">
-              <span style="color:var(--text-secondary);">16/Jun/2026</span>
-              <span style="font-weight:700;color:#f87171;">100%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sites cards -->
-        <div style="display:flex;gap:8px;">
-          <div style="flex:1;background:var(--bg-card);border-radius:8px;padding:8px 10px;text-align:center;border-top:2px solid #4ade80;">
-            <div style="font-size:0.7rem;font-weight:700;color:#4ade80;">&#127474;&#127485; MLM</div>
-            <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">M&eacute;xico</div>
-          </div>
-          <div style="flex:1;background:var(--bg-card);border-radius:8px;padding:8px 10px;text-align:center;border-top:2px solid #c084fc;">
-            <div style="font-size:0.7rem;font-weight:700;color:#c084fc;">&#127464;&#127473; MLC</div>
-            <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Chile</div>
-          </div>
-          <div style="flex:1;background:var(--bg-card);border-radius:8px;padding:8px 10px;text-align:center;border-top:2px solid #fb923c;">
-            <div style="font-size:0.7rem;font-weight:700;color:#fb923c;">&#127482;&#127486; MLU</div>
-            <div style="font-size:0.62rem;color:var(--text-muted);margin-top:2px;">Uruguai</div>
-          </div>
-        </div>
-
-        <!-- Reference -->
-        <div style="background:var(--bg-card);border-radius:8px;padding:8px 12px;border-left:3px solid var(--border-color);">
-          <div style="color:var(--text-muted);font-size:0.72rem;">&#9432; MLA + MLB Desktop: rollout conclu&iacute;do em 08/Jun. An&aacute;lise completa na aba <strong>Desktop</strong>.</div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Placeholder próximas análises -->
-  <div style="background:var(--bg-secondary);border-radius:12px;border:1px dashed var(--border-color);padding:32px;text-align:center;color:var(--text-muted);">
-    <div style="font-size:1.5rem;margin-bottom:10px;">&#128202;</div>
-    <div style="font-size:0.9rem;font-weight:600;margin-bottom:6px;color:var(--text-secondary);">An&aacute;lises em constru&ccedil;&atilde;o</div>
-    <div style="font-size:0.78rem;line-height:1.6;">Dados de navega&ccedil;&atilde;o, visitas di&aacute;rias e funil por site (MLM · MLC · MLU) ser&atilde;o adicionados aqui.</div>
-  </div>
-
 </div><!-- /page-cross -->
 </div>
 <script>
@@ -4160,6 +4088,9 @@ ORDER BY 1</pre>
   })();
 
   // ── TAB NAVIGATION ──────────────────────────────────────────
+  // Abre aba Cross Site por padrão neste painel v2
+  document.addEventListener('DOMContentLoaded', function() { switchTab('cross'); });
+
   function switchTab(tab) {
     document.getElementById('page-5050').style.display    = tab === '5050'    ? 'block' : 'none';
     document.getElementById('page-desktop').style.display = tab === 'desktop' ? 'block' : 'none';
@@ -4180,5 +4111,6 @@ ORDER BY 1</pre>
 </script>
 </body>
 </html>
+
 
 
