@@ -4089,8 +4089,6 @@ ORDER BY 1</pre>
 
   // ── TAB NAVIGATION ──────────────────────────────────────────
   // Abre aba Cross Site por padrão neste painel v2
-  document.addEventListener('DOMContentLoaded', function() { switchTab('cross'); });
-
   function switchTab(tab) {
     document.getElementById('page-5050').style.display    = tab === '5050'    ? 'block' : 'none';
     document.getElementById('page-desktop').style.display = tab === 'desktop' ? 'block' : 'none';
@@ -4107,6 +4105,9 @@ ORDER BY 1</pre>
       setTimeout(function() { window.dispatchEvent(new Event('resize')); }, 50);
     }
   }
+
+  // Abre aba Cross Site por padrão — chamado APÓS todas as inicializações
+  switchTab('cross');
 
 </script>
 </body>
