@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Point Hub Desktop — Audiência Cross Site</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+:root{
+  --bg:#111;--bg2:#1c1c1c;--bg3:#272727;--bg4:#333;
+  --txt:#f0ede6;--txt2:#a09a90;--txt3:#6b6560;
+  --brd:#3c3a35;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);line-height:1.5;}
+.wrap{max-width:1500px;margin:0 auto;padding:28px 20px;}
+.header{margin-bottom:24px;}
+.header h1{font-size:1.5rem;font-weight:700;margin-bottom:4px;}
+.header p{font-size:0.8rem;color:var(--txt3);}
+.card{background:var(--bg2);border-radius:14px;border:1px solid var(--brd);padding:20px 24px;}
+/* filter bar */
+.fbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.flbl{font-size:0.68rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;}
+.fbtn{background:var(--bg3);border:1px solid var(--brd);border-radius:20px;padding:4px 14px;font-size:0.75rem;font-weight:600;color:var(--txt3);cursor:pointer;transition:all .12s;outline:none;}
+.fbtn:hover:not(.on){border-color:var(--txt2);color:var(--txt);}
+.fbtn.on{color:#111 !important;}
+.fbtn[data-f="all"].on{background:#e2e8f0;border-color:#e2e8f0;}
+.fbtn[data-f="mla"].on{background:#f59e0b;border-color:#f59e0b;}
+.fbtn[data-f="mlb"].on{background:#60a5fa;border-color:#60a5fa;}
+.fbtn[data-f="mlm"].on{background:#4ade80;border-color:#4ade80;}
+.fbtn[data-f="mlc"].on{background:#c084fc;border-color:#c084fc;}
+.fbtn[data-f="leg"].on{background:#94a3b8;border-color:#94a3b8;}
+/* legend */
+.leg{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.li{display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--txt2);}
+.dot{width:14px;height:10px;border-radius:2px;display:inline-block;}
+/* rollout info bar */
+.rbar{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;}
+.ri{display:flex;align-items:center;gap:5px;font-size:0.67rem;color:var(--txt3);}
+.rid{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>&#128421;&#65039; Point Hub Desktop — Audiência Cross Site</h1>
+    <p>Usuários únicos/dia &middot; /web/desktop &middot; 25/Mai &rarr; 22/Jun/2026 &middot; MLA · MLB · MLM · MLC</p>
+  </div>
+
+  <div class="card">
+    <!-- Filter -->
+    <div class="fbar">
+      <span class="flbl">Ver:</span>
+      <button class="fbtn on" data-f="all"  onclick="filt('all')">Todos os Sites</button>
+      <button class="fbtn"    data-f="mla"  onclick="filt('mla')">🇦🇷 MLA Hub</button>
+      <button class="fbtn"    data-f="mlb"  onclick="filt('mlb')">🇧🇷 MLB Hub</button>
+      <button class="fbtn"    data-f="mlm"  onclick="filt('mlm')">🇲🇽 MLM Hub</button>
+      <button class="fbtn"    data-f="mlc"  onclick="filt('mlc')">🇨🇱 MLC Hub</button>
+      <button class="fbtn"    data-f="leg"  onclick="filt('leg')">Legacy (todos)</button>
+    </div>
+
+    <!-- Legend -->
+    <div class="leg">
+      <div class="li"><span class="dot" style="background:#f59e0b;"></span>MLA Hub</div>
+      <div class="li"><span class="dot" style="background:#60a5fa;"></span>MLB Hub</div>
+      <div class="li"><span class="dot" style="background:#4ade80;"></span>MLM Hub</div>
+      <div class="li"><span class="dot" style="background:#c084fc;"></span>MLC Hub</div>
+      <div class="li"><span class="dot" style="background:rgba(148,163,184,0.5);border:1px solid #64748b;"></span>Legacy (todos sites)</div>
+    </div>
+
+    <!-- Chart -->
+    <div style="position:relative;height:420px;">
+      <canvas id="c"></canvas>
+    </div>
+
+    <!-- Rollout markers legend -->
+    <div class="rbar">
+      <div class="ri"><span class="rid" style="background:#4ade80;"></span><b style="color:#4ade80;">01/Jun</b> MLA+MLB 25%</div>
+      <div class="ri"><span class="rid" style="background:#fb923c;"></span><b style="color:#fb923c;">03/Jun</b> MLA+MLB 50%</div>
+      <div class="ri"><span class="rid" style="background:#f87171;"></span><b style="color:#f87171;">08/Jun</b> MLA+MLB 100%</div>
+      <div class="ri"><span class="rid" style="background:#a78bfa;"></span><b style="color:#a78bfa;">09/Jun</b> MLM+MLC+MLU 25%</div>
+      <div class="ri"><span class="rid" style="background:#7dd3fc;"></span><b style="color:#7dd3fc;">11/Jun</b> MLM+MLC+MLU 50%</div>
+      <div class="ri"><span class="rid" style="background:#e2e8f0;"></span><b style="color:#e2e8f0;">16/Jun</b> MLM+MLC+MLU 100%</div>
+      <div class="ri"><span style="color:var(--txt3);">&#128197; fim de semana = queda esperada</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── LABELS: 25/Mai → 22/Jun (29 dias) ──────────────────────
+var L = [
+  '25/Mai','26/Mai','27/Mai','28/Mai','29/Mai','30/Mai','31/Mai',
+  '01/Jun','02/Jun','03/Jun','04/Jun','05/Jun','06/Jun','07/Jun',
+  '08/Jun','09/Jun','10/Jun','11/Jun','12/Jun','13/Jun','14/Jun',
+  '15/Jun','16/Jun','17/Jun','18/Jun','19/Jun','20/Jun','21/Jun','22/Jun'
+];
+
+// ── HUB DATA per site (0 = no rollout yet) ─────────────────
+var HUB = {
+  MLA:[0,0,0,0,0,0,0, 212,253,367,518,505,265,184, 891,1137,1080,1063,1089,571,347, 476,983,1001,1045,958,506,256,816],
+  MLB:[0,3,2,4,4,0,0, 151,180,234,173,327,182,139, 681,866,923,845,741,371,307, 910,856,879,847,722,379,334,849],
+  MLM:[1,1,0,0,0,0,0, 1,0,0,0,0,0,0, 0,117,156,208,235,137,101, 255,505,547,490,462,281,173,455],
+  MLC:[0,0,0,0,0,0,0, 0,0,0,0,0,0,0, 0,60,54,137,125,49,53, 134,262,305,271,240,122,101,292]
+};
+
+// ── LEGACY: soma de todos os sites por dia ──────────────────
+var LEG = [
+  1876,2685,2667,2446,2231,1233,946,
+  2410,2188,2047,1381,1489,871,617,
+  1017,678,612,432,460,282,215,
+  496,172,128,116,116,63,40,104
+];
+
+// ── CORES ──────────────────────────────────────────────────
+var COLORS = {
+  MLA:'rgba(245,158,11,0.88)',
+  MLB:'rgba(96,165,250,0.88)',
+  MLM:'rgba(74,222,128,0.88)',
+  MLC:'rgba(192,132,252,0.88)',
+  LEG:'rgba(100,116,139,0.45)'
+};
+
+// ── ROLLOUT PLUGIN ─────────────────────────────────────────
+var rPlugin = {
+  id:'rp',
+  afterDatasetsDraw: function(ch) {
+    var ctx=ch.ctx, y=ch.scales.y;
+    var meta=null;
+    for(var i=0;i<ch.data.datasets.length;i++){
+      if(!ch.data.datasets[i].hidden){meta=ch.getDatasetMeta(i);break;}
+    }
+    if(!meta||!meta.data)return;
+    var marks=[
+      {i:7, t:'25%',  c:'#4ade80'},
+      {i:9, t:'50%',  c:'#fb923c'},
+      {i:14,t:'100%', c:'#f87171'},
+      {i:15,t:'25%',  c:'#a78bfa'},
+      {i:17,t:'50%',  c:'#7dd3fc'},
+      {i:22,t:'100%', c:'#e2e8f0'}
+    ];
+    marks.forEach(function(m){
+      var b=meta.data[m.i]; if(!b)return;
+      var x=b.x, lw=m.t.length>3?34:26;
+      ctx.save();
+      ctx.setLineDash([5,4]);ctx.strokeStyle=m.c;ctx.lineWidth=1.5;ctx.globalAlpha=.7;
+      ctx.beginPath();ctx.moveTo(x,y.top+2);ctx.lineTo(x,y.bottom);ctx.stroke();
+      ctx.setLineDash([]);ctx.globalAlpha=1;ctx.fillStyle=m.c;
+      ctx.beginPath();ctx.roundRect(x-lw/2,y.top-22,lw,16,3);ctx.fill();
+      ctx.fillStyle='#111';ctx.font='bold 8px -apple-system,sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(m.t,x,y.top-14);ctx.restore();
+    });
+  }
+};
+
+// ── BUILD CHART ────────────────────────────────────────────
+var DS = [
+  {key:'MLA', label:'MLA (Argentina)', data:HUB.MLA, color:COLORS.MLA},
+  {key:'MLB', label:'MLB (Brasil)',     data:HUB.MLB, color:COLORS.MLB},
+  {key:'MLM', label:'MLM (México)',     data:HUB.MLM, color:COLORS.MLM},
+  {key:'MLC', label:'MLC (Chile)',      data:HUB.MLC, color:COLORS.MLC},
+  {key:'LEG', label:'Legacy (todos)',   data:LEG,      color:COLORS.LEG}
+];
+
+var chart = new Chart(document.getElementById('c').getContext('2d'),{
+  type:'bar',
+  plugins:[ChartDataLabels, rPlugin],
+  data:{
+    labels:L,
+    datasets: DS.map(function(d){
+      return {
+        label:d.label, data:d.data, _key:d.key,
+        backgroundColor:d.color,
+        borderRadius: d.key==='LEG'?0:0,
+        stack:'v',
+        datalabels:{
+          display: function(ctx){
+            return ctx.raw >= (d.key==='LEG'?200:100);
+          },
+          anchor:'center', align:'center',
+          color: d.key==='LEG'?'#cbd5e1':'#111',
+          font:{size:8,weight:'700'},
+          formatter:function(v){return v>=1000?(v/1000).toFixed(1)+'K':v;}
+        }
+      };
+    })
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    layout:{padding:{top:32,bottom:4,left:4,right:10}},
+    interaction:{mode:'index',intersect:false},
+    plugins:{
+      legend:{display:false},
+      datalabels:{display:true},
+      tooltip:{
+        backgroundColor:'#1e293b',borderColor:'#475569',borderWidth:1,
+        titleColor:'#f1f5f9',bodyColor:'#94a3b8',padding:10,
+        callbacks:{
+          label:function(ctx){
+            if(ctx.raw===0)return null;
+            return ' '+ctx.dataset.label+': '+ctx.raw.toLocaleString('pt-BR');
+          },
+          afterBody:function(items){
+            var tot=items.reduce(function(s,i){return s+(i.raw||0);},0);
+            return tot>0?['─────────','Total: '+tot.toLocaleString('pt-BR')]:[];
+          }
+        }
+      }
+    },
+    scales:{
+      x:{
+        stacked:true,
+        ticks:{color:'#64748b',font:{size:8},maxRotation:45,
+          callback:function(v,i){
+            var d=L[i];
+            return(d==='25/Mai'||d==='01/Jun'||d==='08/Jun'||d==='09/Jun'||d==='16/Jun'||i%7===0)?d:'';
+          }
+        },
+        grid:{display:false},border:{display:false}
+      },
+      y:{
+        stacked:true,
+        ticks:{color:'#64748b',font:{size:9},callback:function(v){return v>=1000?(v/1000).toFixed(0)+'K':v;}},
+        grid:{color:'rgba(71,85,105,0.2)'},border:{display:false},
+        title:{display:true,text:'Usuários únicos / dia',color:'#64748b',font:{size:9}}
+      }
+    }
+  }
+});
+
+// ── FILTER ────────────────────────────────────────────────
+function filt(f){
+  document.querySelectorAll('.fbtn').forEach(function(b){b.classList.toggle('on',b.dataset.f===f);});
+  chart.data.datasets.forEach(function(ds){
+    ds.hidden = f==='all' ? false : ds._key.toLowerCase() !== f;
+  });
+  chart.update();
+}
+</script>
+</body>
+</html>
