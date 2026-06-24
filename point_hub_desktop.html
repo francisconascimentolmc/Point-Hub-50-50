@@ -45,9 +45,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="wrap">
 
   <div class="header">
-    <h1>&#128421;&#65039; Point Hub Desktop — Audiência Cross Site</h1>
-    <p>Usuários únicos/dia &middot; /web/desktop &middot; 25/Mai &rarr; 22/Jun/2026 &middot; MLA · MLB · MLM · MLC</p>
+    <h1>&#128421;&#65039; Point Hub Desktop — An&aacute;lise Cross Site</h1>
+    <p>/web/desktop &middot; 25/Mai &rarr; 22/Jun/2026 &middot; MLA &middot; MLB &middot; MLM &middot; MLC &middot; MLU</p>
   </div>
+
+  <!-- CONTEXTO DA ANÁLISE -->
+  <div style="background:var(--bg2);border-radius:14px;border:1px solid var(--brd);padding:20px 24px;margin-bottom:16px;">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;flex-wrap:wrap;">
+
+      <div>
+        <div style="font-size:0.68rem;font-weight:700;color:#f59e0b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;">&#128421;&#65039; Contexto da An&aacute;lise</div>
+
+        <p style="font-size:0.85rem;color:var(--txt);line-height:1.8;margin-bottom:10px;">
+          O <strong style="color:#f59e0b;">Point Hub Desktop</strong> &eacute; a <strong>nova vers&atilde;o da se&ccedil;&atilde;o de gest&atilde;o de maquininhas Point para web desktop</strong>, lançada progressivamente a partir de <strong>01 de junho de 2026</strong> para MLA e MLB (25% &rarr; 50% &rarr; 100% em 08/Jun) e a partir de <strong>09 de junho</strong> para MLM, MLC e MLU (25% &rarr; 50% &rarr; 100% em 16/Jun).
+          Durante o rollout, sellers atribu&iacute;dos ao Hub acessam a nova experi&ecirc;ncia enquanto os demais permanecem na <strong style="color:#94a3b8;">vers&atilde;o Legacy</strong> &mdash; a interface anterior de desktop, sem o redesign.
+        </p>
+
+        <p style="font-size:0.78rem;color:var(--txt2);line-height:1.75;">
+          O objetivo desta an&aacute;lise &eacute; entender o <strong>comportamento do seller na nova experi&ecirc;ncia desktop</strong> &mdash; como navega, de onde chega, quais a&ccedil;&otilde;es realiza e em que medida recorre ao suporte &mdash; comparando diretamente com a vers&atilde;o Legacy para avaliar o impacto do redesign nesse canal.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;min-width:260px;">
+        <div style="background:var(--bg3);border-radius:10px;padding:12px 16px;border-left:3px solid #f59e0b;">
+          <div style="color:#f59e0b;font-weight:700;font-size:0.8rem;margin-bottom:6px;">Point Hub Desktop <span style="font-size:0.65rem;font-weight:400;">(nova vers&atilde;o)</span></div>
+          <div style="color:var(--txt2);font-size:0.72rem;line-height:1.6;">
+            MLA+MLB: 01/Jun &rarr; 25% &middot; 03/Jun &rarr; 50% &middot; 08/Jun &rarr; 100%<br>
+            MLM+MLC+MLU: 09/Jun &rarr; 25% &middot; 11/Jun &rarr; 50% &middot; 16/Jun &rarr; 100%
+          </div>
+          <div style="color:var(--txt3);font-size:0.62rem;margin-top:4px;">/point_devices/point_hub &middot; /web/desktop</div>
+        </div>
+        <div style="background:var(--bg3);border-radius:10px;padding:12px 16px;border-left:3px solid #94a3b8;">
+          <div style="color:#94a3b8;font-weight:700;font-size:0.8rem;margin-bottom:6px;">Legacy Desktop <span style="font-size:0.65rem;font-weight:400;">(vers&atilde;o antiga)</span></div>
+          <div style="color:var(--txt2);font-size:0.72rem;line-height:1.6;">
+            Grupo controle &middot; sellers n&atilde;o atribu&iacute;dos ao Hub<br>
+            Interface anterior sem o redesign do Point Hub
+          </div>
+          <div style="color:var(--txt3);font-size:0.62rem;margin-top:4px;">/point_devices/* (exceto point_hub) &middot; /web/desktop</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /contexto -->
 
   <!-- DE ONDE VÊM -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
@@ -168,12 +207,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="ri"><span style="color:var(--txt3);">&#128197; fim de semana = queda esperada</span></div>
     </div>
   </div>
-  <!-- FUNIL: Seção → Maxwell → CX -->
+  <!-- FUNIL: Maxwell Legacy vs Point Hub -->
   <div style="background:var(--bg2);border-radius:14px;border:1px solid var(--brd);padding:20px 24px;margin-bottom:16px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;">
       <div>
-        <div style="font-size:0.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">&#128202; Funil Desktop — Seção &rarr; Maxwell &rarr; CX</div>
-        <div style="font-size:0.72rem;color:var(--txt3);">Sellers que acessaram &rarr; abriram Maxwell web &rarr; contataram CX (mesmo dia) &middot; Todos os sites &middot; Jun/2026</div>
+        <div style="font-size:0.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px;">&#128202; Funil Maxwell — Legacy vs Point Hub</div>
+        <div style="font-size:0.72rem;color:var(--txt2);line-height:1.6;max-width:680px;">
+          Compara o comportamento dos sellers nas duas experi&ecirc;ncias desktop ao buscar suporte: quantos acessaram a se&ccedil;&atilde;o, quantos abriram o assistente virtual Maxwell via web e quantos ainda precisaram contatar o CX humano no mesmo dia &middot; 25/Mai–22/Jun/2026 &middot; Todos os sites
+        </div>
       </div>
       <div style="display:flex;gap:12px;">
         <span style="display:flex;align-items:center;gap:5px;font-size:0.72rem;color:var(--txt2);">
@@ -189,19 +230,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
       <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;border-top:2px solid #f59e0b;">
         <div style="font-size:0.6rem;font-weight:700;color:#f59e0b;text-transform:uppercase;margin-bottom:3px;">Hub &middot; Visitantes</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f59e0b;">31.037</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#f59e0b;">27.872</div>
       </div>
       <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;border-top:2px solid #f59e0b;">
         <div style="font-size:0.6rem;font-weight:700;color:#f59e0b;text-transform:uppercase;margin-bottom:3px;">Hub &middot; Maxwell</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f59e0b;">4.780 <span style="font-size:0.72rem;font-weight:400;color:var(--txt3);">15,4%</span></div>
+        <div style="font-size:1.3rem;font-weight:800;color:#f59e0b;">4.417 <span style="font-size:0.72rem;font-weight:400;color:var(--txt3);">15,8%</span></div>
       </div>
       <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;border-top:2px solid #60a5fa;">
         <div style="font-size:0.6rem;font-weight:700;color:#60a5fa;text-transform:uppercase;margin-bottom:3px;">Legacy &middot; Visitantes</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#60a5fa;">25.128</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#60a5fa;">25.022</div>
       </div>
       <div style="background:var(--bg3);border-radius:8px;padding:10px 12px;border-top:2px solid #60a5fa;">
         <div style="font-size:0.6rem;font-weight:700;color:#60a5fa;text-transform:uppercase;margin-bottom:3px;">Legacy &middot; Maxwell</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#60a5fa;">4.174 <span style="font-size:0.72rem;font-weight:400;color:var(--txt3);">16,6%</span></div>
+        <div style="font-size:1.3rem;font-weight:800;color:#60a5fa;">4.153 <span style="font-size:0.72rem;font-weight:400;color:var(--txt3);">16,6%</span></div>
       </div>
     </div>
 
@@ -215,7 +256,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
       <!-- Etapa 1: Entrou na seção -->
       <div style="text-align:right;padding:8px 12px 8px 0;">
-        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">31.037</div>
+        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">27.872</div>
         <div style="font-size:0.6rem;color:var(--txt3);">100%</div>
         <div style="display:flex;justify-content:flex-end;margin-top:5px;">
           <div style="height:18px;width:100%;background:rgba(245,158,11,0.7);border-radius:3px 0 0 3px;"></div>
@@ -228,7 +269,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         </div>
       </div>
       <div style="text-align:left;padding:8px 0 8px 12px;">
-        <div style="font-size:1rem;font-weight:800;color:#60a5fa;">25.128</div>
+        <div style="font-size:1rem;font-weight:800;color:#60a5fa;">25.022</div>
         <div style="font-size:0.6rem;color:var(--txt3);">100%</div>
         <div style="display:flex;justify-content:flex-start;margin-top:5px;">
           <div style="height:18px;width:81%;background:rgba(96,165,250,0.7);border-radius:0 3px 3px 0;"></div>
@@ -237,8 +278,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
       <!-- Etapa 2: Abriu Maxwell -->
       <div style="text-align:right;padding:8px 12px 8px 0;">
-        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">4.780</div>
-        <div style="font-size:0.6rem;color:#f59e0b;font-weight:600;">15,4%</div>
+        <div style="font-size:1rem;font-weight:800;color:#f59e0b;">4.417</div>
+        <div style="font-size:0.6rem;color:#f59e0b;font-weight:600;">15,8%</div>
         <div style="display:flex;justify-content:flex-end;margin-top:5px;">
           <div style="height:18px;width:15.4%;background:rgba(245,158,11,0.85);border-radius:3px 0 0 3px;"></div>
         </div>
@@ -250,7 +291,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         </div>
       </div>
       <div style="text-align:left;padding:8px 0 8px 12px;">
-        <div style="font-size:1rem;font-weight:800;color:#60a5fa;">4.174</div>
+        <div style="font-size:1rem;font-weight:800;color:#60a5fa;">4.153</div>
         <div style="font-size:0.6rem;color:#60a5fa;font-weight:600;">16,6%</div>
         <div style="display:flex;justify-content:flex-start;margin-top:5px;">
           <div style="height:18px;width:16.6%;background:rgba(96,165,250,0.85);border-radius:0 3px 3px 0;"></div>
@@ -259,8 +300,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
       <!-- Etapa 3: Foi ao CX -->
       <div style="text-align:right;padding:8px 12px 8px 0;">
-        <div style="font-size:1rem;font-weight:800;color:#f87171;">79</div>
-        <div style="font-size:0.6rem;color:#f87171;font-weight:600;">0,25%</div>
+        <div style="font-size:1rem;font-weight:800;color:#f87171;">74</div>
+        <div style="font-size:0.6rem;color:#f87171;font-weight:600;">0,27%</div>
         <div style="display:flex;justify-content:flex-end;margin-top:5px;">
           <div style="height:18px;width:0.8%;min-width:16px;background:rgba(248,113,113,0.85);border-radius:3px 0 0 3px;"></div>
         </div>
@@ -283,9 +324,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     <!-- Conclusão -->
     <div style="margin-top:16px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:10px 14px;font-size:0.72rem;color:var(--txt2);line-height:1.7;">
-      <strong style="color:#4ade80;">&#128200; Hub tem menor taxa de CX (0,25% vs 0,31% Legacy — &minus;19%).</strong>
-      A taxa de Maxwell &eacute; similar nas duas experi&ecirc;ncias (~15-17%), indicando que o comportamento de busca por suporte digital &eacute; consistente.
-      O Hub Desktop consegue resolver ligeiramente mais sem escalar ao CX.
+      <strong style="color:#94a3b8;">&#128202; Comportamento similar nas duas experi&ecirc;ncias.</strong>
+      A taxa de acionamento do Maxwell &eacute; praticamente id&ecirc;ntica entre Hub (15,8%) e Legacy (16,6%), com diferen&ccedil;a de apenas <strong>0,8 p.p.</strong> &mdash; indicando que o comportamento de busca por suporte digital &eacute; equivalente nas duas vers&otilde;es.
+      A taxa de contato com CX tamb&eacute;m &eacute; muito pr&oacute;xima (Hub 0,27% vs Legacy 0,31%), com 74 vs 77 sellers em valores absolutos. Dado o volume pequeno de casos, essa diferen&ccedil;a n&atilde;o &eacute; suficiente para afirmar com seguran&ccedil;a que uma experi&ecirc;ncia gera significativamente menos acionamentos de suporte do que a outra.
     </div>
 
     <div style="margin-top:8px;font-size:0.62rem;color:var(--txt3);">
@@ -686,3 +727,4 @@ function filt(f){
 </script>
 </body>
 </html>
+
