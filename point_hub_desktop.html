@@ -292,9 +292,102 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       Metodologia: join por user_id + mesmo dia &middot; Maxwell = DEVICE=&apos;web&apos; em BT_MAXWELL_CONVERSATION_DETAILS &middot; CX = CDU &apos;Point no funciona&apos; em BT_CX_HELP_RATE_V2
     </div>
   </div><!-- /funil -->
+
+  <!-- SHORTCUTS: SMB vs BS -->
+  <div style="background:var(--bg2);border-radius:14px;border:1px solid var(--brd);padding:20px 24px;margin-top:16px;">
+    <div style="margin-bottom:16px;">
+      <div style="font-size:0.7rem;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;">&#9889; Shortcuts — Uso por Segmento (Hub Desktop)</div>
+      <div style="font-size:0.78rem;color:var(--txt2);">Quais shortcuts cada segmento mais utiliza &middot; % sobre total de clicks do segmento &middot; Jun/2026 &rarr; hoje &middot; Todos os sites</div>
+    </div>
+
+    <!-- Chart -->
+    <div style="position:relative;height:320px;margin-bottom:14px;">
+      <canvas id="scChart"></canvas>
+    </div>
+
+    <!-- Legend -->
+    <div style="display:flex;gap:20px;justify-content:center;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--txt2);">
+        <span style="width:14px;height:10px;background:#c084fc;display:inline-block;border-radius:2px;"></span>SMB (Small &amp; Medium Business)
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:0.75rem;color:var(--txt2);">
+        <span style="width:14px;height:10px;background:#4ade80;display:inline-block;border-radius:2px;"></span>BS / Large Sellers (CORP, LM1, LM2)
+      </div>
+    </div>
+
+    <!-- Insight -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:rgba(192,132,252,0.07);border:1px solid rgba(192,132,252,0.2);border-radius:8px;padding:12px 14px;">
+        <div style="font-size:0.68rem;font-weight:700;color:#c084fc;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">SMB &mdash; Perfil de uso</div>
+        <div style="font-size:0.72rem;color:var(--txt2);line-height:1.7;">
+          Mais equilibrado entre os shortcuts. <strong>Solicitar Bobinas</strong> lidera (39,5%), seguido de <strong>Comprar Point</strong> (23,4%) e <strong>Pedidos</strong> (18,4%).
+          <strong>Vouchers</strong> tem uso relevante (17,7%) &mdash; perfil de vendas presenciais diversificadas.
+        </div>
+      </div>
+      <div style="background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.2);border-radius:8px;padding:12px 14px;">
+        <div style="font-size:0.68rem;font-weight:700;color:#4ade80;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px;">BS / Large Sellers &mdash; Perfil de uso</div>
+        <div style="font-size:0.72rem;color:var(--txt2);line-height:1.7;">
+          Concentrado em <strong>Solicitar Bobinas</strong> (63,4%) &mdash; alta demanda de insumos por volume de transações.
+          <strong>Pedidos</strong> (21,2%) &eacute; 2&ordm; principal, refletindo acompanhamento de ordens em escala. <strong>Vouchers quase n&atilde;o usa</strong> (3,5%).
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;font-size:0.62rem;color:var(--txt3);">
+      Fonte: MELIDATA.TRACKS &middot; LK_MP_SEGMENTATION_SELLERS &middot; path=/point_devices/point_hub/shortcuts &middot; /web/desktop
+    </div>
+  </div><!-- /shortcuts -->
+
 </div>
 
 <script>
+// ── SHORTCUTS CHART ──────────────────────────────────────
+(function(){
+  var el=document.getElementById('scChart'); if(!el)return;
+  var shortcuts=['Solicitar\nBobinas','Comprar\nPoint','Pedidos','Vouchers','Impulsionar\nNeg.'];
+  var smb=[39.5, 23.4, 18.4, 17.7, 0.9];
+  var bs =[63.4, 11.6, 21.2,  3.5, 0.3];
+  new Chart(el.getContext('2d'),{
+    type:'bar',
+    plugins:[ChartDataLabels],
+    data:{
+      labels:shortcuts,
+      datasets:[
+        {label:'SMB',data:smb,backgroundColor:'rgba(192,132,252,0.8)',borderRadius:4,
+          datalabels:{anchor:'end',align:'top',offset:2,color:'#e9d5ff',font:{size:10,weight:'700'},
+            formatter:function(v){return v>0?v.toFixed(1)+'%':'';}
+          }
+        },
+        {label:'BS / Large Sellers',data:bs,backgroundColor:'rgba(74,222,128,0.8)',borderRadius:4,
+          datalabels:{anchor:'end',align:'top',offset:2,color:'#bbf7d0',font:{size:10,weight:'700'},
+            formatter:function(v){return v>0?v.toFixed(1)+'%':'';}
+          }
+        }
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:28,bottom:4}},
+      plugins:{
+        legend:{display:false},
+        datalabels:{display:true},
+        tooltip:{
+          backgroundColor:'#1e293b',borderColor:'#475569',borderWidth:1,
+          titleColor:'#f1f5f9',bodyColor:'#94a3b8',padding:10,
+          callbacks:{label:function(c){return ' '+c.dataset.label+': '+c.raw.toFixed(1)+'%';}}
+        }
+      },
+      scales:{
+        x:{ticks:{color:'#64748b',font:{size:10}},grid:{color:'rgba(71,85,105,0.2)'},border:{display:false}},
+        y:{
+          ticks:{color:'#64748b',font:{size:9},callback:function(v){return v+'%';}},
+          grid:{color:'rgba(71,85,105,0.2)'},border:{display:false},max:70,
+          title:{display:true,text:'% do total de clicks do segmento',color:'#64748b',font:{size:9}}
+        }
+      }
+    }
+  });
+})();
 // ── LABELS: 25/Mai → 22/Jun (29 dias) ──────────────────────
 var L = [
   '25/Mai','26/Mai','27/Mai','28/Mai','29/Mai','30/Mai','31/Mai',
