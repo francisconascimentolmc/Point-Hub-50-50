@@ -776,7 +776,8 @@
           <div class="legend-item"><div style="width:22px;height:3px;background:#f97316;border-radius:2px;margin-right:6px;flex-shrink:0;"></div>% Penetra&ccedil;&atilde;o MAD <span style="color:var(--text-muted);font-size:0.75rem;">(eixo direito)</span></div>
           <div class="legend-item" id="rollout-legend-item"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #facc15;margin-right:6px;flex-shrink:0;"></div><span id="rollout-legend-txt">Rollout Restyle Nativo <span style="color:var(--text-muted);font-size:0.75rem;">(MLB)</span></span></div>
           <div class="legend-item"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #ef4444;margin-right:6px;flex-shrink:0;"></div>Reposicionamento na Home</div>
-          <div class="legend-item"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #f59e0b;margin-right:6px;flex-shrink:0;"></div>&#128421; Desktop Hub lançado (Jun/26)</div>
+          <div class="legend-item"><span style="display:inline-block;width:14px;height:10px;background:rgba(245,158,11,0.88);border-radius:2px;margin-right:6px;vertical-align:middle;"></span>&#128421; Hub Desktop (Jun/26)</div>
+          <div class="legend-item"><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #f59e0b;margin-right:6px;flex-shrink:0;"></div>Desktop Hub lançado</div>
 
         </div>
         <div style="background:var(--bg-card);border-radius:10px;padding:16px 20px;margin-top:16px;">
@@ -3210,7 +3211,8 @@ ORDER BY 1</pre>
   // ---- Monthly historical chart (Audiencia na Secao) ----
   const monthLabels  = ["Jul/25","Ago/25","Set/25","Out/25","Nov/25","Dez/25","Jan/26","Fev/26","Mar/26","Abr/26*","Mai/26","Jun/26*"];
   const monthLegacy  = [410012, 383567, 345618, 428676, 480334, 602685, 722546, 433690, 168830, 0, 34359, 6647];
-  const monthHub     = [0, 0, 0, 0, 0, 0, 3525, 135248, 479854, 82000, 615006, 478724];
+  const monthHub        = [0, 0, 0, 0, 0, 0, 3525, 135248, 479854, 82000, 615006, 456470]; // Mobile only
+  const monthHubDesktop  = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22254]; // Desktop Hub Jun/26
   const monthHubProj = [null, null, null, null, null, null, null, null, null, null, null, null];
   const monthMADpct  = [11.2, 10.3, 9.3, 11.3, 12.9, 16.2, 19.6, 15.4, 13.1, null, null, null];
   const monthMADproj = [null, null, null, null, null, null, null, null, null, null, null, null];
@@ -3219,7 +3221,8 @@ ORDER BY 1</pre>
   // Dados por site â€” preencher com resultado da query BQ acima
   // (zeros = pendente; substituir apos executar a query)
   const monthLegacyMLA = [29960, 30297, 28381, 31219, 33359, 33587, 35901, 27613, 10085, 0, 18231, 3754];
-  const monthHubMLA    = [0, 0, 0, 0, 0, 0, 218, 10925, 38146, 9945, 60424, 74789];
+  const monthHubMLA       = [0, 0, 0, 0, 0, 0, 218, 10925, 38146, 9945, 60424, 71317]; // Mobile only
+  const monthHubDesktopMLA = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3472]; // Desktop Hub MLA Jun/26
   const monthMADpctMLA = [0.6, 0.6, 0.6, 0.6, 0.7, 0.7, 0.7, 0.8, 1.0, null, null, null];
   const monthLegacyMLB = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   const monthHubMLB    = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -3337,7 +3340,8 @@ ORDER BY 1</pre>
                   font: { weight: '700', size: 11 },
                   formatter: (v, ctx) => {
                     const i = ctx.dataIndex;
-                    const total = (ctx.chart.data.datasets[0].data[i] || 0) + (v || 0);
+                    const desktop = ctx.chart.data.datasets[2].data[i] || 0;
+                    const total = (ctx.chart.data.datasets[0].data[i] || 0) + (v || 0) + desktop;
                     if (monthHubProj[i] !== null) return '';
                     return (total / 1000).toFixed(0) + 'K';
                   }
@@ -3354,6 +3358,21 @@ ORDER BY 1</pre>
                   }
                 }
               }
+            }
+          },
+          {
+            label: 'Hub Desktop',
+            type: 'bar',
+            data: monthHubDesktop,
+            backgroundColor: 'rgba(245,158,11,0.88)',
+            borderRadius: { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 },
+            stack: 'users', yAxisID: 'y',
+            datalabels: {
+              display: function(ctx) { return (ctx.raw || 0) > 0; },
+              anchor: 'center', align: 'center',
+              color: '#111',
+              font: { weight: '700', size: 9 },
+              formatter: function(v) { return v > 0 ? '4,6%' : ''; }
             }
           },
           {
@@ -3528,18 +3547,21 @@ ORDER BY 1</pre>
     if (site === 'mla') {
       ds[0].data = monthLegacyMLA;
       ds[1].data = monthHubMLA;
-      ds[3].data = monthMADpctMLA;
-      ds[3].hidden = true;
+      ds[2].data = monthHubDesktopMLA;
+      ds[4].data = monthMADpctMLA;
+      ds[4].hidden = true;
     } else if (site === 'mlb') {
       ds[0].data = monthLegacyMLB;
       ds[1].data = monthHubMLB;
-      ds[3].data = monthMADpctMLB;
-      ds[3].hidden = false;
+      ds[2].data = [0,0,0,0,0,0,0,0,0,0,0,18782]; // MLB Desktop estimate
+      ds[4].data = monthMADpctMLB;
+      ds[4].hidden = false;
     } else {
       ds[0].data = monthLegacy;
       ds[1].data = monthHub;
-      ds[3].data = monthMADpct;
-      ds[3].hidden = false;
+      ds[2].data = monthHubDesktop;
+      ds[4].data = monthMADpct;
+      ds[4].hidden = false;
     }
     _audienciaChart._currentSite = site;
     _audienciaChart.update('none');
@@ -4091,6 +4113,7 @@ ORDER BY 1</pre>
 </script>
 </body>
 </html>
+
 
 
 
